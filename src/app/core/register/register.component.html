@@ -1,0 +1,17 @@
+<h2>Registrate</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <label for="name">Nombre:</label>
+    <input formControlName="name">
+<br>
+    <label for="email">Correo electrónico:</label>
+    <input formControlName="email">
+<br>
+    <label for="password">Contraseña:</label>
+    <input formControlName="password" type="password">
+valid: {{loginForm.valid}}
+<br>
+errors: {{loginForm.errors}}
+
+    <input type="submit" value="Hola" [disabled]="!loginForm.valid">
+</form>
