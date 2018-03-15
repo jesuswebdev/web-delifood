@@ -10,16 +10,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { RouterModule } from '@angular/router';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { NavBarComponent } from '../shared/components/nav-bar/nav-bar.component';
 
 import { UserService } from '../shared/services/user.service';
 import { ServerService } from '../shared/services/server.service';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from '../shared/store/user.reducer';
+
 
 @NgModule({
     imports: [
         CommonModule,
         CoreRoutingModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        StoreModule.forRoot({ user: userReducer })
     ],
     exports: [
         RouterModule
@@ -28,7 +33,8 @@ import { ServerService } from '../shared/services/server.service';
         WelcomeComponent,
         LoginComponent,
         RegisterComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        NavBarComponent
     ],
     providers: [
         UserService,
