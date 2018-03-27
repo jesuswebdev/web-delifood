@@ -7,8 +7,43 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
   <app-root></app-root>
 </body>
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+
+let burger = document.getElementById('navBurger');
+
+burger.addEventListener('click', function () {
+	
+	let target = burger.dataset.target;
+	let $target = document.getElementById(target);
+
+	burger.classList.toggle('is-active');
+	$target.classList.toggle('is-active');
+
+	let buttons = document.getElementsByClassName('navBoton');
+
+	for (let i = 0; i < buttons.length; ++i) {
+		
+		buttons.item(i).addEventListener('click', function(){
+			if (burger.classList.contains('is-active')) {
+				let target = burger.dataset.target;
+				let $target = document.getElementById(target);
+
+				burger.classList.toggle('is-active');
+				$target.classList.toggle('is-active');
+			}
+		});
+	}
+});
+});
+</script>
 </html>

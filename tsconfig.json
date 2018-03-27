@@ -14,6 +14,13 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@delifood/services/*": ["app/shared/services/*"],
+      "@delifood/guards/*": ["app/shared/guards/*"],
+      "@delifood/interfaces/*": ["app/shared/interfaces/*"],
+      "@delifood/store/*": ["app/shared/store/*"],
+    }
   }
 }

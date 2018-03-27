@@ -1,37 +1,35 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
-import { UserService } from '../../shared/services/user.service';
-import { LoginData } from '../../shared/interfaces/login-data.interface';
-import { ServerResponse } from '../../shared/interfaces/server-response.interface';
+import { UserService } from '@delifood/services/user.service';
+import { ServerResponse } from '@delifood/interfaces/server-response.interface';
+import { LoginCredentials } from '@delifood/interfaces/user.interface';
 
+import * as fromRoot from '@delifood/store/reducers';
+import * as UserActions from '@delifood/store/user/user.actions';
 import { Store } from '@ngrx/store';
-import { ApplicationState } from '../../shared/store/application.state';
 
 @Component({
     templateUrl: 'login.component.html'
 })
 
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
 
     loginForm: FormGroup;
-
-    subscription: Subscription;
     
     constructor(
         private userService: UserService,
         private fb: FormBuilder,
-        private store: Store<ApplicationState>
+        private store: Store<fromRoot.State>,
+        private router: Router
     ){
-
+        
         this.createForm();
-
-
-     }
-
-     createForm(): void {
-
+    }
+    
+    createForm(): void {
+        
         this.loginForm = this.fb.group({
             email: ['', {
                 validators: [
@@ -46,47 +44,42 @@ export class LoginComponent implements OnDestroy {
                 ]
             }]
         });
+    }
+    
+    onSubmit() {
 
-     }
+        let credentials: LoginCredentials = this.getLoginCredentials();
 
-     onSubmit(): void {
+        this.userService.login(credentials)
+        .subscribe((response) => {
 
-        let userData: LoginData = this.prepareLogin();
+            let user = this.prepareUser(response);
+            localStorage.setItem('user', JSON.stringify(user));
+            this.store.dispatch(new UserActions.LoginSuccess(user));
 
-        this.subscription = this.userService
-                            .login(userData)
-                            .subscribe((response: ServerResponse) => {
+            let destination = user.role === 'admin' ? '/admin/dashboard' : '/home';
+            this.router.navigateByUrl(destination);
+        },(error) => {
+            
+            console.log(error);
+        });
+    }
 
-                                let test = {
-                                    name: response.data.user.name,
-                                    email: response.data.user.email,
-                                    role: response.data.user.role,
-                                    token: response.data.token
-                                };
-                                
-                                this.store.dispatch({ type: 'LOGIN', payload: test });
-                            });
+    getLoginCredentials(): LoginCredentials {
 
-     }
-
-     prepareLogin(): LoginData {
-
-        let data: LoginData = {
+        return {
             email: this.loginForm.get('email').value,
             password: this.loginForm.get('password').value
         };
+    }
+    
+    private prepareUser (response: ServerResponse) {
 
-        return data;
-
-     }
-
-    ngOnDestroy(): void {
-
-        if (this.subscription) {
-            
-            this.subscription.unsubscribe();
-
-        }
-
+        return {
+            name: response.data.user.name,
+            email:response.data.user.email,
+            role: response.data.user.role,
+            token: response.data.token
+        };
     }
 }

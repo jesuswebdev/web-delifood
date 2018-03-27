@@ -1,8 +1,24 @@
-Navigation: 
-<a [routerLink]="['/']">Home</a>
-<a [routerLink]="['/login']">Login</a>
-<a [routerLink]="['/registro']">Registro</a>
-<br>
-usuario: {{user.name}}
-<br>
-email: {{zzz$.email}}
+<nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" [routerLink]="['/']">
+            Delifood
+        </a>
+        <div class="navbar-burger burger" data-target="navMenu" id="navBurger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+        <div class="navbar-start">
+            <a class="navbar-item navBoton" *ngFor="let link of links.navStart" [routerLink]="[link.path]">
+                {{link.name}}
+            </a>
+        </div>
+        <div class="navbar-end">
+            <a class="navbar-item navBoton" *ngFor="let link of links.navEnd" [routerLink]="[link.path]">
+                {{link.name}}
+            </a>
+        </div>
+    </div>
+</nav>

@@ -1,10 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 import { UserService } from '../../shared/services/user.service';
-import { RegistrationData } from '../../shared/interfaces/registration-data.interface';
 import { ServerResponse } from '../../shared/interfaces/server-response.interface';
+import { RegistrationData } from '@delifood/interfaces/user.interface';
 
 @Component({
     templateUrl: 'register.component.html'
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnDestroy {
 
     constructor(
         private fb: FormBuilder,
-        private userService: UserService) {
+        private userService: UserService,
+        private router: Router) {
 
         this.createForm();
     }
@@ -48,7 +50,9 @@ export class RegisterComponent implements OnDestroy {
         
         this.subscription = this.userService.register(userData).subscribe(
             (response: ServerResponse)=>{
-                console.log(response);
+                if (response.statusCode === 201) {
+                    this.router.navigate(['/login']);
+                }
             });
 
     }

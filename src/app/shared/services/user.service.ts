@@ -3,31 +3,53 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
-import { ServerService } from './server.service';
-import { RegistrationData } from '../interfaces/registration-data.interface';
-import { LoginData } from '../interfaces/login-data.interface';
+import * as server from '../server';
+import { ServerResponse } from '@delifood/interfaces/server-response.interface';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from '@delifood/store/reducers';
+import * as UserActions from '@delifood/store/user/user.actions';
+import { RegistrationData, LoginCredentials } from '@delifood/interfaces/user.interface';
 
 @Injectable()
 export class UserService {
-    constructor(private httpClient: HttpClient, private api: ServerService) { }
+
+    constructor (
+        private http: HttpClient,
+        private store: Store<fromRoot.State>
+    ) {
+    }
     
-    register(userData: RegistrationData): Observable<object> {
+    public register(userData: RegistrationData): Observable<object> {
 
-        return this.httpClient.post(
-                                    this.api.userEndpoint,
-                                    userData,
-                                    this.api.defaultOptions
-                                );
-
+        return this.http.post(server.USER_ENDPOINT, userData, server.DEFAULT_OPTIONS);
     }
 
-    login(userData: LoginData): Observable<object> {
+    public login(credentials: LoginCredentials): Observable<any>{
 
-        return this.httpClient.post(
-                                    this.api.userEndpoint + '/login',
-                                    userData,
-                                    this.api.defaultOptions
-                                );
+        return this.http.post(server.USER_ENDPOINT + '/login', credentials);
+    }
 
+    public logout (): void {
+
+        localStorage.clear();
+        this.store.dispatch(new UserActions.Logout());
+    }
+
+    public loadUser (): void {
+
+        try {
+            let user = JSON.parse(localStorage.getItem('user'));
+            this.store.dispatch(new UserActions.LoadUser(user));
+        }
+        catch (error) {
+            let user = {
+                name: 'guest',
+                email: 'guest@mail.com',
+                role: 'guest'
+            }
+
+            this.store.dispatch(new UserActions.LoadUser(user));
+        }
     }
 }

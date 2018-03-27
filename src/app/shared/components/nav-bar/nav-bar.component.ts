@@ -1,45 +1,57 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store, select } from '@ngrx/store';
 
-import { ApplicationState } from '../../store/application.state';
-import { UserState } from '../../store/user.state';
+import * as UserActions from '../../store/user/user.actions';
+import * as fromRoot from '../../store/reducers';
+import * as fromLinks from './links';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '@delifood/services/user.service';
 
 @Component({
     selector: 'nav-bar-component',
     templateUrl: 'nav-bar.component.html'
-    //changeDetection: ChangeDetectionStrategy.OnPush
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class NavBarComponent implements OnChanges {
+export class NavBarComponent implements OnInit, OnDestroy {
 
-    user?: UserState;
-    zzz$?: Observable<string>;
+    name: Observable<String>;
+    email: Observable<String>;
+    role: Observable<String>;
+    links: fromLinks.NavLinks;
+    subscription: Subscription;
 
     constructor(
-        private store: Store<ApplicationState>
+        private store: Store<fromRoot.State>,
+        private userService: UserService
     ){
-        this.store.pipe(select('user')).subscribe((res: ApplicationState)=>{
-            this.user = res.userState;
-            console.log(res)
-        });//.subscribe((res)=>{console.log(res)});
+        this.name = this.store.select(state => state.user.name);
+        this.email = this.store.select(state => state.user.email);
+        this.role = this.store.select(state => state.user.role);
+    }
 
-        this.zzz$ = store.select(state => state.userState.email);
-            
-        // this.zzz$ = this.store.select((state)=>{ return state.userState }).subscribe();
-        // console.log(this.zzz$);
+    ngOnInit () {
+
+        this.userService.loadUser();
         
-        // this.store.pipe(select('user')).subscribe(
-        //     (response: ApplicationState) => {
-        //         console.log(response);
-        //         this.user = response.userState;
-        //         console.log(this.user);
-        //     }
-        // )
+        this.subscription = this.role.subscribe(role => {
+
+            if (role === 'admin') {
+                this.links = fromLinks.ADMIN_LINKS;
+            }
+            else if (role === 'user') {
+                this.links = fromLinks.USER_LINKS;
+            }
+            else {
+                this.links = fromLinks.GUEST_LINKS;
+            }
+        })
     }
 
-    ngOnChanges() {
-        console.log('AAAAAAAAAAAAA');
+    ngOnDestroy () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
-    
 }
