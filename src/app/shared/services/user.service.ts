@@ -22,7 +22,7 @@ export class UserService {
     
     public register(userData: RegistrationData): Observable<object> {
 
-        return this.http.post(server.USER_ENDPOINT, userData, server.DEFAULT_OPTIONS);
+        return this.http.post(server.USER_ENDPOINT, userData);
     }
 
     public login(credentials: LoginCredentials): Observable<any>{
