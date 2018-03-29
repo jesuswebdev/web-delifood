@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 
-export const GUEST_TOKEN: string = 'Fe26.2**edbf5fa561bd037811e90833c31b4666cecdbc62cdb9e0c36e3b039201375205*SriKon8DHQ5qbUPZuBdEmw*3KgCe25MHgIJsYLCwKjdGYUmVabHzEpHP_FLoX-UPR8**a5e3f765f7bb2226dce4033d109c19e3a947c8af98a3f2ed4da57a4a878d227d*FxOtzxBsjIvehbv_KxBXRKQD9wgyl53c6b0RtgrQRk8';
+export const GUEST_TOKEN: string = 'Fe26.2**e083794775bcffe025edecc4b20d160e4150bad5bbf4aca9ca412ae33ddd717f*vVMEpYKLYctAIYmFKojB4w*ITh6DBbl-oGNoNxVLoZSQM96Pp8g9Bv7ua2TXpHU8sI**8438fa227019e10df06d6a8e7c301e2f48b341b2de0796de306df2d2ae35b4a4*k5kzt5JgbB-Dt9V9aGRHgLn5UfoxFVTSdBgx5NDGJdI';
 export const USER_TOKEN: string = '';
 export const ADMIN_TOKEN: string = '';
 
