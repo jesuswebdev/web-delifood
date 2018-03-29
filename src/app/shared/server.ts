@@ -4,7 +4,7 @@ export const GUEST_TOKEN: string = 'Fe26.2**edbf5fa561bd037811e90833c31b4666cecd
 export const USER_TOKEN: string = '';
 export const ADMIN_TOKEN: string = '';
 
-export const ENDPOINT: string = 'http://localhost:3000/api';
+export const ENDPOINT: string = 'https://api-delifood.herokuapp.com/api';
 
 export const USER_ENDPOINT: string = `${ENDPOINT}/users`;
 export const CATEGORY_ENDPOINT: string = `${ENDPOINT}/categories`;

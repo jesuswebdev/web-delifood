@@ -1,7 +1,47 @@
-<h2>Ingresar</h2>
+<section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <div class="card" style="max-width:480px; margin: 0 auto">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Iniciar Sesión
+                    </div>
+                </div>
+                <div class="card-content">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="field">
+                            <label class="label">Correo Electrónico</label>
+                            <div class="control">
+                                <input class="input" placeholder="correo@correo.com" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Contraseña</label>
+                            <div class="control">
+                                <input class="input" placeholder="contraseña" formControlName="password" type="password">
+                            </div>
+                        </div>
+                        <input id="login-button" class="button is-info" type="submit" [disabled]="loginForm.invalid" value="Iniciar sesión">
+                    </form>
+                </div>
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <input formControlName="email"><br>
-    <input formControlName="password" type="password"><br>
-    <input type="submit" value="Ingresar">
-</form>
+                <div [hidden]="!hasError">
+                    <article class="message is-danger">
+                        <div class="message-header">
+                            <p>Ocurrió un error</p>
+                            <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                        </div>
+                        <div class="message-body">
+                            {{errorMessage}}
+                        </div>
+                    </article>
+                </div>
+
+
+                <!-- <div class="notification is-danger" [hidden]="!hasError">
+                    {{errorMessage}}
+                </div> -->
+            </div>
+        </div>
+    </div>
+</section>

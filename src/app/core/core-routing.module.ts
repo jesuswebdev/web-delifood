@@ -11,7 +11,7 @@ import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
 
 const routes: Routes = [
   { path: 'admin', canLoad: [IsAdminGuard], loadChildren: '../admin/admin.module#AdminModule' },
-  // { path: 'productos', loadChildren: '' },
+  // { path: 'comidas', loadChildren: '' },
   // { path: 'pedidos', loadChildren: '' },
   // { path: 'categorias', loadChildren: '' },
   { path: 'login', canActivate: [LoggedInGuard], component: LoginComponent },

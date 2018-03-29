@@ -10,8 +10,7 @@ export interface NavLinks {
 
 export const GUEST_LINKS: NavLinks = {
     navStart: [
-        { path: '/', name: 'Home' },
-        { path: '/productos', name: 'Productos' }
+        { path: '/comidas', name: 'Comidas' }
     ],
     navEnd: [
         { path: '/login', name: 'Login' },
@@ -27,8 +26,7 @@ export const GUEST_LINKS: NavLinks = {
 // ];
 export const USER_LINKS: NavLinks = {
     navStart: [
-        { path: '/', name: 'Home' },
-        { path: '/productos', name: 'Productos' }
+        { path: '/comidas', name: 'Comidas' }
     ],
     navEnd: [
         { path: '/cuenta', name: 'Mi Cuenta' },
@@ -38,7 +36,6 @@ export const USER_LINKS: NavLinks = {
 
 export const ADMIN_LINKS: NavLinks = {
     navStart: [
-        { path: '/', name: 'Home' },
         { path: '/admin/dashboard', name: 'Panel Administrativo' }
     ],
     navEnd: [

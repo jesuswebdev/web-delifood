@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,9 +14,12 @@ import { Store } from '@ngrx/store';
     templateUrl: 'login.component.html'
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
 
     loginForm: FormGroup;
+
+    hasError: boolean = false;
+    errorMessage?: string;
     
     constructor(
         private userService: UserService,
@@ -45,8 +48,22 @@ export class LoginComponent {
             }]
         });
     }
+
+    ngOnInit () {
+
+        document.getElementById('delifood-body').style.backgroundImage = `url('/assets/login-bg.jpg')`;
+    }
+
+    ngOnDestroy () {
+
+        document.getElementById('delifood-body').style.backgroundImage = '';
+    }
     
     onSubmit() {
+
+        this.hasError = false;
+
+        document.getElementById('login-button').classList.add('is-loading');
 
         let credentials: LoginCredentials = this.getLoginCredentials();
 
@@ -56,13 +73,24 @@ export class LoginComponent {
             let user = this.prepareUser(response);
             localStorage.setItem('user', JSON.stringify(user));
             this.store.dispatch(new UserActions.LoginSuccess(user));
-
+        
+            document.getElementById('login-button').classList.remove('is-loading');
             let destination = user.role === 'admin' ? '/admin/dashboard' : '/home';
             this.router.navigateByUrl(destination);
         },(error) => {
-            
             console.log(error);
+            document.getElementById('login-button').classList.remove('is-loading');
+            this.hasError = true;
+
+            this.errorMessage = error.status === 0 ? 
+                'No se pudo conectar con el servidor' :
+                error.error.message; 
         });
+    }
+
+    onClickDeleteError () {
+
+        this.hasError = false;
     }
 
     getLoginCredentials(): LoginCredentials {
