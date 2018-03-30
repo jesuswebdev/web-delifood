@@ -62,9 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     onSubmit() {
 
         this.hasError = false;
-
-        document.getElementById('login-button').classList.add('is-loading');
-
+        
         let credentials: LoginCredentials = this.getLoginCredentials();
 
         this.userService.login(credentials)
@@ -74,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             localStorage.setItem('user', JSON.stringify(user));
             this.store.dispatch(new UserActions.LoginSuccess(user));
             
-            let destination = user.role === 'admin' ? '/admin/dashboard' : '/home';
+            let destination = user.role === 'admin' ? '/admin/panel' : '/';
             this.router.navigateByUrl(destination);
         },(error) => {
         

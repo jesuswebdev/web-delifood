@@ -30,7 +30,7 @@ export const USER_LINKS: NavLinks = {
 
 export const ADMIN_LINKS: NavLinks = {
     navStart: [
-        { path: '/admin/dashboard', name: 'Panel Administrativo' }
+        { path: '/admin/panel', name: 'Panel Administrativo' }
     ],
     navEnd: [
         { path: '/cuenta', name: 'Mi Cuenta' },

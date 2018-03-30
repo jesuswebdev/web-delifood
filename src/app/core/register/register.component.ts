@@ -60,21 +60,26 @@ export class RegisterComponent implements OnInit,OnDestroy {
                 this.errorMessage = error.status === 0 ? 
                 'No se pudo conectar con el servidor' :
                 error.error.message; 
-            });
+            }
+        );
     }
 
     prepareRegistration(): RegistrationData{
 
-        let data = {
+        return {
             name: this.registerForm.get('name').value,
             email: this.registerForm.get('email').value,
             password: this.registerForm.get('password').value
         };
+    }
 
-        return data;
+    onClickDeleteError () {
+
+        this.hasError = false;
     }
 
     ngOnInit () {
+        
         document.getElementById('delifood-body').style.backgroundImage = `url('/assets/bg2.jpg')`;
     }
     
