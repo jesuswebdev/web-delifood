@@ -73,15 +73,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             let user = this.prepareUser(response);
             localStorage.setItem('user', JSON.stringify(user));
             this.store.dispatch(new UserActions.LoginSuccess(user));
-        
-            document.getElementById('login-button').classList.remove('is-loading');
+            
             let destination = user.role === 'admin' ? '/admin/dashboard' : '/home';
             this.router.navigateByUrl(destination);
         },(error) => {
-            console.log(error);
-            document.getElementById('login-button').classList.remove('is-loading');
+        
             this.hasError = true;
-
             this.errorMessage = error.status === 0 ? 
                 'No se pudo conectar con el servidor' :
                 error.error.message; 

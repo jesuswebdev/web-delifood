@@ -13,17 +13,11 @@ export const GUEST_LINKS: NavLinks = {
         { path: '/comidas', name: 'Comidas' }
     ],
     navEnd: [
-        { path: '/login', name: 'Login' },
+        { path: '/login', name: 'Iniciar Sesión' },
         { path: '/registro', name: 'Registro' }
     ]
 };
 
-// export const GUEST_LINKS: Link[] = [
-//     { path: '/', name: 'Home' },
-//     { path: '/productos', name: 'Productos' },
-//     { path: '/login', name: 'Login' },
-//     { path: '/registro', name: 'Registro' }
-// ];
 export const USER_LINKS: NavLinks = {
     navStart: [
         { path: '/comidas', name: 'Comidas' }

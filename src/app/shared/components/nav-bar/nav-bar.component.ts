@@ -11,7 +11,6 @@ import { UserService } from '@delifood/services/user.service';
 @Component({
     selector: 'nav-bar-component',
     templateUrl: 'nav-bar.component.html'
-    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NavBarComponent implements OnInit, OnDestroy {
@@ -50,6 +49,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy () {
+        
         if (this.subscription) {
             this.subscription.unsubscribe();
         }

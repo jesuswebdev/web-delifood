@@ -1,14 +1,48 @@
-<h2>Registrate</h2>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <div class="card" style="max-width:480px; margin: 0 auto">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Registro
+                    </div>
+                </div>
+                <div class="card-content">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div class="field">
+                            <label class="label">Nombres</label>
+                            <div class="control">
+                                <input class="input" placeholder="pedro perez" formControlName="name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Correo electrónico</label>
+                            <div class="control">
+                                <input class="input" placeholder="correo@correo.com" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Contraseña</label>
+                            <div class="control">
+                                <input class="input" placeholder="contraseña" formControlName="password" type="password">
+                            </div>
+                        </div>
+                        <input class="button is-info" type="submit" value="Registrarme" [disabled]="!registerForm.valid">
+                    </form>
+                </div>
 
-    <label for="name">Nombres: </label>
-    <input formControlName="name">
-<br>
-    <label for="email">Correo electrónico: </label>
-    <input formControlName="email">
-<br>
-    <label for="password">Contraseña: </label>
-    <input formControlName="password" type="password">
-<br>
-    <input type="submit" value="Registrarme" [disabled]="!registerForm.valid">
-</form>
+                <div [hidden]="!hasError">
+                        <article class="message is-danger">
+                            <div class="message-header">
+                                <p>Ocurrió un error</p>
+                                <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                            </div>
+                            <div class="message-body">
+                                {{errorMessage}}
+                            </div>
+                        </article>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>

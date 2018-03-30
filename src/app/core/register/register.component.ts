@@ -1,21 +1,23 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 
-import { UserService } from '../../shared/services/user.service';
-import { ServerResponse } from '../../shared/interfaces/server-response.interface';
+import { UserService } from '@delifood/services/user.service';
+import { ServerResponse } from '@delifood/interfaces/server-response.interface';
 import { RegistrationData } from '@delifood/interfaces/user.interface';
 
 @Component({
     templateUrl: 'register.component.html'
 })
 
-export class RegisterComponent implements OnDestroy {
+export class RegisterComponent implements OnInit,OnDestroy {
 
     registerForm: FormGroup;
 
     subscription: Subscription;
+    hasError: boolean = false;
+    errorMessage?: string;
 
     constructor(
         private fb: FormBuilder,
@@ -41,7 +43,6 @@ export class RegisterComponent implements OnDestroy {
                 Validators.minLength(6)
             ] }]
         });
-
     }
     
     onSubmit(){
@@ -49,12 +50,17 @@ export class RegisterComponent implements OnDestroy {
         let userData: RegistrationData = this.prepareRegistration();
         
         this.subscription = this.userService.register(userData).subscribe(
-            (response: ServerResponse)=>{
+            (response: ServerResponse) => {
                 if (response.statusCode === 201) {
                     this.router.navigate(['/login']);
                 }
-            });
+            },(error) => {
 
+                this.hasError = true;
+                this.errorMessage = error.status === 0 ? 
+                'No se pudo conectar con el servidor' :
+                error.error.message; 
+            });
     }
 
     prepareRegistration(): RegistrationData{
@@ -66,16 +72,18 @@ export class RegisterComponent implements OnDestroy {
         };
 
         return data;
-
     }
 
+    ngOnInit () {
+        document.getElementById('delifood-body').style.backgroundImage = `url('/assets/bg2.jpg')`;
+    }
+    
     ngOnDestroy(){
 
-        if (this.subscription) {
-            
-            this.subscription.unsubscribe();
+        document.getElementById('delifood-body').style.backgroundImage = '';
 
+        if (this.subscription) {
+            this.subscription.unsubscribe();
         }
-        
     }
 }
