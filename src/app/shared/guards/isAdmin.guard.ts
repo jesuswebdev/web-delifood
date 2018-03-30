@@ -10,7 +10,6 @@ export class IsAdminGuard implements CanLoad {
     canLoad(
         route: Route
     ): Observable<boolean> | Promise<boolean> | boolean {
-        
         return this.authService.isAdmin();
     }
 }
