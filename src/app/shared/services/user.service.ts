@@ -52,4 +52,19 @@ export class UserService {
             this.store.dispatch(new UserActions.LoadUser(user));
         }
     }
+
+    public getUsers (): Observable<any> {
+        
+        return this.http.get(server.USER_ENDPOINT);
+    }
+
+    public getUsersCount (): Observable<any> {
+
+        return this.http.get(server.USER_ENDPOINT + '/count');
+    }
+
+    public deleteUser (id: string) {
+
+        return this.http.delete(server.USER_ENDPOINT + '/' + id);
+    }
 }

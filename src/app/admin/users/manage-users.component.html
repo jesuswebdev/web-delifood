@@ -1,1 +1,62 @@
-manage users works!
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column has-text-centered">
+            <h1 class="is-size-1">
+                Administrar Usuarios
+            </h1>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column has-text-centered">
+
+                    <div [hidden]="hasErrors">
+                        <p class="heading">Usuarios Registrados</p>
+                        <p class="title">{{ count | async }}</p>
+                    </div>
+
+            <div [hidden]="!hasErrors">
+                Usuarios Registrados: 0
+            </div>
+        </div>
+        <div class="column" style="display: flex; margin-top:  auto; margin-bottom:  auto;">
+            <button class="button is-info" style="margin: auto">
+                <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                    Crear Nuevo Usuario
+                </span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="columns is-centered">
+        <div class="column is-10">
+            <table class="table is-full-width">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>ID</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users | async">
+                        <th>{{user.name}}</th>
+                        <th>{{user.email}}</th>
+                        <th>{{user.id}}</th>
+                        <th>
+                            <button class="button is-warning" (click)="onClickEditUser(user.id)">Modificar</button>
+                        </th>
+                        <th>
+                            <button class="button is-danger" (click)="onClickDeleteUser(user)">Eliminar</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
