@@ -50,13 +50,31 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit () {
-
-        document.getElementById('delifood-body').style.backgroundImage = `url('/assets/login-bg.jpg')`;
+        
+        let body = document.getElementById('delifood-body').style;
+        
+        body.width                = '100%';
+        body.position             = 'fixed';
+        body.minHeight            = '100%';
+        body.backgroundSize       = 'cover';
+        body.backgroundImage      = `url('/assets/login-bg.jpg')`;
+        body.backgroundRepeat     = 'no-repeat';
+        body.backgroundPosition   = 'center center';
+        body.backgroundAttachment = 'fixed';
     }
 
     ngOnDestroy () {
-
-        document.getElementById('delifood-body').style.backgroundImage = '';
+        
+        let body = document.getElementById('delifood-body').style;
+        
+        body.width                = '';
+        body.position             = '';
+        body.minHeight            = '';
+        body.backgroundSize       = '';
+        body.backgroundImage      = '';
+        body.backgroundRepeat     = '';
+        body.backgroundPosition   = '';
+        body.backgroundAttachment = '';
     }
     
     onSubmit() {

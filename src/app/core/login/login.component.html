@@ -1,7 +1,10 @@
-<section class="hero is-medium">
-    <div class="hero-body">
-        <div class="container">
-            <div class="card" style="max-width:480px; margin: 0 auto">
+<div class="container">
+    <div class="columns">
+        <div class="column" style="height: 100px"></div>
+    </div>
+    <div class="columns is-mobile is-centered">
+        <div class="column is-half-desktop is-10-mobile is-8-tablet" style="max-width: 480px; min-width: 320px">
+            <div class="card">
                 <div class="card-header">
                     <div class="card-header-title">
                         Iniciar Sesión
@@ -24,7 +27,6 @@
                         <input id="login-button" class="button is-info" type="submit" [disabled]="loginForm.invalid" value="Iniciar sesión">
                     </form>
                 </div>
-
                 <div [hidden]="!hasError">
                     <article class="message is-danger">
                         <div class="message-header">
@@ -37,6 +39,7 @@
                     </article>
                 </div>
             </div>
+
         </div>
     </div>
-</section>
+</div>
