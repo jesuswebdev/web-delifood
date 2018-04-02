@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
+                    <form [formGroup]="loginForm">
                         <div class="field">
                             <label class="label">Correo Electrónico</label>
                             <div class="control">
@@ -24,7 +25,8 @@
                                 <input class="input" placeholder="contraseña" formControlName="password" type="password">
                             </div>
                         </div>
-                        <input id="login-button" class="button is-info" type="submit" [disabled]="loginForm.invalid" value="Iniciar sesión">
+                        <button id="login-button" class="button is-info" (click)="onSubmit()" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+                        <!-- <input id="login-button" class="button is-info" type="submit" [disabled]="loginForm.invalid" value="Iniciar sesión"> -->
                     </form>
                 </div>
                 <div [hidden]="!hasError">

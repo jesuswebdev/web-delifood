@@ -47,21 +47,37 @@ export class RegisterComponent implements OnInit,OnDestroy {
     
     onSubmit(){
 
+        this.onLoading();
+
         let userData: RegistrationData = this.prepareRegistration();
         
         this.subscription = this.userService.register(userData).subscribe(
             (response: ServerResponse) => {
                 if (response.statusCode === 200) {
+                    this.onDoneLoading();
                     this.router.navigate(['/login']);
                 }
             },(error) => {
 
                 this.hasError = true;
+                this.onDoneLoading();
                 this.errorMessage = error.status === 0 ? 
                 'No se pudo conectar con el servidor' :
                 error.error.message; 
             }
         );
+    }
+
+    onLoading () {
+
+        document.getElementById('register-button').classList.add('is-loading');
+        this.registerForm.disable();
+    }
+
+    onDoneLoading () {
+
+        document.getElementById('register-button').classList.remove('is-loading');
+        this.registerForm.enable();
     }
 
     prepareRegistration(): RegistrationData{

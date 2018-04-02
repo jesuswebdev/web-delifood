@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     onSubmit() {
 
         this.hasError = false;
+        this.onLoading();
         
         let credentials: LoginCredentials = this.getLoginCredentials();
 
@@ -89,16 +90,30 @@ export class LoginComponent implements OnInit, OnDestroy {
             let user = this.prepareUser(response);
             localStorage.setItem('user', JSON.stringify(user));
             this.store.dispatch(new UserActions.LoginSuccess(user));
-            
             let destination = user.role === 'admin' ? '/admin/panel' : '/';
-            this.router.navigateByUrl(destination);
+            this.onDoneLoading();
+            this.router.navigate([destination]);
+            // this.router.navigateByUrl(destination);
         },(error) => {
         
             this.hasError = true;
+            this.onDoneLoading();
             this.errorMessage = error.status === 0 ? 
                 'No se pudo conectar con el servidor' :
                 error.error.message; 
         });
+    }
+
+    onLoading () {
+
+        document.getElementById('login-button').classList.add('is-loading');
+        this.loginForm.disable();
+    }
+
+    onDoneLoading () {
+
+        document.getElementById('login-button').classList.remove('is-loading');
+        this.loginForm.enable();
     }
 
     onClickDeleteError () {
