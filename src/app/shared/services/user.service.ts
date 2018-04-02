@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '@delifood/store/reducers';
 import * as UserActions from '@delifood/store/user/user.actions';
 import { RegistrationData, LoginCredentials } from '@delifood/interfaces/user.interface';
+import { User } from '@delifood/store/users/users.model';
 
 @Injectable()
 export class UserService {
@@ -63,8 +64,13 @@ export class UserService {
         return this.http.get(server.USER_ENDPOINT + '/count');
     }
 
-    public deleteUser (id: string) {
+    public deleteUser (id: string): Observable<any> {
 
         return this.http.delete(server.USER_ENDPOINT + '/' + id);
+    }
+
+    public editUserInfo (user: User): Observable<any> {
+
+        return this.http.put(server.USER_ENDPOINT + '/' + user.id, user);
     }
 }

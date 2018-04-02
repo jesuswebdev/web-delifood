@@ -3,6 +3,8 @@ export interface User {
     email: string;
     role: string;
     token?: string;
+    created?: Date;
+    banned?: boolean;
 }
 
 export interface LoginCredentials {
@@ -14,4 +16,5 @@ export interface RegistrationData {
     name: string;
     email: string;
     password: string;
+    role?: string;
 }

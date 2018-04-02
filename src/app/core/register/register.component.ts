@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
         
         this.subscription = this.userService.register(userData).subscribe(
             (response: ServerResponse) => {
-                if (response.statusCode === 201) {
+                if (response.statusCode === 200) {
                     this.router.navigate(['/login']);
                 }
             },(error) => {

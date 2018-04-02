@@ -3,4 +3,6 @@ export interface User {
     name: string;
     email: string;
     banned: boolean;
+    role?: string;
+    created?: Date;
 }

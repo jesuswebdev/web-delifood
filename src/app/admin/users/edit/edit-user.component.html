@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="columns is-centered is-mobile">
+        <div class="column is-10-mobile is-8-tablet is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Modificar Usuario
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()"> 
+                            <div class="field">
+                                <label class="label">
+                                    Nombre
+                                </label>
+                                <div class="control">
+                                    <input class="input" formControlName="name">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Correo Electrónico
+                                </label>
+                                <div class="control">
+                                    <input class="input" formControlName="email">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Tipo de cuenta
+                                </label>
+                                <div class="select">
+                                    <select formControlName="role">
+                                        <option value="user" [selected]="role === 'user'">Usuario</option>
+                                        <option value="admin" [selected]="role === 'admin'">Administrador</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Estado de la cuenta
+                                </label>
+                                <div class="select">
+                                    <select formControlName="banned">
+                                        <option value="false" [selected]="banned === false">Activo</option>
+                                        <option value="true" [selected]="banned === true">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="button is-info" [disabled]="!editUserForm.dirty">Guardar Cambios</button>
+                            <button type="button" class="button is-warning" (click)="onClickCancel()">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div [hidden]="!hasError">
+                        <article class="message is-danger">
+                            <div class="message-header">
+                                <p>Ocurrió un error</p>
+                                <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                            </div>
+                            <div class="message-body">
+                                {{errorMessage}}
+                            </div>
+                        </article>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>>

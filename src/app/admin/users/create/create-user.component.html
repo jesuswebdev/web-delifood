@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="columns is-mobile is-centered">
+        <div class="column is-10-mobile is-half-desktop is-8-tablet has-text-centered">
+            <h1 class="is-size-1">Crear Nuevo Usuario</h1>
+        </div>
+    </div>
+    <div class="columns is-mobile is-centered">
+        <div class="column is-10-mobile is-half-desktop is-8-tablet">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Crear Nuevo Usuario
+                    </div>
+                </div>
+                <div class="card-content">
+
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
+
+                        <div class="field">
+                            <label class="label">
+                                Nombre
+                            </label>
+                            <div class="control">
+                                <input type="text" class="input" formControlName="name">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Correo Electrónico
+                            </label>
+                            <div class="control">
+                                <input type="text" class="input" formControlName="email">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Contraseña
+                            </label>
+                            <div class="control">
+                                <input type="password" class="input" formControlName="password">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Tipo de cuenta
+                            </label>
+                            <div class="control">
+                                <div class="select">
+                                    <select formControlName="role">
+                                        <option value="" [selected]="true" disabled>Elije una opción</option>
+                                        <option value="user">Usuario</option>
+                                        <option value="admin">Administrador</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="button is-info" [disabled]="userForm.invalid">Crear</button>
+                        <button type="button" class="button is-warning" (click)="onClickCancel()">Cancelar</button>
+                    </form>
+
+                </div>
+                <div [hidden]="!hasError">
+                        <article class="message is-danger">
+                            <div class="message-header">
+                                <p>Ocurrió un error</p>
+                                <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                            </div>
+                            <div class="message-body">
+                                {{errorMessage}}
+                            </div>
+                        </article>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

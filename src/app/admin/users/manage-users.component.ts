@@ -6,6 +6,7 @@ import * as fromRoot from '@delifood/store/reducers'
 import * as UsersActions from '@delifood/store/users/users.actions';
 import { Store } from '@ngrx/store';
 import { User } from '@delifood/store/users/users.model';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './manage-users.component.html'
@@ -18,7 +19,8 @@ export class ManageUsersComponent implements OnInit {
 
     constructor (
         private userService: UserService,
-        private store: Store<fromRoot.State>
+        private store: Store<fromRoot.State>,
+        private router: Router
     ) {
 
         this.count = this.store.select(state => state.users.count);
@@ -38,7 +40,13 @@ export class ManageUsersComponent implements OnInit {
     }
 
     onClickEditUser (id) {
-        alert(id);
+
+        this.router.navigate(['/admin/usuarios/modificar', id]);
+    }
+
+    onClickCreateNewUser () {
+
+        this.router.navigate(['/admin/usuarios/crear']);
     }
 
     onClickDeleteUser (user: User) {

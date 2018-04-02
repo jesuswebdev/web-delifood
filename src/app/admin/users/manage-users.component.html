@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="column" style="display: flex; margin-top:  auto; margin-bottom:  auto;">
-            <button class="button is-info" style="margin: auto">
+            <button class="button is-info" style="margin: auto" (click)="onClickCreateNewUser()">
                 <span class="icon is-small">
                     <i class="fas fa-plus"></i>
                 </span>
@@ -38,7 +38,8 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
-                        <th>ID</th>
+                        <th>Rol</th>
+                        <th>Activo</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -47,7 +48,10 @@
                     <tr *ngFor="let user of users | async">
                         <th>{{user.name}}</th>
                         <th>{{user.email}}</th>
-                        <th>{{user.id}}</th>
+                        <th *ngIf="user.role === 'admin'">Administrador</th>
+                        <th *ngIf="user.role === 'user'">Usuario</th>
+                        <th *ngIf="user.banned === true">Inactivo</th>
+                        <th *ngIf="user.banned === false">Activo</th>
                         <th>
                             <button class="button is-warning" (click)="onClickEditUser(user.id)">Modificar</button>
                         </th>
