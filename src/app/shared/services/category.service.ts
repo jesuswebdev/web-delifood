@@ -23,4 +23,9 @@ export class CategoryService {
 
         return this.http.post(CATEGORY_ENDPOINT, category);
     }
+
+    public editCategory(category: FormData, id): Observable<any> {
+
+        return this.http.put(CATEGORY_ENDPOINT + '/' + id, category);
+    }
 }

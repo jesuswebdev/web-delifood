@@ -47,6 +47,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
                 
                 if (users.length === 0) {
                     this.router.navigate(['/admin/usuarios']);
+                    return;
                 }
                 else {
                     this.user = users.find(user => user.id === params['id']);
