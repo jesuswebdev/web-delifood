@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column has-text-centered">
+            <h1 class="is-size-1">
+                Administrar Categorias
+            </h1>
+        </div>
+    </div>
+
+    <div class="columns is-mobile">
+        <div class="column is-half-mobile has-text-centered">
+            <div [hidden]="hasErrors">
+                <p class="heading">Categorias Registradas</p>
+                <p class="title">{{ count | async }}</p>
+            </div>
+
+            <div [hidden]="!hasErrors">
+                Categorias Registradas: 0
+            </div>
+        </div>
+        
+        <div class="column is-half-mobile has-text-centered" style="display: flex; margin-bottom: auto; margin-top: auto;">
+            <button class="button is-info" style="margin: auto;" (click)="onClickCreateCategory()">
+                <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                    Nueva Categoria
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-10-tablet is-10-desktop">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Productos</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categories | async">
+                        <th>
+                            {{category.name}}
+                        </th>
+                        <th>
+                            {{category.description}}
+                        </th>
+                        <th>
+                            {{category.productsCount}}
+                        </th>
+                        <th>
+                            <button class="button is-warning" (click)="onClickEditCategory(category.id)">
+                                <span class="icon is-small">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span>
+                                    Modificar
+                                </span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="button is-danger" (click)="onClickDeleteCategory(category.id)">
+                                <span class="icon is-smal">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                <span>
+                                    Eliminar
+                                </span>
+                            </button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

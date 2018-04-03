@@ -93,7 +93,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             let destination = user.role === 'admin' ? '/admin/panel' : '/';
             this.onDoneLoading();
             this.router.navigate([destination]);
-            // this.router.navigateByUrl(destination);
         },(error) => {
         
             this.hasError = true;

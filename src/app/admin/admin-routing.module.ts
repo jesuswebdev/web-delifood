@@ -13,7 +13,7 @@ const routes: Routes = [
         children: [
             { path: 'usuarios', loadChildren: './users/admin-users.module#AdminUsersModule' },
             // { path: 'comidas', component: ManageProductsComponent, children: [] },
-            // { path: 'categorias', component: ManageCategoriesComponent, children: [] },
+            { path: 'categorias', loadChildren: './categories/admin-categories.module#AdminCategoriesModule' },
             // { path: 'ordenes', component: ManageOrdersComponent, children: [] },
             { path: '', redirectTo: 'panel', pathMatch: 'full' },
             { path: 'panel', component: DashboardComponent }

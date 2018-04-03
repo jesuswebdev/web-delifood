@@ -14,12 +14,13 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { LogoutComponent } from './logout/logout.component';
 import { TokenInterceptor } from '../utils/interceptors/token.interceptor';
 
-import { UserService } from '../shared/services/user.service';
-import { ServerService } from '../shared/services/server.service';
+import { UserService } from '@delifood/services/user.service';
+import { ServerService } from '@delifood/services/server.service';
+import { CategoryService } from '@delifood/services/category.service';
 
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../shared/store/reducers';
-import { AuthService } from '../shared/services/auth.service';
+import { reducers } from '@delifood/store/reducers';
+import { AuthService } from '@delifood/services/auth.service';
 
 import { LoggedInGuard } from '@delifood/guards/loggedIn.guard';
 import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
@@ -47,6 +48,7 @@ import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
     providers: [
         AuthService,
         UserService,
+        CategoryService,
         ServerService,
         { 
             provide: HTTP_INTERCEPTORS,
