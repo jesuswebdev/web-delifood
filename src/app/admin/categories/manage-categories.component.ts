@@ -33,8 +33,7 @@ export class ManageCategoriesComponent implements OnInit {
         this.hasErrors = false;
         
         this.categoryService.getCategories().subscribe((response) => {
-
-            console.log(response);
+            
             this.store.dispatch(new CategoryActions.GetCategoriesSuccess(response.data));
             this.store.dispatch(new CategoryActions.SetCategoriesCount(response.data.length));
         }, (error) => {
@@ -49,12 +48,24 @@ export class ManageCategoriesComponent implements OnInit {
     }
 
     onClickEditCategory(id: string) {
-
-        console.log(id);
+        
+        this.router.navigate(['/admin/categorias/modificar', id]);
     }
 
-    onClickDeleteCategory(id: string) {
+    onClickDeleteCategory(category) {
 
-        console.log(id);
+        let didConfirm = confirm(`¿Esta seguro que quiere eliminar la categoria: ${category.name}?`);
+        
+        if (didConfirm) {
+            this.categoryService.deleteCategory(category.id)
+            .subscribe((response) => {
+    
+                this.store.dispatch(new CategoryActions.DeleteCategorySuccess(category.id));
+            }, (error) => {
+    
+                alert(error.error.message);
+            });
+        }
+        
     }
 }

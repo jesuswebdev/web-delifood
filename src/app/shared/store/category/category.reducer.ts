@@ -28,7 +28,8 @@ export function reducer(state = initialState, action: CategoryActions.All ): Sta
         case CategoryActions.CategoryActionTypes.DELETE_CATEGORY_SUCCESS: {
 
             return Object.assign({}, state, {
-                categories: state.categories.filter(category => category.id != action.payload)
+                categories: state.categories.filter(category => category.id != action.payload),
+                count: state.count - 1
             });
         }
 

@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminCategoriesRoutingModule } from './admin-categories-routing.module';
 import { ManageCategoriesComponent } from './manage-categories.component';
 import { CreateCategoryComponent } from './create/create-category.component';
+import { EditCategoryComponent } from './edit/edit-category.component';
 
 @NgModule({
     declarations: [
         ManageCategoriesComponent,
-        CreateCategoryComponent
+        CreateCategoryComponent,
+        EditCategoryComponent
     ],
     imports: [
         CommonModule,
