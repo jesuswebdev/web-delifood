@@ -8,7 +8,8 @@ import { Category } from './category.model';
 export enum CategoryActionTypes {
     GET_CATEGORIES_SUCCESS = '[Category] Get Categories Success',
     SET_CATEGORIES_COUNT = '[Category] Set Categories Count',
-    DELETE_CATEGORY_SUCCESS = '[Category] Delete Category Success'
+    DELETE_CATEGORY_SUCCESS = '[Category] Delete Category Success',
+    CREATE_CATEGORY_SUCCESS = '[Category] CREATE_CATEGORY_SUCCESS'
 };
 
 /**
@@ -34,6 +35,12 @@ export class DeleteCategorySuccess implements Action {
     constructor(public payload: string) {}
 }
 
+export class CreateCategorySuccess implements Action {
+    readonly type = CategoryActionTypes.CREATE_CATEGORY_SUCCESS;
+
+    constructor(public payload: Category) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -41,4 +48,5 @@ export class DeleteCategorySuccess implements Action {
 export type All
                 = GetCategoriesSuccess
                 | SetCategoriesCount
-                | DeleteCategorySuccess;
+                | DeleteCategorySuccess
+                | CreateCategorySuccess;

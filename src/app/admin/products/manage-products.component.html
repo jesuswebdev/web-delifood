@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+            Administrar Comidas
+        </div>
+    </div>
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-half-mobile is-half-tablet is-half-desktop has-text-centered">
+            <div [hidden]="hasErrors">
+                <p class="heading">Comidas Registradas</p>
+                <p class="title">{{ count | async }}</p>
+            </div>
+
+            <div [hidden]="!hasErrors">
+                Comidas Registradas: 0
+            </div>
+        </div>
+        <div class="column is-half-mobile is-half-tablet is-half-desktop has-text-centered" style="display: flex; margin-bottom: auto; margin-top: auto;">
+            <button class="button is-info" style="margin: auto;" (click)="onCreateProduct()">
+                <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="">Nueva Comida</span>
+            </button>
+        </div>
+    </div>
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-10-desktop has-text-centered">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                        <th>Cant. Vendidos</th>
+                        <th>Veces Vendido</th>
+                        <th>Visible</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products | async">
+                        <th> {{product.name}} </th>
+                        <th> {{product.category.name}} </th>
+                        <th> {{product.price}} </th>
+                        <th> {{product.totalSold}} </th>
+                        <th> {{product.totalTimesOrdered}} </th>
+                        <th> {{product.visible}} </th>
+                        <th>
+                            <button class="button is-warning" (click)="onEditProduct(product.id)">
+                                <span class="icon is-small">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span>
+                                    Modificar
+                                </span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="button is-danger" (click)="onDeleteProduct(product)">
+                                <span class="icon is-small">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                <span>
+                                    Eliminar
+                                </span>
+                            </button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

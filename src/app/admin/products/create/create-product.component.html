@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+            <h1 class="is-size-1">Crear Producto</h1>
+        </div>
+    </div>
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Crear Producto
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <form [formGroup]="createProductForm">
+                            <div class="field">
+                                <label class="label">
+                                    Nombre
+                                </label>
+                                <div class="control">
+                                    <input class="input" formControlName="name" placeholder="Nombre del producto">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Descripcion
+                                </label>
+                                <div class="control">
+                                    <input class="input" formControlName="description" placeholder="Descripcion del producto">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Precio
+                                </label>
+                                <div class="control">
+                                    <input class="input" type="number" formControlName="price" placeholder="precio del producto">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">
+                                    Categoria
+                                </label>
+                                <div class="select">
+                                    <select formControlName="category">
+                                        <option value="" disabled selected>Elije una categoria</option>
+                                        <option *ngFor="let category of categories | async" [value]="category.id" > {{category.name}} </option>
+                                        
+                                    </select>
+                                </div>
+                                <button class="button is-success" (click)="onCreateCategory()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>Crear Categoria</span>
+                                </button>
+                            </div>
+
+                            <button id="save-product-button" class="button is-info" (click)="onCreateProduct()">
+                                <span class="icon is-small">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span>Crear Producto</span>
+                            </button>
+                            
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<delifood-modal-create-category></delifood-modal-create-category>

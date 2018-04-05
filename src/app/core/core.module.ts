@@ -17,10 +17,11 @@ import { TokenInterceptor } from '../utils/interceptors/token.interceptor';
 import { UserService } from '@delifood/services/user.service';
 import { ServerService } from '@delifood/services/server.service';
 import { CategoryService } from '@delifood/services/category.service';
+import { ProductService } from '@delifood/services/product.service';
+import { AuthService } from '@delifood/services/auth.service';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '@delifood/store/reducers';
-import { AuthService } from '@delifood/services/auth.service';
 
 import { LoggedInGuard } from '@delifood/guards/loggedIn.guard';
 import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
@@ -49,6 +50,7 @@ import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
         AuthService,
         UserService,
         CategoryService,
+        ProductService,
         ServerService,
         { 
             provide: HTTP_INTERCEPTORS,

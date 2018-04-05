@@ -33,6 +33,13 @@ export function reducer(state = initialState, action: CategoryActions.All ): Sta
             });
         }
 
+        case CategoryActions.CategoryActionTypes.CREATE_CATEGORY_SUCCESS: {
+
+            return {
+                ...state, categories: [...state.categories, action.payload]
+            }
+        }
+
         default: {
             return state;
         }

@@ -1,0 +1,61 @@
+<div id="create-category-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+
+                        <form [formGroup]="createCategoryForm">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-title">
+                                        Crear Categoria
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div class="field">
+                                            <label class="label">
+                                                Nombre
+                                            </label>
+                                            <div class="control">
+                                                <input class="input" formControlName="name" placeholder="nombre de la categoria">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label class="label">
+                                                Descripción
+                                            </label>
+                                            <div class="control">
+                                                <input class="input" formControlName="description" placeholder="descripcion de la categoria">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label class="label">
+                                                Subir una imagen
+                                            </label>
+                                            <div class="control">
+                                                <div class="file has-name">
+                                                    <label class="file-label">
+                                                        <input class="file-input" (change)="onFileChange($event)" type="file" name="resume">
+                                                        <span class="file-cta">
+                                                            <span class="file-icon">
+                                                                <i class="fas fa-upload"></i>
+                                                            </span>
+                                                            <span class="file-label">
+                                                                Subir una imagen...
+                                                            </span>
+                                                        </span>
+                                                        <span class="file-name">{{filename}}</span>
+                                                    </label>
+                                                </div>
+                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="modal-save-button" class="button is-info" (click)="onSubmit()">Guardar categoria</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="onCloseModal()"></button>
+</div>

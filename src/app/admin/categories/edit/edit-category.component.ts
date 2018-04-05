@@ -89,11 +89,12 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         this.categoryService.editCategory(this.prepareCategory(), this.category.id)
         .takeUntil(this.destroy$)
         .subscribe((response) => {
-
-            console.log(response);
+            
+            this.router.navigate(['/admin/categorias']);
         }, (error) => {
 
             console.log(error);
+            alert(error.error.message);
         });
     }
 
@@ -113,7 +114,6 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
                     this.category = categories.find(category => category.id === params['id']);
                     this.loadFormData();
                 }
-
             });
         });
     }
