@@ -5,6 +5,7 @@ export interface Product {
     category: {
         name: string;
         id: string;
+        slug?: string;
     };
     price: number;
     visible?: boolean;
@@ -12,4 +13,5 @@ export interface Product {
     totalSold?: number;
     created?: Date;
     img?: string;
+    slug?: string;
 }
