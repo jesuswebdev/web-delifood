@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -40,6 +41,7 @@ import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
         RouterModule
     ],
     declarations: [
+        AboutComponent,
         WelcomeComponent,
         LoginComponent,
         RegisterComponent,

@@ -20,6 +20,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
     createProductForm: FormGroup;
     categories: Observable<Category[]>;
+    
+    filename: string = '...';
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -46,12 +48,20 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         });
     }
 
+    onFileChange(event) {
+        
+        if (event.target.files.length > 0) {
+            this.createProductForm.get('img').setValue(event.target.files[0]);
+            this.filename = event.target.files[0].name;
+        }
+    }
+
     ngOnInit(): void {
 
         this.categoryService.getCategories()
         .takeUntil(this.destroy$)
         .subscribe((response) => {
-            console.log(response);
+            
             this.store.dispatch(new CategoryActions.GetCategoriesSuccess(response.data));
         }, (error) => {
 
@@ -104,6 +114,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
             this.onDoneLoading();
             console.log(error);
         });
+    }
+
+    onClickCancel() {
+
+        this.router.navigate(['/admin/comidas']);
     }
 
     ngOnDestroy() {

@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-image">
+        <figure class="image is-4by3">
+            <img [src]="product.img" alt="product image">
+        </figure>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <a [routerLink]="['/comidas', product.slug]">
+                <p class="title is-4">
+                    {{product.name}}
+                </p>
+            </a>
+            <a [routerLink]="['/categorias', product.category.slug]">
+                <p class="subtitle is-6">
+                    #{{product.category.name}}
+                </p>
+            </a>
+
+        </div>
+        <!-- <div class="media">
+            <div class="media-content"> -->
+            <!-- </div>
+        </div> -->
+        <div class="content">
+            {{product.price | currency: "BsF."}}
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="card-footer-item">
+            <button id="details-button" class="button is-white" (click)="onClickDetails(product.slug)">
+                Detalles
+            </button>
+        </div>
+        <div class="card-footer-item">
+            <button id="add-to-cart-button" class="button is-white" (click)="onAddToCart(product)">
+                <span class="icon is-small">
+                    <i class="fas fa-shopping-cart"></i>
+                </span>
+                <span>
+                    Añadir al carrito
+                </span>
+                
+            </button>
+        </div>
+    </div>
+</div>
+

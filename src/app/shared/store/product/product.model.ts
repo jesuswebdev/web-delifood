@@ -11,5 +11,5 @@ export interface Product {
     totalTimesOrdered?: number;
     totalSold?: number;
     created?: Date;
-    picture?: string;
+    img?: string;
 }

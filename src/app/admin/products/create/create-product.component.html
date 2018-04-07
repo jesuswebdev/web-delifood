@@ -31,13 +31,22 @@
                                     <input class="input" formControlName="description" placeholder="Descripcion del producto">
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">
+                            <div class="field" style="margin-bottom: 8px;">
+                                <label for="price" class="label">
                                     Precio
                                 </label>
+                            </div>
+                            <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input" type="number" formControlName="price" placeholder="precio del producto">
+                                    <a class="button is-static">
+                                        Bs F.
+                                    </a>
                                 </div>
+
+                                <div class="control">
+                                    <input class="input" name="price" id="price" type="number" formControlName="price" placeholder="precio del producto" style="max-width: 200px;">
+                                </div>
+
                             </div>
 
                             <div class="field">
@@ -59,15 +68,38 @@
                                 </button>
                             </div>
 
-                            <button id="save-product-button" class="button is-info" (click)="onCreateProduct()">
+                            <div class="field">
+                                <label class="label">
+                                    Subir una imagen
+                                </label>
+                                <div class="control">
+                                    <div class="file has-name">
+                                        <label class="file-label">
+                                            <input class="file-input" (change)="onFileChange($event)" type="file" name="resume">
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Subir una imagen...
+                                                </span>
+                                            </span>
+                                            <span class="file-name">{{filename}}</span>
+                                        </label>
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                            <button id="save-product-button" class="button is-info" [disabled]="!createProductForm.valid" (click)="onCreateProduct()">
                                 <span class="icon is-small">
                                     <i class="fas fa-plus"></i>
                                 </span>
                                 <span>Crear Producto</span>
                             </button>
-                            
-                        </form>
 
+                            <button type="button" class="button is-warning" (click)="onClickCancel()">Cancelar</button>
+                        </form>
                     </div>
                 </div>
             </div>

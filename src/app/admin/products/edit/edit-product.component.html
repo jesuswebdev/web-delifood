@@ -1,1 +1,111 @@
-aaaaaa
+<div class="container">
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+                <h1 class="is-size-1">Modificar Producto</h1>
+            </div>
+        </div>
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-10-mobile is-8-tablet is-half-desktop">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            Modificar Producto
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <form [formGroup]="editProductForm">
+                                <div class="field">
+                                    <label class="label">
+                                        Nombre
+                                    </label>
+                                    <div class="control">
+                                        <input class="input" formControlName="name" placeholder="Nombre del producto">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">
+                                        Descripcion
+                                    </label>
+                                    <div class="control">
+                                        <input class="input" formControlName="description" placeholder="Descripcion del producto">
+                                    </div>
+                                </div>
+                                <div class="field" style="margin-bottom: 8px;">
+                                    <label for="price" class="label">
+                                        Precio
+                                    </label>
+                                </div>
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <a class="button is-static">
+                                            Bs F.
+                                        </a>
+                                    </div>
+    
+                                    <div class="control">
+                                        <input class="input" name="price" id="price" type="number" formControlName="price" placeholder="precio del producto" style="max-width: 200px;">
+                                    </div>
+    
+                                </div>
+    
+                                <div class="field">
+                                    <label class="label">
+                                        Categoria
+                                    </label>
+                                    <div class="select">
+                                        <select formControlName="category">
+                                            <option value="" disabled selected>Elije una categoria</option>
+                                            <option *ngFor="let category of categories | async" [value]="category.id" [selected]="category.id === product.category.id" > {{category.name}} </option>
+                                            
+                                        </select>
+                                    </div>
+                                    <button class="button is-success" (click)="onCreateCategory()">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                        <span>Crear Categoria</span>
+                                    </button>
+                                </div>
+    
+                                <div class="field">
+                                    <label class="label">
+                                        Subir una imagen
+                                    </label>
+                                    <div class="control">
+                                        <div class="file has-name">
+                                            <label class="file-label">
+                                                <input class="file-input" (change)="onFileChange($event)" type="file" name="resume">
+                                                <span class="file-cta">
+                                                    <span class="file-icon">
+                                                        <i class="fas fa-upload"></i>
+                                                    </span>
+                                                    <span class="file-label">
+                                                        Subir una imagen...
+                                                    </span>
+                                                </span>
+                                                <span class="file-name">{{filename}}</span>
+                                            </label>
+                                        </div>
+        
+                                    </div>
+                                </div>
+    
+                                <button id="save-product-button" class="button is-info" (click)="onSaveProduct()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>Guardar Cambios</span>
+                                </button>
+                                
+                            </form>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <delifood-modal-create-category></delifood-modal-create-category>
+    

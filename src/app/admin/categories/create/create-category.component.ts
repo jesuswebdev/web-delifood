@@ -38,6 +38,11 @@ export class CreateCategoryComponent implements OnInit {
         }
     }
 
+    onClickCancel() {
+
+        this.router.navigate(['/admin/categorias']);
+    }
+
     onLoading() {
 
         document.getElementById('save-button').classList.add('is-loading');

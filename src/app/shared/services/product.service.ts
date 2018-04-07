@@ -25,4 +25,9 @@ export class ProductService {
 
         return this.http.post(PRODUCT_ENDPOINT, product);
     }
+
+    public updateProduct(id: string, product: FormData): Observable<any> {
+
+        return this.http.put(PRODUCT_ENDPOINT + '/' + id, product);
+    }
 }

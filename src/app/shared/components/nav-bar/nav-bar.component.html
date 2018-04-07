@@ -16,6 +16,7 @@
             </a>
         </div>
         <div class="navbar-end">
+            <a class="navbar-item navBoton" [routerLink]="['/info']" >Info</a>
             <a class="navbar-item navBoton" *ngFor="let link of links.navEnd" [routerLink]="[link.path]">
                 {{link.name}}
             </a>

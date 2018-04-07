@@ -54,7 +54,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="save-button" class="button is-info" (click)="onSubmit()">Guardar categoria</button>
+                        <button id="save-button" class="button is-info" [disabled]="!createCategoryForm.valid"  (click)="onSubmit()">Guardar categoria</button>
+                        <button type="button" class="button is-warning" (click)="onClickCancel()">Cancelar</button>
                     </div>
                 </div>
             </form>

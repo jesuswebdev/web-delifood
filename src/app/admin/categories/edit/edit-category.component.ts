@@ -103,7 +103,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         this.route.params.takeUntil(this.destroy$)
         .subscribe((params) => {
 
-            this.store.select(fromRoot.selectCategories).takeUntil(this.destroy$)
+            this.store.select(fromRoot.selectCategories)
+            .takeUntil(this.destroy$)
             .subscribe((categories) => {
 
                 if (categories.length === 0) {
