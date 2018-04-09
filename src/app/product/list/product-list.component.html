@@ -1,13 +1,23 @@
 <div class="container">
     <div class="columns is-mobile is-tablet is-desktop is-centered">
         <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-            Barra de busqueda
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input type="text" class="input is-large" placeholder="Buscar una comida">
+                </div>
+                <div class="control">
+                    <a class="button is-warning is-large">
+                        Buscar
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="columns is-mobile is-tablet is-desktop is-centered is-multiline">
+    <div class="columns is-mobile is-tablet is-desktop is-multiline is-centered">
         <div class="column is-10-mobile is-5-tablet is-4-desktop" *ngFor="let product of products | async">
             <delifood-product-card [product]="product"></delifood-product-card>
         </div>
     </div>
 </div>
 
+<delifood-add-to-cart-modal></delifood-add-to-cart-modal>

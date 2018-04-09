@@ -14,6 +14,9 @@
             <a class="navbar-item navBoton" *ngFor="let link of links.navStart" [routerLink]="[link.path]">
                 {{link.name}}
             </a>
+            <a class="navbar-item navBoton" [routerLink]="['/carrito']">
+                <delifood-cart-label></delifood-cart-label>
+            </a>
         </div>
         <div class="navbar-end">
             <a class="navbar-item navBoton" [routerLink]="['/info']" >Info</a>

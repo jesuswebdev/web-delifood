@@ -1,0 +1,37 @@
+<div *ngIf="isActive" [class.is-active]="isActive" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-title">
+                    Eliminar {{product.name}} del carrito
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    <div class="columns">
+                        <div class="column">
+                            <label class="label">
+                                ¿Estás seguro que quieres eliminar {{product.name}} del carrito?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column">
+                            <button class="button is-warning is-pulled-right" (click)="onDismissModal()">
+                                Cancelar
+                            </button>
+                        </div>
+                        <div class="column">
+                            <button class="button is-info is-pulled-left" (click)="onClickRemoveFromCartButton()">
+                                Eliminar del Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="onDismissModal()"></button>
+</div>

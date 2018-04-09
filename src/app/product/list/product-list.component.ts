@@ -24,9 +24,9 @@ export class ProductListComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.productService.getProducts().subscribe((response) => {
+        this.productService.find(true,0,12).subscribe((response) => {
 
-            this.store.dispatch(new ProductActions.GetProductsSuccess(response.data));
+            this.store.dispatch(new ProductActions.GetProductsSuccess(response.data.results));
         }, (error) => {
 
             console.log(error);

@@ -33,15 +33,7 @@
             </button>
         </div>
         <div class="card-footer-item">
-            <button id="add-to-cart-button" class="button is-white" (click)="onAddToCart(product)">
-                <span class="icon is-small">
-                    <i class="fas fa-shopping-cart"></i>
-                </span>
-                <span>
-                    Añadir al carrito
-                </span>
-                
-            </button>
+            <delifood-add-to-cart-button [product]="product"></delifood-add-to-cart-button>
         </div>
     </div>
 </div>
