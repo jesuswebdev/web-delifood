@@ -1,16 +1,13 @@
 import * as SearchActions from './search.actions';
-import { Product } from '@delifood/store/product/product.model';
 
 export interface State {
     terms: string;
-    results: Product[],
-    resultsCount: number;
+    welcomeSearchSubmitted: boolean;
 };
 
 const initialState: State = {
     terms: '',
-    results: [],
-    resultsCount: 0
+    welcomeSearchSubmitted: false
 };
 
 export function reducer(state = initialState, action: SearchActions.All ): State {
@@ -24,12 +21,19 @@ export function reducer(state = initialState, action: SearchActions.All ): State
             }
         }
 
-        case SearchActions.SearchActionTypes.SEARCH_SUCCESS: {
+        case SearchActions.SearchActionTypes.WELCOME_SEARCH_SUBMITTED: {
 
             return {
                 ...state,
-                results: action.payload.products,
-                resultsCount: action.payload.resultsCount
+                welcomeSearchSubmitted: true
+            }
+        }
+
+        case SearchActions.SearchActionTypes.WELCOME_SEARCH_RECEIVED: {
+            
+            return {
+                ...state,
+                welcomeSearchSubmitted: false
             }
         }
 

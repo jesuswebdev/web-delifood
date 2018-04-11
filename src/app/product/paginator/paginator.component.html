@@ -1,0 +1,22 @@
+<div *ngIf="currentPageNumber">
+    <div class="columns is-mobile is-tablet is-desktop">
+        <div class="column is-1-mobile is-3-tablet is-2-desktop"></div>
+        <div class="column is-10-mobile is-6-tablet is-8-desktop">
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+              <a class="pagination-previous" [attr.disabled]="currentPage.hasPrevious ? null : true" (click)="onClickPreviousPage()">Anterior</a>
+              <a class="pagination-next" [attr.disabled]="currentPage.hasNext ? null : true" (click)="onClickNextPage()">Siguiente</a>
+              <ul class="pagination-list">
+                  <li *ngFor="let pageNumber of paginationIndexes">
+                      <a class="pagination-link" [class.is-current]="pageNumber === currentPage.number" [attr.aria-label]="'Pagina ' + pageNumber" (click)="onClickPaginationLink(pageNumber)">{{pageNumber}}</a>
+                  </li>
+              </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="columns is-mobile is-tablet is-desktop is-multiline is-centered">
+        <div class="column is-10-mobile is-5-tablet is-4-desktop" *ngFor="let product of currentPage.products">
+          <delifood-product-card [product]="product"></delifood-product-card>
+        </div>
+    </div>
+</div>

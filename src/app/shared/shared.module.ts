@@ -5,20 +5,29 @@ import { RouterModule } from '@angular/router';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CartLabelComponent } from '../cart/cart-label/cart-label.component';
+import { SearchBarComponent } from '../product/search-bar/search-bar.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         NavBarComponent,
         FooterComponent,
-        CartLabelComponent
+        CartLabelComponent,
+        SearchBarComponent
     ],
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         NavBarComponent,
-        FooterComponent
+        FooterComponent,
+        SearchBarComponent
     ]
 
 })

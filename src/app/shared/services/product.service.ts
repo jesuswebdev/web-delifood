@@ -31,7 +31,7 @@ export class ProductService {
         return this.http.put(PRODUCT_ENDPOINT + '/' + id, product);
     }
 
-    public findByName(name: string, limit?: number, offset?: number, init?: boolean): Observable<any> {
+    public findByName(name: string, init?: boolean, offset?: number, limit?: number): Observable<any> {
 
         return this.http.get(`${PRODUCT_ENDPOINT}?by=name&q=${name}${limit?'&limit='+limit:''}${offset?'&offset='+offset:''}${init?'&init=true':''}`);
     }

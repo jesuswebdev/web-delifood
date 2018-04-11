@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { SearchResults } from '@delifood/store/search/search.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -7,7 +6,8 @@ import { SearchResults } from '@delifood/store/search/search.model';
  */
 export enum SearchActionTypes {
     SEARCH = '[Search] SEARCH',
-    SEARCH_SUCCESS = '[Search] SEARCH_SUCCESS'
+    WELCOME_SEARCH_SUBMITTED = '[Search] WELCOME SEARCH SUBMITTED',
+    WELCOME_SEARCH_RECEIVED = '[Search] WELCOME SEARCH RECEIVED'
 };
 
 /**
@@ -21,10 +21,16 @@ export class Search implements Action {
     constructor(public payload: string) { }
 }
 
-export class SearchSuccess implements Action {
-    readonly type = SearchActionTypes.SEARCH_SUCCESS;
+export class WelcomeSearchSubmitted implements Action {
+    readonly type = SearchActionTypes.WELCOME_SEARCH_SUBMITTED;
 
-    constructor(public payload: SearchResults) { }
+    constructor() { }
+}
+
+export class WelcomeSearchReceived implements Action {
+    readonly type = SearchActionTypes.WELCOME_SEARCH_RECEIVED;
+
+    constructor() {}
 }
 
 /**
@@ -33,4 +39,5 @@ export class SearchSuccess implements Action {
  */
 export type All
                = Search
-               | SearchSuccess;
+               | WelcomeSearchSubmitted
+               | WelcomeSearchReceived;

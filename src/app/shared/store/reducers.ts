@@ -3,6 +3,8 @@ import * as fromUsers from './users/users.reducer';
 import * as fromCategory from './category/category.reducer';
 import * as fromProduct from './product/product.reducer';
 import * as fromCart from './cart/cart.reducer';
+import * as fromSearch from './search/search.reducer';
+import * as fromPaginator from './paginator/paginator.reducer';
 
 export interface State {
     user: fromUser.State;
@@ -10,6 +12,8 @@ export interface State {
     category: fromCategory.State;
     product: fromProduct.State;
     cart: fromCart.State;
+    paginator: fromPaginator.State;
+    search: fromSearch.State;
 }
 
 export const reducers = {
@@ -17,7 +21,9 @@ export const reducers = {
     users: fromUsers.reducer,
     category: fromCategory.reducer,
     product: fromProduct.reducer,
-    cart: fromCart.reducer
+    cart: fromCart.reducer,
+    paginator: fromPaginator.reducer,
+    search: fromSearch.reducer
 };
 
 export const selectUsers = (state: State) => state.users.users;

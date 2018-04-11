@@ -1,0 +1,17 @@
+<form [formGroup]="searchProductForm" (ngSubmit)="onSubmit()">
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <input class="input is-large" formControlName="search" placeholder="Buscar una comida">
+        </div>
+        <div class="control">
+            <button class="button is-warning is-large">
+                <span class="icon is-medium">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="is-hidden-mobile">
+                    Buscar
+                </span>
+            </button>
+        </div>
+    </div>
+</form>
