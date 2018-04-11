@@ -15,6 +15,8 @@ import 'rxjs/add/operator/takeUntil';
 export class SearchBarComponent implements OnInit, OnDestroy {
 
     searchProductForm: FormGroup;
+    isLoading: boolean = false;
+    terms: string = undefined;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -23,6 +25,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         private store: Store<fromRoot.State>,
         private router: Router
     ) {
+
         this.createForm();
     }
 
@@ -34,12 +37,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        
-        if (this.router.url === '/') {
-            this.store.dispatch(new SearchActions.WelcomeSearchSubmitted());
+
+        if (this.searchProductForm.get('search').value != this.terms) {
+            if (this.router.url === '/') {
+                this.store.dispatch(new SearchActions.WelcomeSearchSubmitted());
+            }
+            
+            this.store.dispatch(new SearchActions.Search(this.searchProductForm.get('search').value));
         }
-        
-        this.store.dispatch(new SearchActions.Search(this.searchProductForm.get('search').value));
     }
 
     ngOnInit(): void {
@@ -53,10 +58,18 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             }
 
             if (this.router.url != '/') {
+                this.terms = search.terms;
                 this.searchProductForm.setValue({
                     search: search.terms
                 });
             }
+        });
+
+        this.store.select(state => state.search.isLoading)
+        .takeUntil(this.destroy$)
+        .subscribe((loading) => {
+
+            this.isLoading = loading;
         });
     }
 

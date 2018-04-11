@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromRoot from '@delifood/store/reducers';
 import * as PaginatorActions from '@delifood/store/paginator/paginator.actions';
+import * as SearchActions from '@delifood/store/search/search.actions';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -69,6 +70,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
         
                     this.paginationIndexes = this.totalPages > 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
         
+                    this.store.dispatch(new SearchActions.SearchDoneLoading());
                     this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
                     this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
                 }, error => console.log(error));
@@ -90,11 +92,11 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
 
                     this.paginationIndexes = this.totalPages > 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
 
+                    this.store.dispatch(new SearchActions.SearchDoneLoading());
                     this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
                     this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
                 }, error => console.log(error));
             }
-
         });
     }
 

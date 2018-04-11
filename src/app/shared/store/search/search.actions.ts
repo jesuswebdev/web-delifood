@@ -7,7 +7,9 @@ import { Action } from '@ngrx/store';
 export enum SearchActionTypes {
     SEARCH = '[Search] SEARCH',
     WELCOME_SEARCH_SUBMITTED = '[Search] WELCOME SEARCH SUBMITTED',
-    WELCOME_SEARCH_RECEIVED = '[Search] WELCOME SEARCH RECEIVED'
+    WELCOME_SEARCH_RECEIVED = '[Search] WELCOME SEARCH RECEIVED',
+    SEARCH_IS_LOADING = '[Search] SEARCH IS LOADING',
+    SEARCH_DONE_LOADING = '[Search] SEARCH DONE LOADING'
 };
 
 /**
@@ -33,6 +35,18 @@ export class WelcomeSearchReceived implements Action {
     constructor() {}
 }
 
+export class SearchIsLoading implements Action {
+    readonly type = SearchActionTypes.SEARCH_IS_LOADING;
+     
+    constructor() {}
+}
+
+export class SearchDoneLoading implements Action {
+    readonly type = SearchActionTypes.SEARCH_DONE_LOADING;
+
+    constructor() {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -40,4 +54,6 @@ export class WelcomeSearchReceived implements Action {
 export type All
                = Search
                | WelcomeSearchSubmitted
-               | WelcomeSearchReceived;
+               | WelcomeSearchReceived
+               | SearchIsLoading
+               | SearchDoneLoading;

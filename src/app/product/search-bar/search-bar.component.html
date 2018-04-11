@@ -4,7 +4,7 @@
             <input class="input is-large" formControlName="search" placeholder="Buscar una comida">
         </div>
         <div class="control">
-            <button class="button is-warning is-large">
+            <button class="button is-warning is-large" [class.is-loading]="isLoading">
                 <span class="icon is-medium">
                     <i class="fas fa-search"></i>
                 </span>

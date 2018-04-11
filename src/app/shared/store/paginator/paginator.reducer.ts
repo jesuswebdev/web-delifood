@@ -28,7 +28,7 @@ export function reducer(state = initialState, action: Paginator.All ): State {
                 ...state,
                 currentPage: action.payload,
                 currentPageNumber: action.payload.number,
-                loadedPages: [...state.loadedPages, action.payload]
+                loadedPages: [action.payload]
             };
         }
 
