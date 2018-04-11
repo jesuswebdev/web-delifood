@@ -30,33 +30,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 this.router.navigate(['/comidas']);
             }
         });
-
-        // let body = document.getElementById('delifood-body').style;
-        
-        // body.width                = '100%';
-        // body.position             = 'fixed';
-        // body.minHeight            = '100%';
-        // body.backgroundSize       = 'cover';
-        // body.backgroundImage      = `url('/assets/bg1.jpg')`;
-        // body.backgroundRepeat     = 'no-repeat';
-        // body.backgroundPosition   = 'center center';
-        // body.backgroundAttachment = 'fixed';
     }
 
     ngOnDestroy () {
 
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
-        
-        // let body = document.getElementById('delifood-body').style;
-        
-        // body.width                = '';
-        // body.position             = '';
-        // body.minHeight            = '';
-        // body.backgroundSize       = '';
-        // body.backgroundImage      = '';
-        // body.backgroundRepeat     = '';
-        // body.backgroundPosition   = '';
-        // body.backgroundAttachment = '';
     }
 }
