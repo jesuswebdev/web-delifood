@@ -17,6 +17,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
 
     private paginatorLimit: number = 12;
 
+    foundNothing: boolean = false;
     searchTerms: string = '';
     productsCount: number;
     totalPages: number;
@@ -24,6 +25,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
     currentPage: Page;
     currentPageNumber: number;
     paginationIndexes: number[] = [];
+    isSearch: boolean;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -42,70 +44,111 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
             this.currentPage = paginator.currentPage;
             this.currentPageNumber = paginator.currentPageNumber;
             this.cd.markForCheck();
-        }, error => console.log(error))
+        }, error => console.log(error));
+
+        this.store.select(state => state.search.isSearch)
+        .takeUntil(this.destroy$)
+        .subscribe((isSearch) => { this.isSearch = isSearch });
     }
 
     ngOnInit(): void {
 
-        this.store.select(state => state.search.terms)
-        .takeUntil(this.destroy$)
-        .subscribe((terms) => {
-
-            this.searchTerms = terms;
-
-            if (terms != '') {
-                this.productService.findByName(terms, true, 0, this.paginatorLimit)
-                .takeUntil(this.destroy$)
-                .subscribe((response) => {
-                    
-                    let firstPage: Page = {
-                        products: response.data.results,
-                        number: 1,
-                        hasNext: response.data.count > this.paginatorLimit ? true : false,
-                        hasPrevious: false
-                    }
-        
-                    this.productsCount = response.data.count;
-                    this.totalPages = Math.ceil(response.data.count / this.paginatorLimit);
-        
-                    this.paginationIndexes = this.totalPages > 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
-        
-                    this.store.dispatch(new SearchActions.SearchDoneLoading());
-                    this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
-                    this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
-                }, error => console.log(error));
+        //para mantener el numero de la pagina seleccionada en el paginador cuando le dan pa tras
+        if (this.currentPageNumber != 0) {
+            if (this.totalPages > 3) {
+                if (this.currentPageNumber > 1 && this.currentPageNumber < this.totalPages) {
+                    this.paginationIndexes = [this.currentPageNumber - 1, this.currentPageNumber, this.currentPageNumber + 1];
+                }
+                if (this.currentPageNumber === 1) {
+                    this.paginationIndexes = [1, 2, 3];
+                }
+                if (this.currentPageNumber === this.totalPages) {
+                    this.paginationIndexes = [this.currentPageNumber - 2, this.currentPageNumber - 1, this.currentPageNumber];
+                }
+            }
+            else if (this.totalPages === 2) {
+                this.paginationIndexes = [1, 2];
             }
             else {
-                this.productService.find(true, 0, this.paginatorLimit)
-                .takeUntil(this.destroy$)
-                .subscribe((response) => {
-
-                    let firstPage: Page = {
-                        products: response.data.results,
-                        number: 1,
-                        hasNext: response.data.count > this.paginatorLimit ? true : false,
-                        hasPrevious: false
-                    }
-
-                    this.productsCount = response.data.count;
-                    this.totalPages = Math.ceil(response.data.count / this.paginatorLimit);
-
-                    this.paginationIndexes = this.totalPages > 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
-
-                    this.store.dispatch(new SearchActions.SearchDoneLoading());
-                    this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
-                    this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
-                }, error => console.log(error));
+                this.paginationIndexes = [1];
             }
-        });
+        }
+
+        /**
+         * si cuando inicia el componente, el numero de la pagina es 0, o es una busqueda
+         * entonces hace un llamado a la api para obtener los productos y asi substituir
+         * las paginas cargadas y el numero de pagina seleccionado
+         */
+
+        if (this.currentPageNumber === 0 || this.isSearch) {
+            this.store.select(state => state.search.terms)
+            .takeUntil(this.destroy$)
+            .subscribe((terms) => {
+    
+                this.foundNothing = false;
+                this.searchTerms = terms;
+    
+                if (terms != '') {
+                    this.productService.findByName(terms, true, 0, this.paginatorLimit)
+                    .takeUntil(this.destroy$)
+                    .subscribe((response) => {
+                        
+                        if (response.data.count === 0){
+                            this.foundNothing = true;
+                        }
+                        
+                        let firstPage: Page = {
+                            products: response.data.results,
+                            number: 1,
+                            hasNext: response.data.count > this.paginatorLimit ? true : false,
+                            hasPrevious: false
+                        }
+            
+                        this.productsCount = response.data.count;
+                        this.totalPages = Math.ceil(response.data.count / this.paginatorLimit);
+            
+                        this.paginationIndexes = this.totalPages > 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
+            
+                        this.store.dispatch(new SearchActions.SearchDoneLoading());
+                        this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
+                        this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
+                    }, error => console.log(error));
+                }
+                else {
+                    this.productService.find(true, 0, this.paginatorLimit)
+                    .takeUntil(this.destroy$)
+                    .subscribe((response) => {
+                        
+                        if (response.data.count === 0){
+                            this.foundNothing = true;
+                        }
+    
+                        let firstPage: Page = {
+                            products: response.data.results,
+                            number: 1,
+                            hasNext: response.data.count > this.paginatorLimit ? true : false,
+                            hasPrevious: false
+                        }
+    
+                        this.productsCount = response.data.count;
+                        this.totalPages = Math.ceil(response.data.count / this.paginatorLimit);
+                        this.paginationIndexes = this.totalPages >= 3 ? [1, 2, 3] : this.totalPages > 1 ? [1, 2] : [1];
+    
+                        this.store.dispatch(new SearchActions.SearchDoneLoading());
+                        this.store.dispatch(new PaginatorActions.SetFirstPage(firstPage));
+                        this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
+                    }, error => console.log(error));
+                }
+            });
+        }
     }
 
     onClickPreviousPage() {
 
         if (this.currentPage.hasPrevious) {
-            let previusPageNumber = this.currentPageNumber - 1;
+            let previousPageNumber = this.currentPageNumber - 1;
 
-            this.changePage(previusPageNumber);
+            this.changePage(previousPageNumber);
         }
     }
 
@@ -117,23 +160,20 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
             this.changePage(nextPageNumber);
         }
     }
-    
-    onClickPaginationLink(pageNumber: number) {
-
-        if (pageNumber > this.currentPageNumber) {
-            if (this.totalPages > pageNumber) {
-                this.paginationIndexes = this.paginationIndexes.slice(1).concat(pageNumber + 1);
-            }
-        }
-        if (pageNumber < this.currentPageNumber) {
-            if (pageNumber > 1) {
-                this.paginationIndexes = [pageNumber - 1].concat(this.paginationIndexes.slice(0,1));
-            }
-        }
-        this.changePage(pageNumber);
-    }
 
     changePage(nextPageNumber: number) {
+
+        if (this.totalPages > 3) {
+            if (nextPageNumber > 1 && nextPageNumber < this.totalPages) {
+                this.paginationIndexes = [nextPageNumber - 1, nextPageNumber, nextPageNumber + 1];
+            }
+            if (nextPageNumber === 1) {
+                this.paginationIndexes = [1, 2, 3];
+            }
+            if (nextPageNumber === this.totalPages) {
+                this.paginationIndexes = [nextPageNumber - 2, nextPageNumber - 1, nextPageNumber];
+            }
+        }
 
         if (!this.loadedPages.find(page => page.number === nextPageNumber)){
             
@@ -144,7 +184,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
                 this.productService.findByName(this.searchTerms, false, offset, this.paginatorLimit)
                 .takeUntil(this.destroy$)
                 .subscribe((response) => {
-    
+
                     let loadedPage = {
                         products: response.data,
                         number: nextPageNumber,
@@ -161,7 +201,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
                 this.productService.find(false, offset, this.paginatorLimit)
                 .takeUntil(this.destroy$)
                 .subscribe((response) => {
-    
+                    
                     let loadedPage = {
                         products: response.data,
                         number: nextPageNumber,

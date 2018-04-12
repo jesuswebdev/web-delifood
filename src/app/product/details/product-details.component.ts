@@ -7,6 +7,7 @@ import * as fromRoot from '@delifood/store/reducers';
 import { Store } from '@ngrx/store';
 import { Product } from '@delifood/store/product/product.model';
 import { ProductService } from '@delifood/services/product.service';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: 'product-details.component.html',
@@ -17,6 +18,8 @@ export class ProductDetailsComponent implements OnInit {
 
     product: Product;
     done: boolean = false;
+
+    apiUrl: string = environment.API_URL;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -41,7 +44,7 @@ export class ProductDetailsComponent implements OnInit {
                 
                 if (products.length === 0) {
 
-                    this.productsService.findProductBySlug(params['slug'])
+                    this.productsService.findBySlug(params['slug'])
                     .takeUntil(this.destroy$)
                     .subscribe((response) => {
                         

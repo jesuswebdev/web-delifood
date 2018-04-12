@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -17,7 +16,6 @@ const routes: Routes = [
   { path: 'login', canActivate: [LoggedInGuard], component: LoginComponent },
   { path: 'registro', canActivate: [LoggedInGuard], component: RegisterComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'info', component: AboutComponent },
   { path: '', component: WelcomeComponent },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
 ];

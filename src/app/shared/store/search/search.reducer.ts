@@ -4,12 +4,14 @@ export interface State {
     terms: string;
     welcomeSearchSubmitted: boolean;
     isLoading: boolean;
+    isSearch: boolean;
 };
 
 const initialState: State = {
     terms: '',
     welcomeSearchSubmitted: false,
-    isLoading: false
+    isLoading: false,
+    isSearch: false
 };
 
 export function reducer(state = initialState, action: SearchActions.All ): State {
@@ -20,7 +22,8 @@ export function reducer(state = initialState, action: SearchActions.All ): State
             return {
                 ...state,
                 terms: action.payload,
-                isLoading: true
+                isLoading: true,
+                isSearch: true
             }
         }
 
@@ -52,7 +55,8 @@ export function reducer(state = initialState, action: SearchActions.All ): State
             
             return {
                 ...state,
-                isLoading: false
+                isLoading: false,
+                isSearch: false
             }
         }
 

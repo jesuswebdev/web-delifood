@@ -41,8 +41,8 @@ export class ProductService {
         return this.http.get(`${PRODUCT_ENDPOINT}?init=${init?'true':'false'}${offset?'&offset='+offset:''}${limit?'&limit='+limit:''}`)
     }
 
-    public findProductBySlug(slug: string): Observable<any> {
+    public findBySlug(slug: string): Observable<any> {
 
-        return this.http.get(`${PRODUCT_ENDPOINT}/slug/${slug}`);
+        return this.http.get(`${PRODUCT_ENDPOINT}?by=slug&q=${slug}`);
     }
 }
