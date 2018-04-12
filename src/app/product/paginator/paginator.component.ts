@@ -52,7 +52,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+        
         //para mantener el numero de la pagina seleccionada en el paginador cuando le dan pa tras
         if (this.currentPageNumber != 0) {
             if (this.totalPages > 3) {
@@ -80,11 +80,12 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
          * las paginas cargadas y el numero de pagina seleccionado
          */
 
-        if (this.currentPageNumber === 0 || this.isSearch) {
-            this.store.select(state => state.search.terms)
-            .takeUntil(this.destroy$)
-            .subscribe((terms) => {
-    
+        
+        this.store.select(state => state.search.terms)
+        .takeUntil(this.destroy$)
+        .subscribe((terms) => {
+
+            if (this.currentPageNumber === 0 || this.isSearch) {
                 this.foundNothing = false;
                 this.searchTerms = terms;
     
@@ -139,8 +140,8 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
                         this.store.dispatch(new PaginatorActions.SetSearchResultsCount(response.data.count));
                     }, error => console.log(error));
                 }
-            });
-        }
+            }
+        });
     }
 
     onClickPreviousPage() {

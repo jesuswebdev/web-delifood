@@ -36,8 +36,6 @@ export class ProductDetailsComponent implements OnInit {
         .takeUntil(this.destroy$)
         .subscribe((params) => {
 
-            console.log(params);
-
             this.store.select(fromRoot.selectProducts)
             .takeUntil(this.destroy$)
             .subscribe((products) => {

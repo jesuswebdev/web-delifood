@@ -48,12 +48,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+        
         this.store.select(state => state.search)
         .takeUntil(this.destroy$)
         .subscribe((search) => {
 
-            if (search.welcomeSearchSubmitted) {
+            if (search.welcomeSearchSubmitted && this.router.url != '/') {
                 this.store.dispatch(new SearchActions.WelcomeSearchReceived());
             }
 

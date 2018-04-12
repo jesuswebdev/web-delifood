@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 export class LoginComponent implements OnInit, OnDestroy {
 
     loginForm: FormGroup;
+    isLoading: boolean = false;
 
     hasError: boolean = false;
     errorMessage?: string;
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             password: ['', {
                 validators: [
                     Validators.required,
+                    Validators.pattern(/^[a-zA-Z0-9\._]+$/),
                     Validators.minLength(6)
                 ]
             }]
@@ -51,30 +53,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit () {
         
-        let body = document.getElementById('delifood-body').style;
-        
-        body.width                = '100%';
-        body.position             = 'fixed';
-        body.minHeight            = '100%';
-        body.backgroundSize       = 'cover';
-        body.backgroundImage      = `url('/assets/login-bg.jpg')`;
-        body.backgroundRepeat     = 'no-repeat';
-        body.backgroundPosition   = 'center center';
-        body.backgroundAttachment = 'fixed';
     }
 
     ngOnDestroy () {
-        
-        let body = document.getElementById('delifood-body').style;
-        
-        body.width                = '';
-        body.position             = '';
-        body.minHeight            = '';
-        body.backgroundSize       = '';
-        body.backgroundImage      = '';
-        body.backgroundRepeat     = '';
-        body.backgroundPosition   = '';
-        body.backgroundAttachment = '';
     }
     
     onSubmit() {
@@ -137,4 +118,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             token: response.data.token
         };
     }
+
+    get email() { return this.loginForm.get('email'); }
+    get password() { return this.loginForm.get('password'); }
 }
