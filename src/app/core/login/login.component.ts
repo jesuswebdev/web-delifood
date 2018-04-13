@@ -11,7 +11,8 @@ import * as UserActions from '@delifood/store/user/user.actions';
 import { Store } from '@ngrx/store';
 
 @Component({
-    templateUrl: 'login.component.html'
+    templateUrl: 'login.component.html',
+    changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             password: ['', {
                 validators: [
                     Validators.required,
-                    Validators.pattern(/^[a-zA-Z0-9\._]+$/),
+                    Validators.pattern(/^[a-zA-Z0-9\.\_]+$/),
                     Validators.minLength(6)
                 ]
             }]
@@ -85,15 +86,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     onLoading () {
-
-        document.getElementById('login-button').classList.add('is-loading');
-        this.loginForm.disable();
+        this.isLoading = true;
+        // this.loginForm.disable();
     }
 
     onDoneLoading () {
 
-        document.getElementById('login-button').classList.remove('is-loading');
-        this.loginForm.enable();
+        this.isLoading = false;
+        
+        // this.loginForm.enable();
     }
 
     onClickDeleteError () {

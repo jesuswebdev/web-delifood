@@ -7,6 +7,9 @@ import { UserService } from '@delifood/services/user.service';
 import { ServerResponse } from '@delifood/interfaces/server-response.interface';
 import { RegistrationData } from '@delifood/interfaces/user.interface';
 
+import 'rxjs/add/operator/takeUntil'
+import { Subject } from 'rxjs/Subject';
+
 @Component({
     templateUrl: 'register.component.html'
 })
@@ -14,10 +17,12 @@ import { RegistrationData } from '@delifood/interfaces/user.interface';
 export class RegisterComponent implements OnInit,OnDestroy {
 
     registerForm: FormGroup;
-
-    subscription: Subscription;
+    
     hasError: boolean = false;
     errorMessage?: string;
+
+    isLoading: boolean = false;
+    destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         private fb: FormBuilder,
@@ -32,7 +37,9 @@ export class RegisterComponent implements OnInit,OnDestroy {
         this.registerForm = this.fb.group({
             name: ['', { validators: [ 
                 Validators.required,
-                Validators.pattern(/^[a-zA-Z][a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]{4,64}/)
+                Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\.]+$/),
+                Validators.minLength(4),
+                Validators.maxLength(64)
             ] }],
             email: ['', { validators: [
                 Validators.email,
@@ -40,7 +47,8 @@ export class RegisterComponent implements OnInit,OnDestroy {
             ] }],
             password: ['', { validators: [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(6),
+                Validators.pattern(/^[a-zA-Z0-9\.\_]+$/)
             ] }]
         });
     }
@@ -51,7 +59,9 @@ export class RegisterComponent implements OnInit,OnDestroy {
 
         let userData: RegistrationData = this.prepareRegistration();
         
-        this.subscription = this.userService.register(userData).subscribe(
+        this.userService.register(userData)
+        .takeUntil(this.destroy$)
+        .subscribe(
             (response: ServerResponse) => {
                 if (response.statusCode === 200) {
                     this.onDoneLoading();
@@ -69,15 +79,13 @@ export class RegisterComponent implements OnInit,OnDestroy {
     }
 
     onLoading () {
-
-        document.getElementById('register-button').classList.add('is-loading');
-        this.registerForm.disable();
+        
+        this.isLoading = true;
     }
 
     onDoneLoading () {
-
-        document.getElementById('register-button').classList.remove('is-loading');
-        this.registerForm.enable();
+        
+        this.isLoading = false;
     }
 
     prepareRegistration(): RegistrationData{
@@ -95,34 +103,15 @@ export class RegisterComponent implements OnInit,OnDestroy {
     }
 
     ngOnInit () {
-
-        let body = document.getElementById('delifood-body').style;
-        
-        body.width                = '100%';
-        body.position             = 'fixed';
-        body.minHeight            = '100%';
-        body.backgroundSize       = 'cover';
-        body.backgroundImage      = `url('/assets/bg2.jpg')`;
-        body.backgroundRepeat     = 'no-repeat';
-        body.backgroundPosition   = 'center center';
-        body.backgroundAttachment = 'fixed';
     }
     
     ngOnDestroy(){
 
-        let body = document.getElementById('delifood-body').style;
-        
-        body.width                = '';
-        body.position             = '';
-        body.minHeight            = '';
-        body.backgroundSize       = '';
-        body.backgroundImage      = '';
-        body.backgroundRepeat     = '';
-        body.backgroundPosition   = '';
-        body.backgroundAttachment = '';
-
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+        this.destroy$.next(true);
+        this.destroy$.unsubscribe();
     }
+
+    get name() { return this.registerForm.get('name'); }
+    get email() { return this.registerForm.get('email'); }
+    get password() { return this.registerForm.get('password'); }
 }

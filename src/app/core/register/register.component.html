@@ -1,55 +1,137 @@
-<div class="container">
-    <div class="columns">
-        <div class="column" style="height: 80px"></div>
-    </div>
-    <div class="columns is-mobile is-centered">
-        <div class="column is-half-desktop is-10-mobile is-8-tablet" style="max-width: 480px; min-width: 320px">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        Registro
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <form [formGroup]="registerForm">
-                            <div class="field">
-                                <label class="label">Nombres</label>
-                                <div class="control">
-                                    <input class="input" placeholder="pedro perez" formControlName="name">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label">Correo electrónico</label>
-                                <div class="control">
-                                    <input class="input" placeholder="correo@correo.com" formControlName="email">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label">Contraseña</label>
-                                <div class="control">
-                                    <input class="input" placeholder="contraseña" formControlName="password" type="password">
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <button id="register-button" class="button is-info" [disabled]="!registerForm.valid" (click)="onSubmit()">Registrarme</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <div [hidden]="!hasError">
-                    <article class="message is-danger">
-                        <div class="message-header">
-                            <p>Ocurrió un error</p>
-                            <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+<section style="background-image: url('/assets/bg2.jpg'); min-height: 100vh; background-size: cover; background-position: center center; background-repeat: no-repeat">
+    <div class="container">
+        
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-5-desktop is-10-mobile is-8-tablet">
+                <div class="card" style="margin-top: 50px">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            Registro
                         </div>
-                        <div class="message-body">
-                            {{errorMessage}}
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <form [formGroup]="registerForm">
+                                <div class="field">
+                                    <label class="label">Nombres</label>
+                                    <div class="control has-icons-left has-icons-right">
+                                        <input class="input" [readonly]="isLoading" [class.is-success]="(name.dirty || name.touched) && name.valid" [class.is-danger]="(name.dirty || name.touched) && !name.valid" placeholder="Pedro Perez" formControlName="name">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <div *ngIf="name.dirty || name.touched">
+                                            <span class="icon is-small is-right has-text-success" *ngIf="name.valid">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="icon is-small is-right has-text-warning" *ngIf="!name.valid">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </span>
+                                            <p class="help is-danger" *ngIf="name.errors && name.errors.maxlength">
+                                                El nombre es muy largo
+                                            </p>
+                                            <p class="help is-danger" *ngIf="name.errors && name.errors.pattern">
+                                                El nombre contiene caracteres no permitidos
+                                            </p>
+                                            <p class="help is-danger" *ngIf="name.errors && name.errors.minlength">
+                                                El nombre debe tener un mínimo de 4 caracteres
+                                            </p>
+                                            <p class="help is-danger" *ngIf="name.errors && name.errors.required">
+                                                El nombre no puede quedar vacío
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Correo electrónico</label>
+                                    <div class="control has-icons-left has-icons-right">
+                                        <input class="input" [readonly]="isLoading" [class.is-success]="(email.dirty || email.touched) && email.valid" [class.is-danger]="(email.dirty || email.touched) && !email.valid" placeholder="correo@correo.com" formControlName="email">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <div *ngIf="email.dirty || email.touched">
+                                            <span class="icon is-small is-right has-text-success" *ngIf="email.valid">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="icon is-small is-right has-text-warning" *ngIf="!email.valid">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </span>
+                                            <p class="help is-danger" *ngIf="email.errors && email.errors.required">
+                                                El correo electrónico no puede quedar vacío
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="help is-danger" *ngIf="email.touched && email.errors && email.errors.email">
+                                        El correo electrónico no es válido
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Contraseña</label>
+                                    <div class="control has-icons-left has-icons-right">
+                                        <input class="input" [readonly]="isLoading" [class.is-success]="(password.dirty || password.touched) && password.valid" [class.is-danger]="(password.dirty || password.touched) && !password.valid" placeholder="contraseña" formControlName="password" type="password">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-asterisk"></i>
+                                        </span>
+                                        <div *ngIf="password.dirty || password.touched">
+                                            <span class="icon is-small is-right" *ngIf="password.valid">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="icon is-small is-right" *ngIf="!password.valid">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </span>
+                                            <p class="help is-danger" *ngIf="password.errors && password.errors.required">
+                                                La contraseña no puede quedar vacía
+                                            </p>
+                                            <p class="help is-danger" *ngIf="password.errors && password.errors.minlength">
+                                                La contraseña debe tener un mínimo de 6 caracteres
+                                            </p>
+                                            <p class="help is-danger" *ngIf="password.errors && password.errors.pattern">
+                                                La contraseña contiene caracteres no válidos
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buttons">
+                                    <button class="button is-info is-fullwidth" [class.is-loading]="isLoading" [disabled]="!registerForm.valid" (click)="onSubmit()">Registrarme</button>
+                                </div>
+                            </form>
                         </div>
-                    </article>
+                    </div>
+                    <hr style="margin-top: 0; margin-bottom: 0">
+                    <div class="card-content has-text-centered">
+                        Registrate con:
+                        <button class="button is-link is-fullwidth" style="margin-top:5px">
+                            <span class="icon is-small">
+                                <i class="fab fa-facebook-f"></i>
+                            </span>
+                            <span>
+                                Facebook
+                            </span>
+                        </button>
+                        <button class="button is-danger is-fullwidth" style="margin-top: 10px">
+                            <span class="icon is-small">
+                                <i class="fab fa-google"></i>
+                            </span>
+                            <span>
+                                Google
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div [hidden]="!hasError">
+                        <article class="message is-danger">
+                            <div class="message-header">
+                                <p>Ocurrió un error</p>
+                                <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                            </div>
+                            <div class="message-body">
+                                {{errorMessage}}
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<delifood-footer></delifood-footer>

@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="columns is-mobile is-tablet is-desktop is-centered">
-            <div class="column is-6-desktop is-10-mobile is-8-tablet">
+            <div class="column is-5-desktop is-10-mobile is-8-tablet">
                 <div class="card" style="margin-top: 50px">
                     <div class="card-header">
                         <div class="card-header-title">
@@ -13,46 +13,74 @@
                         <form [formGroup]="loginForm" >
                             <div class="field">
                                 <label class="label">Correo Electrónico</label>
-                                <div class="control has-icons-left" [class.has-icons-right]="(email.dirty || email.touched) && email.valid || email.invalid">
-                                    <input class="input" [class.is-success]="(email.dirty || email.touched) && email.valid" [class.is-danger]="(email.dirty || email.touched) && email.invalid" placeholder="correo@correo.com" formControlName="email">
+                                <div class="control has-icons-left has-icons-right">
+                                    <input class="input" [readonly]="isLoading" [class.is-success]="(email.dirty || email.touched) && email.valid" [class.is-danger]="(email.dirty || email.touched) && !email.valid" placeholder="correo@correo.com" formControlName="email">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
-                                    <span class="icon is-small is-right has-text-success" *ngIf="(email.dirty || email.touched) && email.valid">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                    <span class="icon is-small is-right has-text-warning" *ngIf="(email.dirty || email.touched) && email.invalid">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </span>
+                                    <div *ngIf="email.dirty || email.touched">
+                                        <span class="icon is-small is-right has-text-success" *ngIf="email.valid">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="icon is-small is-right has-text-warning" *ngIf="!email.valid">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                        <p class="help is-danger" *ngIf="!email.valid">
+                                            El correo electrónico introducido no es válido
+                                        </p>
+                                    </div>
                                 </div>
-                                <p class="help is-danger" *ngIf="(email.dirty || email.touched) && email.invalid">
-                                    El correo electrónico introducido no es válido
-                                </p>
                             </div>
 
                             <div class="field">
                                 <label class="label">Contraseña</label>
-                                <div class="control has-icons-left" [class.has-icons-right]="(password.dirty || password.touched) && password.valid || password.invalid">
-                                    <input class="input" [class.is-success]="(password.dirty || password.touched) && password.valid" [class.is-danger]="(password.dirty || password.touched) && password.invalid" placeholder="contraseña" formControlName="password" type="password">
+                                <div class="control has-icons-left has-icons-right">
+                                    <input class="input" [readonly]="isLoading" [class.is-success]="(password.dirty || password.touched) && password.valid" [class.is-danger]="(password.dirty || password.touched) && !password.valid" placeholder="contraseña" formControlName="password" type="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-asterisk"></i>
                                     </span>
-                                    <span class="icon is-small is-right has-text-success" *ngIf="(password.dirty || password.touched) && password.valid">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                    <span class="icon is-small is-right has-text-warning" *ngIf="(password.dirty || password.touched) && password.invalid">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </span>
+                                    <div *ngIf="password.dirty || password.touched">
+                                        <span class="icon is-small is-right has-text-success" *ngIf="password.valid">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="icon is-small is-right has-text-warning" *ngIf="!password.valid">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                        
+                                        <p class="help is-danger" *ngIf="password.errors && password.errors.minlength">
+                                            La contraseña debe tener un mínimo de 6 caracteres
+                                        </p>
+                                        <p class="help is-danger" *ngIf="password.errors && password.errors.pattern">
+                                            La contraseña contiene caracteres no válidos
+                                        </p>
+                                    </div>
                                 </div>
-                                <p class="help is-danger" *ngIf="(password.dirty || password.touched) && password.errors.minlength">
-                                    La contraseña debe tener un mínimo de 6 caracteres
-                                </p>
-                                <p class="help is-danger" *ngIf="(password.dirty || password.touched) && password.errors.pattern">
-                                    La contraseña contiene caracteres no válidos
-                                </p>
                             </div>
-                            <button id="login-button" class="button is-info" (click)="onSubmit()" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+                            <button class="button is-info is-fullwidth" [class.is-loading]="isLoading" (click)="onSubmit()" [disabled]="!loginForm.valid">Iniciar Sesión</button>
                         </form>
+                    </div>
+                    <hr style="margin-top: 0; margin-bottom: 0;">
+                    
+                    <div class="card-content">
+                        <p class="has-text-centered">
+                            También puedes iniciar sesión con:
+                        </p>
+                        <button class="button is-link is-fullwidth" style="margin-top: 5px">
+                            <span class="icon is-small">
+                                <i class="fab fa-facebook-f"></i>
+                            </span>
+                            <span>
+                                Facebook
+                            </span>
+                        </button>
+                        <button class="button is-danger is-fullwidth" style="margin-top: 15px">
+                            <span class="icon is-small">
+                                <i class="fab fa-google"></i>
+                            </span>
+                            <span>
+                                Google
+                            </span>
+                        </button>
                     </div>
                     <div [hidden]="!hasError">
                         <article class="message is-danger">
