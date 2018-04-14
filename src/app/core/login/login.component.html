@@ -3,13 +3,25 @@
     <div class="container">
         <div class="columns is-mobile is-tablet is-desktop is-centered">
             <div class="column is-5-desktop is-10-mobile is-8-tablet">
-                <div class="card" style="margin-top: 50px">
+                <div class="card" style="margin-top: 50px; margin-bottom: 15px;">
                     <div class="card-header">
                         <div class="card-header-title">
                             Iniciar Sesión
                         </div>
                     </div>
                     <div class="card-content">
+                        <div [hidden]="!hasError" style="margin-bottom: 15px;">
+                            <article class="message is-danger">
+                                <div class="message-header">
+                                    <p>Ocurrió un error</p>
+                                    <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
+                                </div>
+                                <div class="message-body">
+                                    {{errorMessage}}
+                                </div>
+                            </article>
+                        </div>
+
                         <form [formGroup]="loginForm" >
                             <div class="field">
                                 <label class="label">Correo Electrónico</label>
@@ -82,19 +94,7 @@
                             </span>
                         </button>
                     </div>
-                    <div [hidden]="!hasError">
-                        <article class="message is-danger">
-                            <div class="message-header">
-                                <p>Ocurrió un error</p>
-                                <button class="delete" aria-label="delete" (click)="onClickDeleteError()"></button>
-                            </div>
-                            <div class="message-body">
-                                {{errorMessage}}
-                            </div>
-                        </article>
-                    </div>
                 </div>
-    
             </div>
         </div>
     </div>
