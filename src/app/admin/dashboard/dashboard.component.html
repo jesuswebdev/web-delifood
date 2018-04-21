@@ -1,87 +1,80 @@
 <div class="container">
 
-    <div class="columns">
-        <div class="column"></div>
-    </div>
-
-    <div class="columns">
-        <div class="column has-text-centered">
-            <h1 class="is-size-1">Panel Administrativo</h1>
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+            <h1 class="is-size-1" style="margin-top:20px">Panel Administrativo</h1>
         </div>
     </div>
 
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        <a [routerLink]="[ '/admin/usuarios' ]">Administrar Usuarios</a>
+    <div class="columns is-mobile is-tablet is-desktop is-centered is-multiline">
+        <div class="column is-10-mobile is-5-tablet is-5-desktop">
+                <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <a [routerLink]="[ '/admin/usuarios' ]">Administrar Usuarios</a>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <a [routerLink]="[ '/admin/usuarios/crear' ]">Crear nuevo usuario</a>
+                            </div>
+                            <div class="content">
+                                <a [routerLink]="[ '/admin/usuarios/buscar' ]">Buscar usuario</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/usuarios/crear' ]">Crear nuevo usuario</a>
-                    </div>
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/usuarios/buscar' ]">Buscar usuario</a>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="column">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        <a [routerLink]="[ '/admin/comidas' ]">Administrar Comidas</a>
+        <div class="column is-10-mobile is-5-tablet is-5-desktop">
+                <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <a [routerLink]="[ '/admin/comidas' ]">Administrar Comidas</a>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <a [routerLink]="[ '/admin/comidas/crear' ]">Crear una nueva comida</a>
+                            </div>
+                            <div class="content">
+                                <a [routerLink]="[ '/admin/comidas/buscar' ]">Buscar una comida</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/comidas/crear' ]">Crear una nueva comida</a>
-                    </div>
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/comidas/buscar' ]">Buscar una comida</a>
-                    </div>
-                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        <a [routerLink]="[ '/admin/categorias' ]">Administrar Categorias</a>
-                    </div>
+            <div class="column is-10-mobile is-5-tablet is-5-desktop">
+                    <div class="card">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <a [routerLink]="[ '/admin/categorias' ]">Administrar Categorias</a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <a [routerLink]="[ '/admin/categorias/crear' ]">Crear una nueva categoria</a>
+                                </div>
+                                <div class="content">
+                                    <a [routerLink]="[ '/admin/categorias/buscar' ]">Buscar una categoria</a>
+                                </div>
+                            </div>
+                        </div>
                 </div>
-                <div class="card-content">
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/categorias/crear' ]">Crear una nueva categoria</a>
+                <div class="column is-10-mobile is-5-tablet is-5-desktop">
+                        <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-title">
+                                        <a [routerLink]="[ '/admin/ordenes' ]">Administrar Ordenes</a>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <a [routerLink]="[ '/admin/ordenes/crear' ]">Crear una nueva orden</a>
+                                    </div>
+                                    <div class="content">
+                                        <a [routerLink]="[ '/admin/ordenes/buscar' ]">Buscar una orden</a>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/categorias/buscar' ]">Buscar una categoria</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        <a [routerLink]="[ '/admin/ordenes' ]">Administrar Ordenes</a>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/ordenes/crear' ]">Crear una nueva orden</a>
-                    </div>
-                    <div class="content">
-                        <a [routerLink]="[ '/admin/ordenes/buscar' ]">Buscar una orden</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

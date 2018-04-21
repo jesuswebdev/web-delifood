@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="min-height: 100vh">
     <div class="columns is-mobile is-tablet is-desktop is-centered">
         <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
             <h1 class="is-size-1">Carrito</h1>
@@ -6,82 +6,110 @@
     </div>
 
     <div *ngIf="cartItems.length > 0">
-    
-    <div class="columns is-mobile is-tablet is-desktop is-centered">
-        <div class="column is-10-mobile is-10-tablet is-10-desktop has-text-centered">
-            <table class="table is-fullwidth is-striped is-hoverable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            Nombre de la comida
-                        </th>
-                        <th>
-                            Cantidad pedida
-                        </th>
-                        <th>
-                            Sub-Total
-                        </th>
-                        <th></th>
-                    </tr>
-                    <tr *ngFor="let item of cartItems; let i = index">
-                        <td>{{i+1}}</td>
-                        <td>{{item.item.name}}</td>
-                        <td>
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-10-mobile is-10-tablet is-10-desktop has-text-centered">
+
+                <div [hidden]="cartDetailsForm.valid">
+                    <div class="notification is-danger">
+                        <div *ngFor="let item of cartDetailsForm.controls.items.controls; let i = index">
+                            <div *ngIf="item.controls.quantity.errors && item.controls.quantity.errors.max">
+                                La cantidad pedida de <strong>{{item.value.item.name}}</strong> no puede exceder de cien (100)
+                            </div>
+                            <div *ngIf="item.controls.quantity.errors && item.controls.quantity.errors.min">
+                                La cantidad pedida de <strong>{{item.value.item.name}}</strong> no puede ser menor que uno (1)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form [formGroup]="cartDetailsForm">
+
+                        <div formArrayName="items">
+                    <table class="table is-fullwidth is-striped is-hoverable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    Nombre de la comida
+                                </th>
+                                <th>
+                                    Cantidad pedida
+                                </th>
+                                <th>
+                                    Sub-Total
+                                </th>
+                                <th></th>
+                            </tr>
+                                <tr *ngFor="let item of cartItems.controls; let i = index" [formGroupName]="i">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.value.item.name}}</td>
+                                    <td>
+                                        
+                                        <input class="input"
+                                        type="number"
+                                        min="1"
+                                        max="100"
+                                        [value]="item.controls.quantity.value"
+                                        (change)="onChangeItemQuantity(item.value)"
+                                        [class.is-danger]="(item.dirty || item.touched) && !item.valid"
+                                        [class.is-success]="(item.dirty || item.touched) && item.valid"
+                                        formControlName="quantity">
+
+                                    </td>
+                                    <td> {{item.value.total}} BsF. </td>
+                                    <td>
+                                        <button class="button is-danger" (click)="onDeleteItemFromCart(item.value)">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                            <span>
+                                                Eliminar
+                                            </span>
+                                        </button>
+                                    </td>
+                                </tr>
                             
-                            <input class="input" type="number" min="1" [(ngModel)]="item.quantity" (keyup)="onChangeItemQuantity(item)" (click)="onChangeItemQuantity(item)" (change)="onChangeItemQuantity(item)">
-                        </td>
-                        <td> {{item.total}} BsF. </td>
-                        <td>
-                            <button class="button is-danger" (click)="onDeleteItemFromCart(item)">
-                                <span class="icon is-small">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                                <span>
-                                    Eliminar
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-                <tfoot></tfoot>
-            </table>
+                        </thead>
+                        <tbody>
+        
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="columns is-mobile is-tablet is-desktop is-centered">
-        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-            Cantidad de Productos: {{totalItems}}
-            Total a pagar: {{totalPayment}} BsF.
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+                Cantidad de Productos: {{totalItems}}
+                Total a pagar: {{totalPayment}} BsF.
+            </div>
         </div>
-    </div>
-    
-    <div class="columns is-mobile is-tablet is-desktop is-centered">
-        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-            <button class="button is-info" (click)="onClickOrder()">
-            <span class="icon is-small">
-                <i class="fas fa-check"></i>
-            </span>
-            <span>
-                Hacer el pedido
-
-            </span>
-            </button>
+        
+        <div class="columns is-mobile is-tablet is-desktop is-centered" style="margin-bottom: 50px">
+            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+                <button class="button is-info" (click)="onClickOrder()" [disabled]="!cartDetailsForm.valid">
+                <span class="icon is-small">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span>
+                    Hacer el pedido
+                </span>
+                </button>
+            </div>
         </div>
-    </div>
     </div>
 
     <div *ngIf="cartItems.length === 0">
-    <div class="columns is-mobile is-tablet is-desktop is-centered">
-        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-            No hay nada en el carrito
+        <div class="columns is-mobile is-tablet is-desktop is-centered">
+            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+                No hay nada en el carrito
+            </div>
         </div>
-    </div>
     </div>
 
 </div>
-
+<delifood-footer></delifood-footer>
 <delifood-remove-from-cart-modal></delifood-remove-from-cart-modal>
+<delifood-send-order-modal></delifood-send-order-modal>

@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'admin', canLoad: [IsAdminGuard], loadChildren: '../admin/admin.module#AdminModule' },
   { path: 'comidas', loadChildren: '../product/product.module#ProductModule' },
   { path: 'carrito', loadChildren: '../cart/cart.module#CartModule' },
+  { path: 'pedidos', loadChildren: '../order/order.module#OrderModule' },
   { path: 'login', canActivate: [LoggedInGuard], component: LoginComponent },
   { path: 'registro', canActivate: [LoggedInGuard], component: RegisterComponent },
   { path: 'logout', component: LogoutComponent },

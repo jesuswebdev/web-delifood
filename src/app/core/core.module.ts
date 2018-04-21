@@ -25,6 +25,7 @@ import { reducers } from '@delifood/store/reducers';
 
 import { LoggedInGuard } from '@delifood/guards/loggedIn.guard';
 import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
+import { OrderService } from '@delifood/services/order.service';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
         UserService,
         CategoryService,
         ProductService,
+        OrderService,
         ServerService,
         { 
             provide: HTTP_INTERCEPTORS,

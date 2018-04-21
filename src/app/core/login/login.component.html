@@ -49,7 +49,7 @@
                                 <div class="control has-icons-left has-icons-right">
                                     <input class="input" [readonly]="isLoading" [class.is-success]="(password.dirty || password.touched) && password.valid" [class.is-danger]="(password.dirty || password.touched) && !password.valid" placeholder="contraseña" formControlName="password" type="password">
                                     <span class="icon is-small is-left">
-                                        <i class="fas fa-asterisk"></i>
+                                        <i class="fas fa-lock"></i>
                                     </span>
                                     <div *ngIf="password.dirty || password.touched">
                                         <span class="icon is-small is-right has-text-success" *ngIf="password.valid">

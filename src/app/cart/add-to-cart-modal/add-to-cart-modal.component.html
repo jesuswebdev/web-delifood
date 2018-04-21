@@ -8,47 +8,96 @@
                 </div>
             </div>
             <div class="card-content">
-                <div class="content">
-                    <div class="columns">
-                        <div class="column">
-                            <label class="label">
-                                {{product.name}}
-                            </label>
+                <div class="content" [hidden]="addToCartForm.valid">
+                    <div class="notification is-danger" [hidden]="(quantity.pristine || quantity.untouched) && quantity.valid">
+                        <div *ngIf="quantity.errors && quantity.errors.min">
+                            La cantidad no puede ser menor que uno (1)
                         </div>
-                        <div class="column is-1">
-                            <label class="label">
-                                x
-                            </label>
+                        <div *ngIf="quantity.errors && quantity.errors.max">
+                            Debe introducir un valor menor que 100
                         </div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input" type="number" min="1" [(ngModel)]="quantity" (click)="onQuantityChange()" (keyup)="onQuantityChange()" (change)="onQuantityChange()"  placeholder="1">
-                                </div>
-                            </div>
+                        <div *ngIf="quantity.errors && quantity.errors.required">
+                            El campo <strong>cantidad</strong> no puede quedar vacío
                         </div>
-                        <div class="column is-3">
-                            <label class="label">
-                                = {{total}} BsF.
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="columns">
-                        <div class="column">
-                            <button class="button is-warning is-pulled-right" (click)="onDismissModal()">
-                                Cancelar
-                            </button>
-                        </div>
-                        <div class="column">
-                            <button class="button is-info is-pulled-left" [disabled]="quantity < 1" (click)="onClickAddToCartButton()">
-                                Añadir al Carrito
-                            </button>
+                        <div *ngIf="quantity.errors && quantity.errors.pattern">
+                            El campo <strong>cantidad</strong> sólo admite números
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>  
+
+                <div class="content" [hidden]="!submitted">
+                        <div class="notification is-success has-text-centered">
+                                <strong>{{product.name}}</strong> se añadió al carrito
+                            </div>
+                </div>
+                    
+                    <div class="content" *ngIf="!submitted">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre de la comida</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input is-static" [value]="product.name">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field">
+                                            <div class="control">
+                                                <form [formGroup]="addToCartForm">
+                                                    <input type="number" min="1" max="100" class="input" [class.is-success]="(quantity.dirty || quantity.touched) && quantity.valid" [class.is-danger]="(quantity.dirty || quantity.touched) && !quantity.valid" formControlName="quantity">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input is-static" [value]="total | currency: 'BsF. '" >
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                        <div class="content">
+
+                            <div class="columns is-mobile is-tablet is-desktop is-centered">
+                                <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+                                    <div class="field is-grouped" *ngIf="!submitted">
+                                        <p class="control" style="margin: auto">
+                                            <button class="button is-warning" type="button" (click)="onDismissModal()">
+                                                Cancelar
+                                            </button>
+                                        </p>
+                                        <p class="control" style="margin: auto">
+                                            <button class="button is-info" type="button" [disabled]="!addToCartForm.valid" (click)="onClickAddToCartButton()">
+                                                Añadir al Carrito
+                                            </button>
+                                        </p>
+                                    </div>
+
+                                    <button class="button is-info" *ngIf="submitted" (click)="onDismissModal()">
+                                        Continuar
+                                    </button>
+                                    
+                                </div>
+                            </div><!-- Columns -->
+                        </div>
+
+                    </div>
+                </div>  
+              
     </div>
     <button class="modal-close is-large" aria-label="close" (click)="onDismissModal()"></button>
 </div>

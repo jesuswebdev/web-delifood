@@ -15,35 +15,5 @@
 <body id="delifood-body">
   <app-root></app-root>
 </body>
-
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function () {
-
-let burger = document.getElementById('navBurger');
-
-burger.addEventListener('click', function () {
-	
-	let target = burger.dataset.target;
-	let $target = document.getElementById(target);
-
-	burger.classList.toggle('is-active');
-	$target.classList.toggle('is-active');
-
-	let buttons = document.getElementsByClassName('navBoton');
-
-	for (let i = 0; i < buttons.length; ++i) {
-		
-		buttons.item(i).addEventListener('click', function(){
-			if (burger.classList.contains('is-active')) {
-				let target = burger.dataset.target;
-				let $target = document.getElementById(target);
-
-				burger.classList.toggle('is-active');
-				$target.classList.toggle('is-active');
-			}
-		});
-	}
-});
-});
-</script>
+<script type="text/javascript">document.addEventListener('DOMContentLoaded',function(){let burger=document.getElementById('navBurger');burger.addEventListener('click',function(){let target=burger.dataset.target;let $target=document.getElementById(target);burger.classList.toggle('is-active');$target.classList.toggle('is-active');let buttons=document.getElementsByClassName('navBoton');for(let i=0;i<buttons.length;++i){buttons.item(i).addEventListener('click',function(){if(burger.classList.contains('is-active')){let target=burger.dataset.target;let $target=document.getElementById(target);burger.classList.toggle('is-active');$target.classList.toggle('is-active')}})}})});</script>
 </html>

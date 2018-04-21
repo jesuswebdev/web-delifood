@@ -26,19 +26,24 @@ export function reducer(state = initialState, action: CartActions.All ): State {
 
         case CartActions.CartActionTypes.ADD_ITEM_TO_CART: {
 
-            if (!state.items.find(item => item.item.id === action.payload.item.id)) {
+            let existingItem = state.items.find(i => i.item._id === action.payload.item._id);
+            let newItems = [];
+            let newItemCount = undefined;
 
-                state.items = [...state.items, action.payload];
-                state.itemCount += 1;
+            if (existingItem) {
+                existingItem.quantity += action.payload.quantity;
+                existingItem.total += action.payload.total;
+                newItems = state.items.filter(item => item.item._id != existingItem.item._id).concat(existingItem);
             }
             else {
-
-                state.items.find(item => item.item.id === action.payload.item.id).quantity += action.payload.quantity;
-                state.items.find(item => item.item.id === action.payload.item.id).total += action.payload.total;
+                newItems = [...state.items, action.payload];
+                newItemCount = state.itemCount += 1;
             }
             
             return { ...state,
-                totalPayment: state.items.reduce((previous: number, current: CartItem) => { return previous + current.total }, 0)
+                itemCount: existingItem ? state.itemCount : newItemCount,
+                items: newItems,
+                totalPayment: newItems.reduce((previous: number, current: CartItem) => { return previous + current.total }, 0)
             }
         }
 
@@ -61,30 +66,32 @@ export function reducer(state = initialState, action: CartActions.All ): State {
         }
 
         case CartActions.CartActionTypes.CHANGE_CART_ITEM_QUANTITY: {
+            
+            let newItems = state.items.map(item => {
 
-            state.items.map(item => {
-
-                if (item.item.id === action.payload.item.id) {
+                if (item.item._id === action.payload.item._id) {
                     item.quantity = action.payload.quantity;
                     item.total = action.payload.quantity * item.item.price;
                 }
+                return item;
             });
-
-            state.totalPayment = state.items.reduce((previous: number, current: CartItem) => {return previous + current.total }, 0);
+            
+            let newPayment = state.items.reduce((previous: number, current: CartItem) => {return previous + current.total }, 0);
 
             return {
-                ...state
+                ...state,
+                items: newItems,
+                totalPayment: newPayment
             };
         }
 
         case CartActions.CartActionTypes.REMOVE_ITEM_FROM_CART: {
-
-            state.items = state.items.filter(item => item.item.id != action.payload);
-            state.itemCount -= 1;
-            state.totalPayment = state.items.reduce((previous: number, current: CartItem) => { return previous + current.total }, 0);
-
+            
             return {
-                ...state
+                ...state,
+                items: state.items.filter(item => item.item._id != action.payload),
+                itemCount: state.itemCount - 1,
+                totalPayment: state.totalPayment - state.items.find(item => item.item._id === action.payload).total
             };
         }
 

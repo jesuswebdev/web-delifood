@@ -5,6 +5,7 @@ import * as fromProduct from './product/product.reducer';
 import * as fromCart from './cart/cart.reducer';
 import * as fromSearch from './search/search.reducer';
 import * as fromPaginator from './paginator/paginator.reducer';
+import * as fromOrder from './order/order.reducer';
 
 export interface State {
     user: fromUser.State;
@@ -14,6 +15,7 @@ export interface State {
     cart: fromCart.State;
     paginator: fromPaginator.State;
     search: fromSearch.State;
+    order: fromOrder.State;
 }
 
 export const reducers = {
@@ -23,7 +25,8 @@ export const reducers = {
     product: fromProduct.reducer,
     cart: fromCart.reducer,
     paginator: fromPaginator.reducer,
-    search: fromSearch.reducer
+    search: fromSearch.reducer,
+    order: fromOrder.reducer
 };
 
 export const selectUsers = (state: State) => state.users.users;

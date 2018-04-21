@@ -1,0 +1,50 @@
+<div *ngIf="active" [class.is-active]="active" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-title">
+                    Confirmar pedido
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="content" [hidden]="!sent">
+                    <div class="notification is-success has-text-centered">
+                        El pedido fue creado con éxito
+                    </div>
+                </div>
+
+                <div class="content" [hidden]="sent">
+                    <p>Cantidad de comidas a pedir: {{cart.products.length}} comida<span *ngIf="cart.products.length > 1">s</span></p>
+                    <p>Total a pagar: {{cart.totalPayment | currency: 'BsF. '}}</p>
+                </div>
+                
+                <div class="content">
+                    <div class="columns is-mobile is-tablet is-desktop is-centered">
+                        <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+                            <div class="field is-grouped" *ngIf="!sent">
+                                <p class="control" style="margin: auto">
+                                    <button class="button is-warning" [class.is-loading]="loading" [disabled]="loading" type="button" (click)="onDismissModal()">
+                                        Cancelar
+                                    </button>
+                                </p>
+                                <p class="control" style="margin: auto">
+                                    <button class="button is-info" [class.is-loading]="loading" [disabled]="loading" type="button" (click)="sendOrder()">
+                                        Hacer el pedido
+                                    </button>
+                                </p>
+                            </div>
+
+                            <button class="button is-info" *ngIf="sent" (click)="onDismissModal()">
+                                Continuar
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="onDismissModal()" [disabled]="loading"></button>
+</div>
+

@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import { CartItem } from '@delifood/store/cart/cart.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'delifood-add-to-cart-modal',
@@ -16,37 +17,73 @@ import { CartItem } from '@delifood/store/cart/cart.model';
 export class AddToCartModalComponent implements OnInit, OnDestroy {
 
     isActive: boolean = false;
+    submitted: boolean = false;
+    addToCartForm: FormGroup;
+    total: number;
+    // product: CartItem;
     product: Product;
-    quantity: number = 0;
-    total: number = 0;
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         private store: Store<fromRoot.State>,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private fb: FormBuilder
     ) {
         this.store.select(state => state.cart.modalIsActive)
         .takeUntil(this.destroy$)
         .subscribe((active) => {
             
             this.isActive = active;
+            if (active === false) {
+                this.submitted = false;
+            }
             this.cd.markForCheck();
         }, error => console.log(error));
 
+        this.createForm();
+    }
+    
+    ngOnInit(): void {
+        
         this.store.select(state => state.cart.tempProduct)
         .takeUntil(this.destroy$)
         .subscribe((product) => {
             
             if (product) {
                 this.product = product;
-                this.quantity = 1;
                 this.total = product.price;
+
+                this.addToCartForm.setValue({
+                    quantity: 1
+                });
+
                 this.cd.markForCheck();
             }
         }, error => console.log(error));
+
+        this.addToCartForm.get('quantity').valueChanges
+        .takeUntil(this.destroy$)
+        .subscribe((qty) => {
+            
+            if (qty < 1 || qty > 100) {
+                this.total = 0;
+                this.cd.markForCheck();
+            }
+            else {
+                if (this.product) {
+                    this.total = qty * this.product.price;
+                    this.cd.markForCheck();
+                }
+            }
+        });
     }
 
-    ngOnInit(): void { }
+    createForm() {
+
+        this.addToCartForm = this.fb.group({
+            quantity: ['', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern(/^[0-9]+$/)]],
+        });
+    }
 
     ngOnDestroy() {
 
@@ -68,17 +105,22 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
         let cartItem: CartItem = {
             item: this.product,
-            quantity: this.quantity,
+            unitPrice: this.product.price,
+            quantity: this.quantity.value,
             total: this.total
         };
 
         this.store.dispatch(new CartActions.AddItemToCart(cartItem));
-        this.onDismissModal();
+        this.submitted = true;
     }
     
     onQuantityChange() {
-        
-        this.total = this.product.price * this.quantity;
+
+        this.addToCartForm.patchValue({
+            total: this.product.price * this.quantity.value
+        });
         this.cd.markForCheck();
     }
+
+    get quantity() { return this.addToCartForm.get('quantity'); }
 }

@@ -22,10 +22,5 @@ export class ProductCardComponent implements OnInit {
         this.router.navigate(['/comidas', slug]);
     }
 
-    onAddToCart(product: Product) {
-
-        console.log(product);
-    }
-
     ngOnInit(): void { }
 }

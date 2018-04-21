@@ -55,7 +55,7 @@ export class RemoveFromCartModalComponent implements OnInit, OnDestroy {
 
     onClickRemoveFromCartButton() {
 
-        this.store.dispatch(new CartActions.RemoveItemFromCart(this.product.id));
+        this.store.dispatch(new CartActions.RemoveItemFromCart(this.product._id));
         this.onDismissModal();
     }
 }

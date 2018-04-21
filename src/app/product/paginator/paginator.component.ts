@@ -123,7 +123,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
                         if (response.data.count === 0){
                             this.foundNothing = true;
                         }
-    
+                        
                         let firstPage: Page = {
                             products: response.data.results,
                             number: 1,
