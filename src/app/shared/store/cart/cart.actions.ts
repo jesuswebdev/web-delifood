@@ -15,7 +15,8 @@ export enum CartActionTypes {
     DISMISS_CART_MODAL = '[Cart] DISMISS_CART_MODAL',
     CHANGE_CART_ITEM_QUANTITY = '[Cart] CHANGE_CART_ITEM_QUANTITY',
     ACTIVATE_REMOVE_ITEM_FROM_CART_MODAL = '[Cart] ACTIVATE_REMOVE_ITEM_FROM_CART_MODAL',
-    DISMISS_REMOVE_ITEM_FROM_CART_MODAL = '[Cart] DISMISS_REMOVE_ITEM_FROM_CART_MODAL'
+    DISMISS_REMOVE_ITEM_FROM_CART_MODAL = '[Cart] DISMISS_REMOVE_ITEM_FROM_CART_MODAL',
+    RESET_CART = '[Cart] RESET CART'
 };
 
 /**
@@ -65,6 +66,12 @@ export class DismissRemoveItemFromCartModal implements Action {
     constructor() {}
 }
 
+export class ResetCart implements Action {
+    readonly type = CartActionTypes.RESET_CART;
+
+    constructor() {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -76,4 +83,5 @@ export type All
                 | DismissCartModal
                 | ChangeCartItemQuantity
                 | ActivateRemoveItemFromCartModal
-                | DismissRemoveItemFromCartModal;
+                | DismissRemoveItemFromCartModal
+                | ResetCart;

@@ -1,1 +1,18 @@
-{{id}}
+<div class="columns is-mobile is-tablet is-desktop is-centered">
+    <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+        <h1 class="is-size-1">Detalles del pedido</h1>
+        <div class="card" *ngIf="order">
+            <div class="card-content">
+                <div class="content">
+                    <p>Estatus del pedido: {{order.status}}</p>
+                    <p>Fecha: {{order.created | date: 'dd/mm/yyyy'}}</p>
+                    <p>Comidas Pedidas: {{order.products.length}}</p>
+                    <ol>
+                        <li *ngFor="let p of order.products">{{p.product.name}} x {{p.quantity}}</li>
+                    </ol>
+                    <p>Total a pagar: {{order.totalPayment | currency: 'BsF. '}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

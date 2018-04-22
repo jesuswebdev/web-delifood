@@ -4,12 +4,14 @@ import { Cart } from '@delifood/store/cart/cart.model';
 
 export interface State {
     sendOrderModalIsActive: boolean;
-    tempOrder: Cart
+    tempOrder: Cart,
+    orders: Order[]
 };
 
 const initialState: State = {
     sendOrderModalIsActive: false,
-    tempOrder: undefined
+    tempOrder: undefined,
+    orders: []
 };
 
 export function reducer(state = initialState, action: OrderActions.All ): State {
@@ -29,6 +31,13 @@ export function reducer(state = initialState, action: OrderActions.All ): State 
                 sendOrderModalIsActive: false,
                 tempOrder: undefined
             }
+        }
+
+        case OrderActions.OrderActionTypes.CREATE_ORDER_SUCCESS: {
+            return {
+                ...state,
+                orders: [...state.orders, action.payload]
+            };
         }
 
         default: {

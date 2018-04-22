@@ -113,6 +113,10 @@ export function reducer(state = initialState, action: CartActions.All ): State {
             };
         }
 
+        case CartActions.CartActionTypes.RESET_CART: {
+
+            return initialState;
+        }
         default: {
             return state;
         }
