@@ -4,8 +4,8 @@
         <div class="card" *ngIf="order">
             <div class="card-content">
                 <div class="content">
-                    <p>Estatus del pedido: {{order.status}}</p>
-                    <p>Fecha: {{order.created | date: 'dd/mm/yyyy'}}</p>
+                    <p>Estatus del pedido: {{order.status.text}}</p>
+                    <p>Fecha: {{order.created | date: 'dd/MM/yyyy'}}</p>
                     <p>Comidas Pedidas: {{order.products.length}}</p>
                     <ol>
                         <li *ngFor="let p of order.products">{{p.product.name}} x {{p.quantity}}</li>

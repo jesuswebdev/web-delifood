@@ -36,7 +36,14 @@ export function reducer(state = initialState, action: OrderActions.All ): State 
         case OrderActions.OrderActionTypes.CREATE_ORDER_SUCCESS: {
             return {
                 ...state,
-                orders: [...state.orders, action.payload]
+                orders: state.orders.concat(action.payload)
+            };
+        }
+
+        case OrderActions.OrderActionTypes.GET_ORDERS_SUCCESS: {
+            return {
+                ...state,
+                orders: action.payload
             };
         }
 

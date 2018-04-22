@@ -1,1 +1,54 @@
-order-list
+<div class="container">
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+            <h1 class="is-size-1">
+                Mis Pedidos
+            </h1>
+        </div>
+    </div>
+
+    <div class="columns is-mobile is-tablet is-desktop is-centered">
+        <div class="column is-10-mobile is-10-tablet is-10-desktop has-text-centered">
+
+            <div *ngIf="foundNothing">
+                <h4 class="is-size-4">No tienes pedidos</h4>
+            </div>
+
+            <table class="table is-fullwidth" *ngIf="orders">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Estatus</th>
+                        <th>Comidas</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders; let i = index">
+                        <td> {{ i+1 }} </td>
+                        <td> {{ order.created | date: 'dd/MM/yyyy' }} </td>
+                        <td> 
+                            <span *ngIf="order.status.code === 0" class="tag is-warning">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 1" class="tag is-success">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 2" class="tag is-danger">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 3" class="tag is-info">{{ order.status.text }}</span>
+
+                        </td>
+                        <td> {{ order.products.length }} </td>
+                        <td> {{ order.totalPayment | currency: 'BsF. ' }} </td>
+                        <td>
+                            <button class="button is-info" (click)="onClickOrderDetails(order._id)">
+                                <span class="icon is-small">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <span>Ver Detalles</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

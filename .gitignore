@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 #private files
-src/environments
+src/environments/*

@@ -9,7 +9,8 @@ import { Order } from '@delifood/store/order/order.model';
 export enum OrderActionTypes {
     ACTIVATE_SEND_ORDER_MODAL = '[Order] ACTIVATE SEND ORDER MODAL',
     DISMIS_SEND_ORDER_MODAL = '[Order] DISMISS SEND ORDER MODAL',
-    CREATE_ORDER_SUCCESS = '[Order] CREATE ORDER SUCCESS'
+    CREATE_ORDER_SUCCESS = '[Order] CREATE ORDER SUCCESS',
+    GET_ORDERS_SUCCESS = '[Order] GET ORDERS SUCCESS'
 };
 
 /**
@@ -35,6 +36,12 @@ export class CreateOrderSuccess implements Action {
     constructor(public payload: Order) {}
 }
 
+export class GetOrdersSuccess implements Action {
+    readonly type = OrderActionTypes.GET_ORDERS_SUCCESS
+
+    constructor(public payload: Order[]){}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -42,4 +49,5 @@ export class CreateOrderSuccess implements Action {
 export type All
                 = ActivateSendOrderModal
                 | DismissSendOrderModal
-                | CreateOrderSuccess;
+                | CreateOrderSuccess
+                | GetOrdersSuccess;

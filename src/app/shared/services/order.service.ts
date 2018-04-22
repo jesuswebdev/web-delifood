@@ -13,4 +13,9 @@ export class OrderService {
 
         return this.http.post(`${ENDPOINT}/orders`, order);
     }
+
+    public getOrders(): Observable<any> {
+
+        return this.http.get(`${ENDPOINT}/orders`);
+    }
 }

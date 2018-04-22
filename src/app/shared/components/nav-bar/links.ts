@@ -20,7 +20,8 @@ export const GUEST_LINKS: NavLinks = {
 
 export const USER_LINKS: NavLinks = {
     navStart: [
-        { path: '/comidas', name: 'Comidas' }
+        { path: '/comidas', name: 'Comidas' },
+        { path: '/pedidos', name: 'Mis Pedidos' }
     ],
     navEnd: [
         { path: '/cuenta', name: 'Mi Cuenta' },
@@ -31,7 +32,8 @@ export const USER_LINKS: NavLinks = {
 export const ADMIN_LINKS: NavLinks = {
     navStart: [
         { path: '/admin/panel', name: 'Panel Administrativo' },
-        { path: '/comidas', name: 'Comidas' }
+        { path: '/comidas', name: 'Comidas' },
+        { path: '/pedidos', name: 'Mis Pedidos' }
     ],
     navEnd: [
         { path: '/cuenta', name: 'Mi Cuenta' },

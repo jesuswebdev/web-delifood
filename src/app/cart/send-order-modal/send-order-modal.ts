@@ -61,8 +61,7 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
                     this.store.dispatch(new CartActions.ResetCart());
                     this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
                     this.cd.markForCheck();
-                    this.router.navigate(['/pedidos', response.data._id])
-                    console.log(response);
+                    this.router.navigate(['/pedidos', response.data._id]);
                 }, 1000);
             }
         }, err => {console.log(err); this.loading = false;});
