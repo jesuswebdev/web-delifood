@@ -25,8 +25,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        console.log(this.apiUrl);
-
         this.route.params.subscribe((params) => {
             
             this.store.select(state => state.order.orders)

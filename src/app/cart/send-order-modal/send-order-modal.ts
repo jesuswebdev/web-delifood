@@ -19,6 +19,7 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     sent: boolean = false;
     active: boolean = false;
+    tempId: string;
 
     products: number;
     payment: number;
@@ -54,15 +55,12 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
 
             if (response.statusCode === 201) {
-
-                setTimeout(() => {
-                    this.loading = false;
-                    this.sent = true;
-                    this.store.dispatch(new CartActions.ResetCart());
-                    this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
-                    this.cd.markForCheck();
-                    this.router.navigate(['/pedidos', response.data._id]);
-                }, 1000);
+                this.loading = false;
+                this.sent = true;
+                this.tempId = response.data._id;
+                this.store.dispatch(new CartActions.ResetCart());
+                this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
+                this.cd.markForCheck();
             }
         }, err => {console.log(err); this.loading = false;});
     }
@@ -70,6 +68,12 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
     onDismissModal() {
         
         this.store.dispatch(new OrderActions.DismissSendOrderModal());
+    }
+
+    onClickContinue() {
+
+        this.onDismissModal();
+        this.router.navigate(['/pedidos', this.tempId]);
     }
 
     ngOnDestroy() {

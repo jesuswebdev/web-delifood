@@ -11,28 +11,31 @@
                             <span *ngIf="order.status.code === 3" class="tag is-info">{{ order.status.text }}</span>
                     <p>Comidas Pedidas: {{order.products.length}}</p>
                     
-                            <article class="media" *ngFor="let p of order.products">
-                                <figure class="media-left" style="margin-bottom: 0">
-                                    <p class="image is-128x128">
-                                        <img [src]="apiUrl + p.product.img" [alt]="p.product.name">
-                                    </p>
-                                </figure>
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <strong>{{ p.product.name }} x {{ p.quantity }}</strong>
-                                            <br>
-                                            {{ p.totalPrice | currency: 'BsF. ' }}
-                                            <br>
-                                            {{ p.product.description }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-
-                    <p>Total a pagar: {{order.totalPayment | currency: 'BsF. '}}</p>
+                    <article class="media" *ngFor="let p of order.products">
+                        <figure class="media-left" style="margin-bottom: 0">
+                            <p class="image is-128x128">
+                                <img [src]="apiUrl + p.product.img" [alt]="p.product.name">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>{{ p.product.name }} x {{ p.quantity }}</strong>
+                                    <br>
+                                    {{ p.totalPrice | currency: 'BsF. ' }}
+                                    <br>
+                                    {{ p.product.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
+            <footer class="card-footer">
+                <a class="card-footer-item">
+                    Total a pagar: {{order.totalPayment | currency: 'BsF. '}}
+                </a>
+            </footer>
         </div>
     </div>
 </div>
