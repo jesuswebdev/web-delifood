@@ -26,6 +26,7 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
     currentPageNumber: number;
     paginationIndexes: number[] = [];
     isSearch: boolean;
+    loading: boolean;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -88,12 +89,15 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
             if (this.currentPageNumber === 0 || this.isSearch) {
                 this.foundNothing = false;
                 this.searchTerms = terms;
+                this.loading = true;
     
                 if (terms != '') {
                     this.productService.findByName(terms, true, 0, this.paginatorLimit)
                     .takeUntil(this.destroy$)
                     .subscribe((response) => {
                         
+                        this.loading = false;
+
                         if (response.data.count === 0){
                             this.foundNothing = true;
                         }
@@ -119,6 +123,8 @@ export class ProductPaginatorComponent implements OnInit, OnDestroy {
                     this.productService.find(true, 0, this.paginatorLimit)
                     .takeUntil(this.destroy$)
                     .subscribe((response) => {
+                        
+                        this.loading = false;
                         
                         if (response.data.count === 0){
                             this.foundNothing = true;

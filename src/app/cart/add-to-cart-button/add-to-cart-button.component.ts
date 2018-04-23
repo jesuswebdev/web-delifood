@@ -15,9 +15,7 @@ export class AddToCartButtonComponent implements OnInit {
 
     constructor(
         private store: Store<fromRoot.State>
-    ) {
-
-    }
+    ) { }
 
     ngOnInit(): void { }
 

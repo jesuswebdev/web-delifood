@@ -29,7 +29,7 @@
                     <tr *ngFor="let order of orders; let i = index">
                         <td> {{ i+1 }} </td>
                         <td> {{ order.created | date: 'dd/MM/yyyy' }} </td>
-                        <td> 
+                        <td>
                             <span *ngIf="order.status.code === 0" class="tag is-warning">{{ order.status.text }}</span>
                             <span *ngIf="order.status.code === 1" class="tag is-success">{{ order.status.text }}</span>
                             <span *ngIf="order.status.code === 2" class="tag is-danger">{{ order.status.text }}</span>

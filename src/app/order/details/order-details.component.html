@@ -1,15 +1,35 @@
 <div class="columns is-mobile is-tablet is-desktop is-centered">
-    <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+    <div class="column is-10-mobile is-8-tablet is-6-desktop has-text-centered">
         <h1 class="is-size-1">Detalles del pedido</h1>
         <div class="card" *ngIf="order">
             <div class="card-content">
                 <div class="content">
-                    <p>Estatus del pedido: {{order.status.text}}</p>
-                    <p>Fecha: {{order.created | date: 'dd/MM/yyyy'}}</p>
+                    <p>Fecha: {{order.created | date: 'dd/MM/yyyy'}}
+                            <span *ngIf="order.status.code === 0" class="tag is-warning">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 1" class="tag is-success">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 2" class="tag is-danger">{{ order.status.text }}</span>
+                            <span *ngIf="order.status.code === 3" class="tag is-info">{{ order.status.text }}</span>
                     <p>Comidas Pedidas: {{order.products.length}}</p>
-                    <ol>
-                        <li *ngFor="let p of order.products">{{p.product.name}} x {{p.quantity}}</li>
-                    </ol>
+                    
+                            <article class="media" *ngFor="let p of order.products">
+                                <figure class="media-left" style="margin-bottom: 0">
+                                    <p class="image is-128x128">
+                                        <img [src]="apiUrl + p.product.img" [alt]="p.product.name">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{ p.product.name }} x {{ p.quantity }}</strong>
+                                            <br>
+                                            {{ p.totalPrice | currency: 'BsF. ' }}
+                                            <br>
+                                            {{ p.product.description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+
                     <p>Total a pagar: {{order.totalPayment | currency: 'BsF. '}}</p>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '@delifood/services/order.service';
+import { AuthService } from '@delifood/services/auth.service';
 
 @Component({
     templateUrl: './cart-details.component.html',
@@ -16,7 +17,6 @@ import { OrderService } from '@delifood/services/order.service';
 })
 export class CartDetailsComponent implements OnInit, OnDestroy {
 
-    // cartItems: CartItem[];
     totalItems: number = 0;
     totalPayment: number = 0;
 
@@ -25,11 +25,14 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
+    loggedIn: boolean;
+
     constructor(
         private store: Store<fromRoot.State>,
         private cd: ChangeDetectorRef,
         private fb: FormBuilder,
-        private orderService: OrderService
+        private orderService: OrderService,
+        private authService: AuthService
     ) {
 
         this.createForm();
@@ -81,11 +84,14 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         
+        this.loggedIn = this.authService.isLoggedIn();
     }
 
     onClickOrder() {
-        
-        this.store.dispatch(new OrderActions.ActivateSendOrderModal(this.prepareOrder()));
+
+        if (this.loggedIn) {
+            this.store.dispatch(new OrderActions.ActivateSendOrderModal(this.prepareOrder()));
+        }
     }
 
     prepareOrder(): Cart {

@@ -4,11 +4,14 @@ import * as fromRoot from '@delifood/store/reducers';
 import { Store } from '@ngrx/store';
 import { Order } from '@delifood/store/order/order.model';
 import { Subject } from 'rxjs/Subject';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './order-details.component.html'
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
+
+    apiUrl: string = environment.API_URL;
 
     order: Order;
 
@@ -21,6 +24,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
+
+        console.log(this.apiUrl);
 
         this.route.params.subscribe((params) => {
             

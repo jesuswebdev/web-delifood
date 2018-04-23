@@ -23,9 +23,10 @@ import { AuthService } from '@delifood/services/auth.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '@delifood/store/reducers';
 
-import { LoggedInGuard } from '@delifood/guards/loggedIn.guard';
 import { IsAdminGuard } from '@delifood/guards/isAdmin.guard';
 import { OrderService } from '@delifood/services/order.service';
+import { IsAuthorizedUserGuard } from '@delifood/guards/isAuthorizedUser.guard';
+import { IsGuestUserGuard } from '@delifood/guards/isGuestUser.guard';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { OrderService } from '@delifood/services/order.service';
             useClass: TokenInterceptor,
             multi: true
         },
-        LoggedInGuard,
+        IsAuthorizedUserGuard,
+        IsGuestUserGuard,
         IsAdminGuard
     ],
 })

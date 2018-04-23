@@ -22,21 +22,27 @@ export class OrderListComponent implements OnInit, OnDestroy {
         private orderService: OrderService,
         private store: Store<fromRoot.State>,
         private router: Router
-    ) { }
+    ) {
+        this.store.select(state => state.order.orders)
+        .takeUntil(this.destroy$)
+        .subscribe((orders: Order[]) => {
+            this.orders = orders;
+        });
+    }
 
     ngOnInit(): void {
 
-        this.orderService.getOrders()
-        .takeUntil(this.destroy$)
-        .subscribe((response) => {
-
-            console.log(response);
-
-            this.foundNothing = response.data === null;
-
-            this.orders = response.data;
-            this.store.dispatch(new OrderActions.GetOrdersSuccess(response.data));
-        }, err => console.log(err));
+        if (this.orders.length === 0) {
+            this.orderService.getOrders()
+            .takeUntil(this.destroy$)
+            .subscribe((response) => {
+                
+                this.foundNothing = response.data === null;
+                
+                this.orders = <Order[]>response.data;
+                this.store.dispatch(new OrderActions.GetOrdersSuccess(response.data));
+            }, err => console.log(err));
+        }
     }
 
     onClickOrderDetails(id: string) {
