@@ -3,12 +3,14 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrateg
 import * as fromRoot from '@delifood/store/reducers';
 import * as OrderActions from '@delifood/store/order/order.actions';
 import * as CartActions from '@delifood/store/cart/cart.actions';
+import * as UserActions from '@delifood/store/user/user.actions';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import { Cart } from '@delifood/store/cart/cart.model';
 import { OrderService } from '@delifood/services/order.service';
 import { Router } from '@angular/router';
+import { UserService } from '@delifood/services/user.service';
 
 @Component({
     selector: 'delifood-send-order-modal',
@@ -32,7 +34,8 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
         private store: Store<fromRoot.State>,
         private orderService: OrderService,
         private cd: ChangeDetectorRef,
-        private router: Router
+        private router: Router,
+        private userService: UserService
     ) {
 
         this.store.select(state => state.order)
@@ -60,6 +63,8 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
                 this.tempId = response.data._id;
                 this.store.dispatch(new CartActions.ResetCart());
                 this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
+                this.userService.setUserOrderStatus(true);
+                this.userService.loadUser();
                 this.cd.markForCheck();
             }
         }, err => {console.log(err); this.loading = false;});

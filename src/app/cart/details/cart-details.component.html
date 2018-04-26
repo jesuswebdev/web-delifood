@@ -11,6 +11,9 @@
                 <div class="notification" *ngIf="!loggedIn">
                     Debes registrarte para poder hacer un pedido
                 </div>
+                <div class="notification" *ngIf="hasPendingOrder">
+                    Ya tienes un pedido pendiente.
+                </div>
 
                 <div [hidden]="cartDetailsForm.valid">
                     <div class="notification is-danger">
@@ -96,7 +99,7 @@
         
         <div class="columns is-mobile is-tablet is-desktop is-centered" style="margin-bottom: 50px">
             <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-                <button class="button is-info" (click)="onClickOrder()" [disabled]="!cartDetailsForm.valid || !loggedIn">
+                <button class="button is-info" (click)="onClickOrder()" [disabled]="!cartDetailsForm.valid || !loggedIn || hasPendingOrder">
                 <span class="icon is-small">
                     <i class="fas fa-check"></i>
                 </span>

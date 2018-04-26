@@ -73,4 +73,26 @@ export class UserService {
 
         return this.http.put(server.USER_ENDPOINT + '/' + user.id, user);
     }
+
+    public setUserOrderStatus(status: boolean) {
+
+        try {
+            let user = JSON.parse(localStorage.getItem('user'));
+            user.hasPendingOrder = status;
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    public hasPendingOrder(): boolean {
+        try {
+            return JSON.parse(localStorage.getItem('user')).hasPendingOrder;
+        }
+        catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
 }

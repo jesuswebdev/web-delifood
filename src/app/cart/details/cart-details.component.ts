@@ -10,6 +10,7 @@ import 'rxjs/add/operator/takeUntil';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '@delifood/services/order.service';
 import { AuthService } from '@delifood/services/auth.service';
+import { UserService } from '@delifood/services/user.service';
 
 @Component({
     templateUrl: './cart-details.component.html',
@@ -26,13 +27,15 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     loggedIn: boolean;
+    hasPendingOrder: boolean;
 
     constructor(
         private store: Store<fromRoot.State>,
         private cd: ChangeDetectorRef,
         private fb: FormBuilder,
         private orderService: OrderService,
-        private authService: AuthService
+        private authService: AuthService,
+        private userService: UserService
     ) {
 
         this.createForm();
@@ -85,11 +88,12 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         
         this.loggedIn = this.authService.isLoggedIn();
+        this.hasPendingOrder = this.userService.hasPendingOrder();
     }
 
     onClickOrder() {
 
-        if (this.loggedIn) {
+        if (this.loggedIn && !this.hasPendingOrder) {
             this.store.dispatch(new OrderActions.ActivateSendOrderModal(this.prepareOrder()));
         }
     }

@@ -8,13 +8,15 @@ export interface State {
          credentials?: {
              email: string;
              password: string;
-         }
+         },
+         hasPendingOrder: boolean;
 };
 
 const initialState: State = {
         name: '',
         email: '',
-        role: ''
+        role: '',
+        hasPendingOrder: false
 };
 
 export function reducer(state = initialState, action: UserActions.All ): State {

@@ -111,12 +111,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     
     private prepareUser (response: ServerResponse) {
-
+        
         return {
             name: response.data.user.name,
             email:response.data.user.email,
             role: response.data.user.role,
-            token: response.data.token
+            token: response.data.token,
+            hasPendingOrder: response.data.user.hasPendingOrder
         };
     }
 
