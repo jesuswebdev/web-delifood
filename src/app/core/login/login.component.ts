@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     loadingFacebook: boolean = false;
     loadingGoogle: boolean = false;
     loadingNormal: boolean = false;
-    // private user: SocialUser;
     
     constructor(
         private userService: UserService,
@@ -63,15 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit () {
-        
-        // this.authService.authState
-        // .takeUntil(this.destroy$)
-        // .subscribe(user => {
-        //     console.log(user);
-        //     this.user = user;
-        // })
-    }
+    ngOnInit () { }
 
     ngOnDestroy () {
 
@@ -92,11 +83,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
             
             this.setUserFromServerResponse(response);
-            this.loadingNormal = false;
         },(error) => {
             
             this.showErrorFromServerResponse(error);
-            this.loadingNormal = false;
         });
     }
 
@@ -114,10 +103,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 .subscribe(response => {
                     
                     this.setUserFromServerResponse(response);
-                    this.loadingFacebook = false;
                 },
                 err => {
-                    this.loadingFacebook = false;
                     this.showErrorFromServerResponse(err);
                 });
             }
@@ -129,17 +116,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     googleLogin() {
 
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
-        .then(
-            user => {
-                console.log(user);
+        .then(user => {
+            if (!this.isLoading) {
+                this.onLoading();
+                this.loadingGoogle = true;
+                
                 this.userService.loginWithGoogle({ token: user.idToken })
                 .takeUntil(this.destroy$)
                 .subscribe(response => {
-                    console.log(response);
-                }, err => console.error(err));
-            },
-            reason => { console.log('rejected', reason); }
-        )
+                    this.setUserFromServerResponse(response);
+                }, err => {
+                    this.showErrorFromServerResponse(err);
+                });
+            }
+        },
+        reason => { console.log('rejected', reason); })
         .catch(err => console.log(err));
     }
 
@@ -150,6 +141,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     onDoneLoading () {
 
         this.isLoading = false;
+        this.loadingFacebook = false;
+        this.loadingGoogle = false;
+        this.loadingNormal = false;
     }
 
     onClickDeleteError () {
