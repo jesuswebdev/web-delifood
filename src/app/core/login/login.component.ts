@@ -87,14 +87,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     onLoading () {
         this.isLoading = true;
-        // this.loginForm.disable();
     }
 
     onDoneLoading () {
 
         this.isLoading = false;
-        
-        // this.loginForm.enable();
     }
 
     onClickDeleteError () {
@@ -116,8 +113,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             name: response.data.user.name,
             email:response.data.user.email,
             role: response.data.user.role,
-            token: response.data.token,
-            hasPendingOrder: response.data.user.hasPendingOrder
+            token: response.data.token
         };
     }
 

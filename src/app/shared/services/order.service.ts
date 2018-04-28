@@ -18,4 +18,13 @@ export class OrderService {
 
         return this.http.get(`${ENDPOINT}/orders`);
     }
+
+    public payWithPayPal() {
+
+    }
+
+    public payWithStripe(order: any): Observable<any> {
+
+        return this.http.post(`${ENDPOINT}/orders/payment/stripe`, order);
+    }
 }

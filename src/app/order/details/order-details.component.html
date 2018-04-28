@@ -4,12 +4,22 @@
         <div class="card" *ngIf="order">
             <div class="card-content">
                 <div class="content">
-                    <p>Fecha: {{order.created | date: 'dd/MM/yyyy'}}
-                            <span *ngIf="order.status.code === 0" class="tag is-warning">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 1" class="tag is-success">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 2" class="tag is-danger">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 3" class="tag is-info">{{ order.status.text }}</span>
+                    <p>
+                        Fecha: {{order.created | date: 'dd/MM/yyyy'}}
+                    </p>
+                    <p>
+                        Metodo de Pago: 
+                        <span class="icon is-medium" *ngIf="order.paymentProcessor === 'stripe'">
+                            <i class="fab fa-2x fa-cc-stripe"></i>
+                        </span>
+                        <span class="icon is-medium" *ngIf="order.paymentProcessor === 'paypal'">
+                            <i class="fab fa-2x fa-cc-paypal"></i>
+                        </span>
+                    </p>
                     <p>Comidas Pedidas: {{order.products.length}}</p>
+                    <p>
+                        Total: {{order.totalPayment | currency: 'BsF. '}}
+                    </p>
                     
                     <article class="media" *ngFor="let p of order.products">
                         <figure class="media-left" style="margin-bottom: 0">
@@ -31,11 +41,6 @@
                     </article>
                 </div>
             </div>
-            <footer class="card-footer">
-                <a class="card-footer-item">
-                    Total a pagar: {{order.totalPayment | currency: 'BsF. '}}
-                </a>
-            </footer>
         </div>
     </div>
 </div>

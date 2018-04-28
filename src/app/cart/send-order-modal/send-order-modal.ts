@@ -11,24 +11,28 @@ import { Cart } from '@delifood/store/cart/cart.model';
 import { OrderService } from '@delifood/services/order.service';
 import { Router } from '@angular/router';
 import { UserService } from '@delifood/services/user.service';
+import { environment } from 'environments/environment.prod';
 
 @Component({
     selector: 'delifood-send-order-modal',
-    templateUrl: './send-order-modal.component.html'
+    templateUrl: './send-order-modal.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SendOrderModalComponent implements OnInit, OnDestroy {
 
-    loading: boolean = false;
     sent: boolean = false;
     active: boolean = false;
     tempId: string;
 
     products: number;
     payment: number;
+    processingPayment: boolean;
 
     cart: Cart;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
+
+    handler: any;
 
     constructor(
         private store: Store<fromRoot.State>,
@@ -44,30 +48,73 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
 
             this.active = order.sendOrderModalIsActive;
             this.cart = order.tempOrder;
+            this.cd.markForCheck();
         }, err => console.log(err));
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+
+        this.handler = StripeCheckout.configure({
+            key: environment.stripeKey,
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: token => {
+
+                this.processingPayment = true;
+                this.cd.markForCheck();
+
+                let order = {
+                    order: this.cart,
+                    token: token
+                };
+
+                this.orderService.payWithStripe(order).subscribe(response => {
+                    
+                    this.processingPayment = false;
+                    this.sent = true;
+                    this.tempId = response.data._id;
+                    this.store.dispatch(new CartActions.ResetCart());
+                    this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
+                    this.cd.markForCheck();
+                }, err => {
+
+                    this.processingPayment = false;
+                });
+            }
+        });
+    }
+
+    payWithStripe() {
+
+        this.handler.open({
+            name: 'Delifood',
+            description: 'test payment',
+            amount: this.cart.totalPayment * 100
+        });
+    }
+
+    payWithPayPal() {
+
+    }
 
     sendOrder() {
 
-        this.loading = true;
+        // this.loading = true;
 
-        this.orderService.sendOrder(this.cart)
-        .takeUntil(this.destroy$)
-        .subscribe((response) => {
+        // this.orderService.sendOrder(this.cart)
+        // .takeUntil(this.destroy$)
+        // .subscribe((response) => {
 
-            if (response.statusCode === 201) {
-                this.loading = false;
-                this.sent = true;
-                this.tempId = response.data._id;
-                this.store.dispatch(new CartActions.ResetCart());
-                this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
-                this.userService.setUserOrderStatus(true);
-                this.userService.loadUser();
-                this.cd.markForCheck();
-            }
-        }, err => {console.log(err); this.loading = false;});
+        //     if (response.statusCode === 201) {
+        //         this.loading = false;
+        //         this.sent = true;
+        //         this.tempId = response.data._id;
+        //         this.store.dispatch(new CartActions.ResetCart());
+        //         this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
+        //    
+        //         this.cd.markForCheck();
+        //     }
+        // }, err => {console.log(err); this.loading = false;});
     }
 
     onDismissModal() {

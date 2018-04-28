@@ -19,7 +19,7 @@
                     <tr>
                         <th>#</th>
                         <th>Fecha</th>
-                        <th>Estatus</th>
+                        <th>Método de Pago</th>
                         <th>Comidas</th>
                         <th>Total</th>
                         <th></th>
@@ -30,11 +30,12 @@
                         <td> {{ i+1 }} </td>
                         <td> {{ order.created | date: 'dd/MM/yyyy' }} </td>
                         <td>
-                            <span *ngIf="order.status.code === 0" class="tag is-warning">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 1" class="tag is-success">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 2" class="tag is-danger">{{ order.status.text }}</span>
-                            <span *ngIf="order.status.code === 3" class="tag is-info">{{ order.status.text }}</span>
-
+                            <span class="icon is-medium" *ngIf="order.paymentProcessor === 'stripe'">
+                                <i class="fab fa-2x fa-cc-stripe"></i>
+                            </span>
+                            <span class="icon is-medium" *ngIf="order.paymentProcessor === 'paypal'">
+                                <i class="fab fa-2x fa-cc-paypal"></i>
+                            </span>
                         </td>
                         <td> {{ order.products.length }} </td>
                         <td> {{ order.totalPayment | currency: 'BsF. ' }} </td>

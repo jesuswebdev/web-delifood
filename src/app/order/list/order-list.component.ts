@@ -26,6 +26,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
         this.store.select(state => state.order.orders)
         .takeUntil(this.destroy$)
         .subscribe((orders: Order[]) => {
+            
             this.orders = orders;
         });
     }

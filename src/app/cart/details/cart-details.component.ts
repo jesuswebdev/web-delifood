@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@ang
 import { OrderService } from '@delifood/services/order.service';
 import { AuthService } from '@delifood/services/auth.service';
 import { UserService } from '@delifood/services/user.service';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './cart-details.component.html',
@@ -27,7 +28,6 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     loggedIn: boolean;
-    hasPendingOrder: boolean;
 
     constructor(
         private store: Store<fromRoot.State>,
@@ -88,12 +88,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         
         this.loggedIn = this.authService.isLoggedIn();
-        this.hasPendingOrder = this.userService.hasPendingOrder();
     }
 
     onClickOrder() {
 
-        if (this.loggedIn && !this.hasPendingOrder) {
+        if (this.loggedIn) {
             this.store.dispatch(new OrderActions.ActivateSendOrderModal(this.prepareOrder()));
         }
     }

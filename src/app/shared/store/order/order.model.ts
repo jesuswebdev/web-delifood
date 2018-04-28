@@ -16,7 +16,7 @@ export interface Order {
     totalPayment: number;
     _id: string;
     user: string;
-    status: string;
     created: Date;
-    approved?: Date;
+    paymendId: string;
+    paymentProcessor: string;
 }
