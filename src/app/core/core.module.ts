@@ -28,6 +28,23 @@ import { OrderService } from '@delifood/services/order.service';
 import { IsAuthorizedUserGuard } from '@delifood/guards/isAuthorizedUser.guard';
 import { IsGuestUserGuard } from '@delifood/guards/isGuestUser.guard';
 
+import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, LoginOpt } from 'angularx-social-login';
+import { environment } from 'environments/environment';
+
+const googleLoginOptions: LoginOpt = {
+    scope: 'profile email'
+}
+
+let config = new AuthServiceConfig([
+    {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider(environment.facebookId)
+    },
+    {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider(environment.googleId, googleLoginOptions)
+    }
+]);
 
 @NgModule({
     imports: [
@@ -36,7 +53,8 @@ import { IsGuestUserGuard } from '@delifood/guards/isGuestUser.guard';
         SharedModule,
         ReactiveFormsModule,
         HttpClientModule,
-        StoreModule.forRoot(reducers)
+        StoreModule.forRoot(reducers),
+        SocialLoginModule.initialize(config)
     ],
     exports: [
         RouterModule

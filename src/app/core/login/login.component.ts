@@ -9,6 +9,9 @@ import { LoginCredentials } from '@delifood/interfaces/user.interface';
 import * as fromRoot from '@delifood/store/reducers';
 import * as UserActions from '@delifood/store/user/user.actions';
 import { Store } from '@ngrx/store';
+import { AuthService, FacebookLoginProvider, SocialUser, GoogleLoginProvider } from 'angularx-social-login';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     templateUrl: 'login.component.html',
@@ -22,12 +25,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     hasError: boolean = false;
     errorMessage?: string;
+
+    destroy$: Subject<boolean> = new Subject<boolean>();
+
+    loadingFacebook: boolean = false;
+    loadingGoogle: boolean = false;
+    loadingNormal: boolean = false;
+    // private user: SocialUser;
     
     constructor(
         private userService: UserService,
         private fb: FormBuilder,
         private store: Store<fromRoot.State>,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ){
         
         this.createForm();
@@ -54,35 +65,82 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit () {
         
+        // this.authService.authState
+        // .takeUntil(this.destroy$)
+        // .subscribe(user => {
+        //     console.log(user);
+        //     this.user = user;
+        // })
     }
 
     ngOnDestroy () {
+
+        this.destroy$.next(true);
+        this.destroy$.unsubscribe();
     }
     
     onSubmit() {
 
         this.hasError = false;
         this.onLoading();
+        this.loadingNormal = true;
         
         let credentials: LoginCredentials = this.getLoginCredentials();
 
         this.userService.login(credentials)
+        .takeUntil(this.destroy$)
         .subscribe((response) => {
-
-            let user = this.prepareUser(response);
-            localStorage.setItem('user', JSON.stringify(user));
-            this.store.dispatch(new UserActions.LoginSuccess(user));
-            let destination = user.role === 'admin' ? '/admin/panel' : '/';
-            this.onDoneLoading();
-            this.router.navigate([destination]);
+            
+            this.setUserFromServerResponse(response);
+            this.loadingNormal = false;
         },(error) => {
-        
-            this.hasError = true;
-            this.onDoneLoading();
-            this.errorMessage = error.status === 0 ? 
-                'No se pudo conectar con el servidor' :
-                error.error.message; 
+            
+            this.showErrorFromServerResponse(error);
+            this.loadingNormal = false;
         });
+    }
+
+    facebookLogin() {
+        
+        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
+        .then(user => {
+
+            if (!this.isLoading) {
+                this.onLoading();
+                this.loadingFacebook = true;
+
+                this.userService.loginWithFacebook({ token: user.authToken })
+                .takeUntil(this.destroy$)
+                .subscribe(response => {
+                    
+                    this.setUserFromServerResponse(response);
+                    this.loadingFacebook = false;
+                },
+                err => {
+                    this.loadingFacebook = false;
+                    this.showErrorFromServerResponse(err);
+                });
+            }
+        },
+        reason => { console.log('rejected', reason); })
+        .catch(err => console.log(err));
+    }
+
+    googleLogin() {
+
+        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
+        .then(
+            user => {
+                console.log(user);
+                this.userService.loginWithGoogle({ token: user.idToken })
+                .takeUntil(this.destroy$)
+                .subscribe(response => {
+                    console.log(response);
+                }, err => console.error(err));
+            },
+            reason => { console.log('rejected', reason); }
+        )
+        .catch(err => console.log(err));
     }
 
     onLoading () {
@@ -105,6 +163,25 @@ export class LoginComponent implements OnInit, OnDestroy {
             email: this.loginForm.get('email').value,
             password: this.loginForm.get('password').value
         };
+    }
+
+    private setUserFromServerResponse (response) {
+
+        let user = this.prepareUser(response);
+        localStorage.setItem('user', JSON.stringify(user));
+        this.store.dispatch(new UserActions.LoginSuccess(user));
+        let destination = user.role === 'admin' ? '/admin/panel' : '/';
+        this.onDoneLoading();
+        this.router.navigate([destination]);
+    }
+
+    private showErrorFromServerResponse (error) {
+
+        this.hasError = true;
+        this.onDoneLoading();
+        this.errorMessage = error.status === 0 ? 
+            'No se pudo conectar con el servidor' :
+            error.error.message;
     }
     
     private prepareUser (response: ServerResponse) {

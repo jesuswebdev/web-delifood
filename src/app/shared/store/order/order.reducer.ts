@@ -36,7 +36,7 @@ export function reducer(state = initialState, action: OrderActions.All ): State 
         case OrderActions.OrderActionTypes.CREATE_ORDER_SUCCESS: {
             return {
                 ...state,
-                orders: state.orders.length === 0 ? [action.payload] : [...state.orders, action.payload]
+                orders: state.orders && state.orders.length > 0 ? [...state.orders, action.payload] : [action.payload]
             };
         }
 

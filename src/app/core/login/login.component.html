@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="button is-info is-fullwidth" [class.is-loading]="isLoading" (click)="onSubmit()" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+                            <button class="button is-info is-fullwidth" [class.is-loading]="loadingNormal" (click)="onSubmit()" [disabled]="!loginForm.valid || isLoading">Iniciar Sesión</button>
                         </form>
                     </div>
                     <hr style="margin-top: 0; margin-bottom: 0;">
@@ -77,7 +77,7 @@
                         <p class="has-text-centered">
                             También puedes iniciar sesión con:
                         </p>
-                        <button class="button is-link is-fullwidth" style="margin-top: 5px">
+                        <button class="button is-link is-fullwidth" [class.is-loading]="loadingFacebook" [disabled]="isLoading" style="margin-top: 5px" (click)="facebookLogin()">
                             <span class="icon is-small">
                                 <i class="fab fa-facebook-f"></i>
                             </span>
@@ -85,7 +85,7 @@
                                 Facebook
                             </span>
                         </button>
-                        <button class="button is-danger is-fullwidth" style="margin-top: 15px">
+                        <button class="button is-danger is-fullwidth" [class.is-loading]="loadingGoogle" [disabled]="isLoading" style="margin-top: 15px" (click)="googleLogin()">
                             <span class="icon is-small">
                                 <i class="fab fa-google"></i>
                             </span>

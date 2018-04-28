@@ -73,4 +73,14 @@ export class UserService {
 
         return this.http.put(server.USER_ENDPOINT + '/' + user.id, user);
     }
+
+    public loginWithFacebook (token: { token: string }): Observable<any> {
+
+        return this.http.post(`${server.USER_ENDPOINT}/login/facebook`, token);
+    }
+
+    public loginWithGoogle (token: { token: string }): Observable<any> {
+        
+        return this.http.post(`${server.USER_ENDPOINT}/login/google`, token);
+    }
 }

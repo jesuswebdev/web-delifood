@@ -11,7 +11,7 @@ import { Cart } from '@delifood/store/cart/cart.model';
 import { OrderService } from '@delifood/services/order.service';
 import { Router } from '@angular/router';
 import { UserService } from '@delifood/services/user.service';
-import { environment } from 'environments/environment.prod';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'delifood-send-order-modal',
@@ -68,7 +68,9 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
                     token: token
                 };
 
-                this.orderService.payWithStripe(order).subscribe(response => {
+                this.orderService.payWithStripe(order)
+                .takeUntil(this.destroy$)
+                .subscribe(response => {
                     
                     this.processingPayment = false;
                     this.sent = true;
@@ -95,26 +97,6 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
 
     payWithPayPal() {
 
-    }
-
-    sendOrder() {
-
-        // this.loading = true;
-
-        // this.orderService.sendOrder(this.cart)
-        // .takeUntil(this.destroy$)
-        // .subscribe((response) => {
-
-        //     if (response.statusCode === 201) {
-        //         this.loading = false;
-        //         this.sent = true;
-        //         this.tempId = response.data._id;
-        //         this.store.dispatch(new CartActions.ResetCart());
-        //         this.store.dispatch(new OrderActions.CreateOrderSuccess(response.data));
-        //    
-        //         this.cd.markForCheck();
-        //     }
-        // }, err => {console.log(err); this.loading = false;});
     }
 
     onDismissModal() {

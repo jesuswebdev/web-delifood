@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '@delifood/services/user.service';
+import { AuthService } from 'angularx-social-login';
 
 
 
@@ -11,10 +12,18 @@ import { UserService } from '@delifood/services/user.service';
 
 export class LogoutComponent implements OnInit {
 
-    constructor (private userService: UserService, private router: Router) {}
+    constructor (
+        private userService: UserService,
+        private router: Router,
+        private authService: AuthService
+    ) {}
 
     ngOnInit(): void {
+        
         this.userService.logout();
-        setTimeout(()=>{this.router.navigate(['/']);},1000);        
+        this.authService.signOut().then(
+            () => { console.log('signed out');this.router.navigate(['/']); },
+            () => { console.log('rejected');this.router.navigate(['/']); }
+        ).catch(err => console.log(err));      
     }
 }
