@@ -48,3 +48,6 @@ Thumbs.db
 #private files
 src/environments/*
 ssl
+
+#other
+package-lock.json

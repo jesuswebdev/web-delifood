@@ -46,6 +46,10 @@ let config = new AuthServiceConfig([
     }
 ]);
 
+export function provideConfig() {
+    return config;
+}
+
 @NgModule({
     imports: [
         CommonModule,
@@ -54,7 +58,7 @@ let config = new AuthServiceConfig([
         ReactiveFormsModule,
         HttpClientModule,
         StoreModule.forRoot(reducers),
-        SocialLoginModule.initialize(config)
+        SocialLoginModule
     ],
     exports: [
         RouterModule
@@ -80,7 +84,11 @@ let config = new AuthServiceConfig([
         },
         IsAuthorizedUserGuard,
         IsGuestUserGuard,
-        IsAdminGuard
+        IsAdminGuard,
+        {
+            provide: AuthServiceConfig,
+            useFactory: provideConfig
+        }
     ],
 })
 export class CoreModule {
