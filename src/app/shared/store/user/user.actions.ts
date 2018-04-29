@@ -9,6 +9,8 @@ export enum UserActionTypes {
     LOGIN = '[User] Login',
     LOGIN_SUCCESS = '[User] Login Success',
     LOGOUT = '[User] Logout',
+    ACTIVATE_LOGOUT_MODAL = '[User] Activate Logout Modal',
+    DISMISS_LOGOUT_MODAL = '[User] Dismiss Logout Modal',
     LOAD_USER = '[User] Load User'
 };
 
@@ -39,6 +41,18 @@ export class LoadUser implements Action {
     constructor(public payload: User) {}
 }
 
+export class ActivateLogoutModal implements Action {
+    readonly type = UserActionTypes.ACTIVATE_LOGOUT_MODAL;
+
+    constructor() { }
+}
+
+export class DismissLogoutModal implements Action {
+    readonly type = UserActionTypes.DISMISS_LOGOUT_MODAL;
+
+    constructor() { }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -47,4 +61,6 @@ export type All
                 = Login
                 | LoginSuccess
                 | Logout
-                | LoadUser;
+                | LoadUser
+                | ActivateLogoutModal
+                | DismissLogoutModal;

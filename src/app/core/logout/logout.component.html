@@ -1,1 +1,28 @@
-Cerrando sesión...
+<div *ngIf="active" [class.is-active]="active" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-title">
+                    Cerrar Sesión
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    ¿Está seguro que quiere cerrar la sesión?
+                </div>
+                <div class="content">
+                    <div class="buttons">
+                        <button class="button is-info" [class.is-loading]="isLoading" [disabled]="isLoading" (click)="onConfirmLogout()">Confirmar</button>
+                        <button class="button is-warning" [class.is-loading]="isLoading" [disabled]="isLoading" (click)="onDismissModal()">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="onDismissModal()" [disabled]="loading"></button>
+</div>
+
+    

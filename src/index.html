@@ -16,6 +16,4 @@
   <app-root></app-root>
 </body>
 <script src="https://checkout.stripe.com/checkout.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-<script type="text/javascript">document.addEventListener('DOMContentLoaded',function(){let burger=document.getElementById('navBurger');let h=new Hammer(burger);h.on('tap press',()=>{burger.classList.toggle('is-active');document.getElementById(burger.dataset.target).classList.toggle('is-active')});Hammer.each(document.getElementsByClassName('navBoton'),(button,i)=>{let b={};b[i]=new Hammer(button);b[i].on('tap press',()=>{if(burger.classList.contains('is-active')){burger.classList.toggle('is-active');document.getElementById(burger.dataset.target).classList.toggle('is-active')}})})});</script>
 </html>

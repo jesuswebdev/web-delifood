@@ -1,22 +1,23 @@
 import * as UserActions from './user.actions';
 
 export interface State {
-         name: string;
-         email: string;
-         role: string;
-         token?: string;
-         credentials?: {
-             email: string;
-             password: string;
-         },
-         hasPendingOrder: boolean;
+    name: string;
+    email: string;
+    role: string;
+    token?: string;
+    credentials?: {
+        email: string;
+        password: string;
+    },
+    logoutModalIsActive: boolean;
+
 };
 
 const initialState: State = {
-        name: '',
-        email: '',
-        role: '',
-        hasPendingOrder: false
+    name: '',
+    email: '',
+    role: 'guest',
+    logoutModalIsActive: false
 };
 
 export function reducer(state = initialState, action: UserActions.All ): State {
@@ -45,6 +46,22 @@ export function reducer(state = initialState, action: UserActions.All ): State {
         case UserActions.UserActionTypes.LOAD_USER: {
 
             return Object.assign({}, state, action.payload);
+        }
+
+        case UserActions.UserActionTypes.ACTIVATE_LOGOUT_MODAL: {
+            
+            return {
+                ...state,
+                logoutModalIsActive: true
+            };
+        }
+
+        case UserActions.UserActionTypes.DISMISS_LOGOUT_MODAL: {
+
+            return {
+                ...state,
+                logoutModalIsActive: false
+            }
         }
 
         default: {

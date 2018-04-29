@@ -27,7 +27,7 @@
                                     <label class="label">Nombres</label>
                                     <div class="control has-icons-left has-icons-right">
                                         <input class="input" [readonly]="isLoading" [class.is-success]="(name.dirty || name.touched) && name.valid" [class.is-danger]="(name.dirty || name.touched) && !name.valid" placeholder="Pedro Perez" formControlName="name">
-                                        <span class="icon is-small">
+                                        <span class="icon is-small is-left">
                                             <i class="fas fa-user"></i>
                                         </span>
                                         <div *ngIf="name.dirty || name.touched">
@@ -107,7 +107,7 @@
                             </form>
                         </div>
                     </div>
-                    <hr style="margin-top: 0; margin-bottom: 0">
+                  <!--   <hr style="margin-top: 0; margin-bottom: 0">
                     <div class="card-content has-text-centered">
                         Registrate con:
                         <button class="button is-link is-fullwidth" style="margin-top:5px">
@@ -126,7 +126,7 @@
                                 Google
                             </span>
                         </button>
-                    </div>
+                    </div> -->
                     
                     
                 </div>

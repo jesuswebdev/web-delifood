@@ -3,7 +3,7 @@
         <a class="navbar-item" [routerLink]="['/']">
             Delifood
         </a>
-        <div class="navbar-burger burger" data-target="navMenu" id="navBurger">
+        <div class="navbar-burger burger" data-target="navMenu" id="navBurger" (click)="navBarToggle()">
             <span></span>
             <span></span>
             <span></span>
@@ -11,17 +11,27 @@
     </div>
     <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
-            <a class="navbar-item navBoton" *ngFor="let link of links.navStart" [routerLink]="[link.path]">
+            <a class="navbar-item navBoton" *ngFor="let link of navLinks" [routerLink]="[link.path]" (click)="navButtonPressed()">
                 {{link.name}}
             </a>
-            <a class="navbar-item navBoton" [routerLink]="['/carrito']">
+            <a class="navbar-item navBoton" [routerLink]="['/carrito']" (click)="navButtonPressed()">
                 <delifood-cart-label></delifood-cart-label>
             </a>
         </div>
-        <div class="navbar-end">
-            <a class="navbar-item navBoton" *ngFor="let link of links.navEnd" [routerLink]="[link.path]">
-                {{link.name}}
+        <div class="navbar-end" *ngIf="role !== 'guest'">
+            <a class="navbar-item navBoton" (click)="activateLogoutModal()" (click)="navButtonPressed()">
+                Salir
+            </a>
+        </div>
+        <div class="navbar-end" *ngIf="role === 'guest'">
+            <a class="navbar-item navBoton" [routerLink]="['/login']" (click)="navButtonPressed()">
+                Iniciar Sesión
+            </a>
+            <a class="navbar-item navBoton" [routerLink]="['/registro']" (click)="navButtonPressed()">
+                Registrarme
             </a>
         </div>
     </div>
 </nav>
+
+<delifood-logout></delifood-logout>

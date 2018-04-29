@@ -11,7 +11,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { RouterModule } from '@angular/router';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { LogoutComponent } from './logout/logout.component';
 import { TokenInterceptor } from '../utils/interceptors/token.interceptor';
 
 import { UserService } from '@delifood/services/user.service';
@@ -67,7 +66,6 @@ export function provideConfig() {
         WelcomeComponent,
         LoginComponent,
         RegisterComponent,
-        LogoutComponent,
         PageNotFoundComponent
     ],
     providers: [

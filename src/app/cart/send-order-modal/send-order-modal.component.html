@@ -43,7 +43,10 @@
             <div class="card-content" *ngIf="sent">
                 <div class="content">
                     <div class="columns is-mobile is-tablet is-desktop is-centered">
-                        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+                        <div class="column is-10-mobile is-8-tablet is-8-desktop has-text-centered">
+                            <div class="notification is-success">
+                                El pago se realizó con éxito. Presiona continuar para ver los detalles del pedido.
+                            </div>
                             <button class="button is-info" (click)="onClickContinue()">
                                 Continuar
                             </button>

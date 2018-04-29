@@ -90,7 +90,7 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
 
         this.handler.open({
             name: 'Delifood',
-            description: 'test payment',
+            description: 'compra de comida',
             amount: this.cart.totalPayment * 100
         });
     }
