@@ -107,7 +107,7 @@ export class SendOrderModalComponent implements OnInit, OnDestroy {
     onClickContinue() {
 
         this.onDismissModal();
-        this.router.navigate(['/pedidos', this.tempId]);
+        this.router.navigate(['/cuenta/pedidos', this.tempId]);
     }
 
     ngOnDestroy() {

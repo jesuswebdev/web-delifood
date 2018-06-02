@@ -1,4 +1,72 @@
-<div class="columns is-mobile is-tablet is-desktop is-centered">
+<div class="container">
+        <div class="columns">
+            <div class="column is-3">
+                <aside class="menu">
+                    <p class="menu-label">
+                        Mi Cuenta
+                    </p>
+                    <ul class="menu-list">
+                        <li><a [routerLink]="['/cuenta/configuracion']">Configuración</a></li>
+                        <li><a [routerLink]="['/cuenta/pedidos']" class="is-active">Mis Pedidos</a></li>
+                        <li><a [routerLink]="['/cuenta/contrasena']">Cambiar Contraseña</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-6">
+                
+
+                <h1 class="is-size-1">Detalles del pedido</h1>
+                <div class="card" *ngIf="order">
+                    <div class="card-content">
+                        <div class="content">
+                            <article class="media" *ngFor="let p of order.products">
+                                <figure class="media-left" style="margin-bottom: 0">
+                                    <p class="image is-128x128">
+                                        <img [src]="apiUrl + p.product.img" [alt]="p.product.name">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{ p.quantity }} X {{ p.product.name }}</strong>
+                                            <br>
+                                            Precio Unitario: {{ p.unitPrice | currency: 'BsF. ' }}
+                                            <br>
+                                            Sub-Total: {{ p.totalPrice | currency: 'BsF. ' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="column is-3">
+                
+                    <p>
+                        Fecha: {{order.created | date: 'dd/MM/yyyy'}}
+                    </p>
+                    <p>
+                        Metodo de Pago: 
+                        <span class="icon is-medium" *ngIf="order.paymentProcessor === 'stripe'">
+                            <i class="fab fa-2x fa-cc-stripe"></i>
+                        </span>
+                        <span class="icon is-medium" *ngIf="order.paymentProcessor === 'paypal'">
+                            <i class="fab fa-2x fa-cc-paypal"></i>
+                        </span>
+                    </p>
+                    <p>Comidas Pedidas: {{order.products.length}}</p>
+                    <p>
+                        Total: {{order.totalPayment | currency: 'BsF. '}}
+                    </p>
+            </div>
+        </div>
+    </div>
+
+<!-- <div class="columns is-mobile is-tablet is-desktop is-centered">
     <div class="column is-10-mobile is-8-tablet is-6-desktop has-text-centered">
         <h1 class="is-size-1">Detalles del pedido</h1>
         <div class="card" *ngIf="order">
@@ -43,4 +111,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

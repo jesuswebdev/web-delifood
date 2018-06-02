@@ -70,15 +70,15 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
         if (this.role === 'user') {
             links = [
-                { path: '/comidas', name: 'Comidas' },
-                { path: '/pedidos', name: 'Mis Pedidos' }
+                { path: '/comidas', name: 'Comidas' }
+                // { path: '/pedidos', name: 'Mis Pedidos' }
             ]
         }
         else if (this.role === 'admin') {
             links = [
                 { path: '/admin/panel', name: 'Panel Administrativo' },
-                { path: '/comidas', name: 'Comidas' },
-                { path: '/pedidos', name: 'Mis Pedidos' }
+                { path: '/comidas', name: 'Comidas' }
+                // { path: '/pedidos', name: 'Mis Pedidos' }
             ]
         }
         else {

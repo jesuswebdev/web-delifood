@@ -1,4 +1,65 @@
 <div class="container">
+    <div class="columns">
+        <div class="column is-3">
+            <aside class="menu">
+                <p class="menu-label">
+                    Mi Cuenta
+                </p>
+                <ul class="menu-list">
+                    <li><a [routerLink]="['/cuenta/configuracion']">Configuración</a></li>
+                    <li><a [routerLink]="['/cuenta/pedidos']" class="is-active">Mis Pedidos</a></li>
+                    <li><a [routerLink]="['/cuenta/contrasena']">Cambiar Contraseña</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column is-9">
+            
+            <div *ngIf="foundNothing">
+                <h4 class="is-size-4">No tienes pedidos</h4>
+            </div>
+
+            <table class="table is-fullwidth" *ngIf="orders">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Método de Pago</th>
+                        <th>Comidas</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders; let i = index">
+                        <td> {{ i+1 }} </td>
+                        <td> {{ order.created | date: 'dd/MM/yyyy' }} </td>
+                        <td>
+                            <span class="icon is-medium" *ngIf="order.paymentProcessor === 'stripe'">
+                                <i class="fab fa-2x fa-cc-stripe"></i>
+                            </span>
+                            <span class="icon is-medium" *ngIf="order.paymentProcessor === 'paypal'">
+                                <i class="fab fa-2x fa-cc-paypal"></i>
+                            </span>
+                        </td>
+                        <td> {{ order.products.length }} </td>
+                        <td> {{ order.totalPayment | currency: 'BsF. ' }} </td>
+                        <td>
+                            <button class="button is-info" (click)="onClickOrderDetails(order._id)">
+                                <span class="icon is-small">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <span>Ver Detalles</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<!-- 
+<div class="container">
     <div class="columns is-mobile is-tablet is-desktop is-centered">
         <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
             <h1 class="is-size-1">
@@ -52,4 +113,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->

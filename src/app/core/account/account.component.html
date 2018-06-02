@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="columns">
+        <div class="column is-3">
+            <aside class="menu">
+                <p class="menu-label">
+                    Mi Cuenta
+                </p>
+                <ul class="menu-list">
+                    <li><a [routerLink]="['/cuenta/configuracion']" class="is-active" >Configuración</a></li>
+                    <li><a [routerLink]="['/cuenta/pedidos']" >Mis Pedidos</a></li>
+                    <li><a [routerLink]="['/cuenta/contrasena']" >Cambiar Contraseña</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column is-9">
+            <form [formGroup]="accountDetailsForm">
+
+                <div class="field">
+                    <label class="label">Correo Electrónico</label>
+                    <div class="control">
+                        <input type="text" [value]="user.email" class="input is-static" readonly>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label">Nombre</label>
+                    <div class="control">
+                        <input type="text" formControlName="name" class="input">
+                    </div>
+                </div>
+
+                
+
+                <div class="field">
+                    <label class="label">
+                        Telefono
+                    </label>
+                    <div class="control">
+                        <input class="input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">
+                        Direccion
+                    </label>
+                    <div class="control">
+                        <input class="input">
+                    </div>
+                </div>
+
+                <button class="button is-link">
+                    Guardar Cambios
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

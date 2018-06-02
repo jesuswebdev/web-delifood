@@ -29,6 +29,10 @@ import { IsGuestUserGuard } from '@delifood/guards/isGuestUser.guard';
 
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, LoginOpt } from 'angularx-social-login';
 import { environment } from 'environments/environment';
+import { AccountComponent } from './account/account.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { OrderListComponent } from '../order/list/order-list.component';
+import { OrderDetailsComponent } from '../order/details/order-details.component';
 
 const googleLoginOptions: LoginOpt = {
     scope: 'profile email'
@@ -66,7 +70,11 @@ export function provideConfig() {
         WelcomeComponent,
         LoginComponent,
         RegisterComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        AccountComponent,
+        ChangePasswordComponent,
+        OrderListComponent,
+        OrderDetailsComponent
     ],
     providers: [
         AuthService,

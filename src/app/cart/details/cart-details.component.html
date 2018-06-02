@@ -1,111 +1,108 @@
 <div class="container" style="min-height: 100vh">
-    <div class="columns is-mobile is-tablet is-desktop is-centered">
-        <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-            <h1 class="is-size-1">Carrito</h1>
-        </div>
-    </div>
 
-    <div *ngIf="cartItems.length > 0">
-        <div class="columns is-mobile is-tablet is-desktop is-centered">
-            <div class="column is-10-mobile is-10-tablet is-10-desktop has-text-centered">
+    <div class="columns is-desktop is-centered">
+        <div class="column is-9 has-text-centered">
+            <div *ngIf="cartItems.length > 0">
+                <h1 class="is-size-1">Carrito</h1>
+    
                 <div class="notification" *ngIf="!loggedIn">
                     Debes registrarte para poder hacer un pedido
                 </div>
                 <div class="notification" *ngIf="hasPendingOrder">
                     Ya tienes un pedido pendiente.
                 </div>
+    
+                <form [formGroup]="cartDetailsForm">
+                    <div formArrayName="items">
+                        <div *ngFor="let item of cartItems.controls; let i = index" [formGroupName]="i">
+    
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img [src]="apiUrl + item.value.item.img" [alt]="item.value.item.name">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>
+                                                {{ item.value.item.name }}
+                                            </strong>
+                                        </p>
 
-                <div [hidden]="cartDetailsForm.valid">
-                    <div class="notification is-danger">
-                        <div *ngFor="let item of cartDetailsForm.controls.items.controls; let i = index">
-                            <div *ngIf="item.controls.quantity.errors && item.controls.quantity.errors.max">
-                                La cantidad pedida de <strong>{{item.value.item.name}}</strong> no puede exceder de cien (100)
-                            </div>
-                            <div *ngIf="item.controls.quantity.errors && item.controls.quantity.errors.min">
-                                La cantidad pedida de <strong>{{item.value.item.name}}</strong> no puede ser menor que uno (1)
-                            </div>
+                                         <div class="field is-horizontal">
+                                            <div class="field-label is-normal">
+                                                <label class="label">
+                                                    Pedir:
+                                                </label>
+                                            </div>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="control">
+                                                        <input class="input"
+                                                        style="max-width: 150px"
+                                                        type="number"
+                                                        min="1"
+                                                        max="100"
+                                                        [value]="item.controls.quantity.value"
+                                                        (change)="onChangeItemQuantity(item.value)"
+                                                        [class.is-danger]="(item.dirty || item.touched) && !item.valid"
+                                                        [class.is-success]="(item.dirty || item.touched) && item.valid"
+                                                        formControlName="quantity">
+                                                    </div>
+                                                    <p class="help is-danger" *ngIf="item.controls.quantity.errors?.min">
+                                                        La cantidad pedida no puede ser menor a uno (1)
+                                                    </p>
+                                                    <p class="help is-danger" *ngIf="item.controls.quantity.errors?.max">
+                                                        La cantidad pedida no puede exceder las cien (100) unidades
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="field is-horizontal">
+                                            <div class="field-label is-normal">
+                                                <label class="label">
+                                                    Sub-Total:
+                                                </label>
+                                            </div>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="control">
+                                                        <input type="text" class="input is-static" [value]="item.value.total | currency: 'BsF. '" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <button class="delete" (click)="onDeleteItemFromCart(item.value)"></button>
+                                </div>
+                            </article>
+                            <hr>
                         </div>
                     </div>
-                </div>
-                
-                <form [formGroup]="cartDetailsForm">
-
-                        <div formArrayName="items">
-                    <table class="table is-fullwidth is-striped is-hoverable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>
-                                    Nombre de la comida
-                                </th>
-                                <th>
-                                    Cantidad pedida
-                                </th>
-                                <th>
-                                    Sub-Total
-                                </th>
-                                <th></th>
-                            </tr>
-                                <tr *ngFor="let item of cartItems.controls; let i = index" [formGroupName]="i">
-                                    <td>{{i+1}}</td>
-                                    <td>{{item.value.item.name}}</td>
-                                    <td>
-                                        
-                                        <input class="input"
-                                        type="number"
-                                        min="1"
-                                        max="100"
-                                        [value]="item.controls.quantity.value"
-                                        (change)="onChangeItemQuantity(item.value)"
-                                        [class.is-danger]="(item.dirty || item.touched) && !item.valid"
-                                        [class.is-success]="(item.dirty || item.touched) && item.valid"
-                                        formControlName="quantity">
-
-                                    </td>
-                                    <td> {{item.value.total | currency: 'BsF. '}} </td>
-                                    <td>
-                                        <button class="button is-danger" (click)="onDeleteItemFromCart(item.value)">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-times"></i>
-                                            </span>
-                                            <span>
-                                                Eliminar
-                                            </span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            
-                        </thead>
-                        <tbody>
-        
-                        </tbody>
-                        <tfoot></tfoot>
-                    </table>
-                </div>
                 </form>
             </div>
-        </div>
 
-        <div class="columns is-mobile is-tablet is-desktop is-centered">
-            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+        </div>
+        <div class="column is-3 has-text-centered">
+            <div *ngIf="cartItems.length > 0" style="padding-top:50px;">
                 <p>
                     Cantidad de Productos: {{totalItems}}
                 </p>
                 <p>
                     Total a pagar: {{totalPayment | currency: 'BsF. '}}
                 </p>
-            </div>
-        </div>
-        
-        <div class="columns is-mobile is-tablet is-desktop is-centered" style="margin-bottom: 50px">
-            <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
+    
                 <button class="button is-info" (click)="onClickOrder()" [disabled]="!cartDetailsForm.valid || !loggedIn">
-                <span class="icon is-small">
-                    <i class="fas fa-check"></i>
-                </span>
-                <span>
-                    Hacer el pedido
-                </span>
+                    <span class="icon is-small">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span>
+                        Hacer el pedido
+                    </span>
                 </button>
             </div>
         </div>
@@ -114,7 +111,9 @@
     <div *ngIf="cartItems.length === 0">
         <div class="columns is-mobile is-tablet is-desktop is-centered">
             <div class="column is-10-mobile is-8-tablet is-half-desktop has-text-centered">
-                No hay nada en el carrito
+                <h1 class="is-size-1">
+                    No hay nada en el carrito   
+                </h1>
             </div>
         </div>
     </div>

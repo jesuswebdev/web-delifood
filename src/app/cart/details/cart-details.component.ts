@@ -29,6 +29,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
     loggedIn: boolean;
 
+    apiUrl: string = environment.API_URL;
+
     constructor(
         private store: Store<fromRoot.State>,
         private cd: ChangeDetectorRef,
@@ -57,15 +59,13 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
                     })
                 });
                 let itemFormArray = this.fb.array(itemFG);
-                this.cartDetailsForm.setControl('items',itemFormArray);
+                this.cartDetailsForm.setControl('items', itemFormArray);
             }
             else if (cart.items.length === 0) {
                 this.cartDetailsForm.setControl('items', this.fb.array([]));
             }
-
             this.cd.markForCheck();
         });
-
     }
 
     createForm() {

@@ -19,8 +19,11 @@
             </a>
         </div>
         <div class="navbar-end" *ngIf="role !== 'guest'">
+
+            <a class="navbar-item navBoton" [routerLink]="['/cuenta/configuracion']" (click)="navButtonPressed()">Mi Cuenta</a>
+
             <a class="navbar-item navBoton" (click)="activateLogoutModal()" (click)="navButtonPressed()">
-                Salir
+                Cerrar Sesión
             </a>
         </div>
         <div class="navbar-end" *ngIf="role === 'guest'">

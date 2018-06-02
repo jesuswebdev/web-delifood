@@ -32,7 +32,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
                 .subscribe((orders) => {
                     
                     if (orders.length === 0) {
-                            this.router.navigate(['/pedidos']);
+                            this.router.navigate(['/cuenta/pedidos']);
                         }
                     else {
                         this.order = orders.find(order => order._id === params['id']);

@@ -5,6 +5,8 @@ export interface State {
     email: string;
     role: string;
     token?: string;
+    address?: string;
+    phone?: string;
     credentials?: {
         email: string;
         password: string;

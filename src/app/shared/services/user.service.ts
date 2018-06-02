@@ -54,6 +54,11 @@ export class UserService {
         }
     }
 
+    public getStoredUserInfo () {
+
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
     public getUsers (): Observable<any> {
         
         return this.http.get(server.USER_ENDPOINT);

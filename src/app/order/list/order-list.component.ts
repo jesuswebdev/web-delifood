@@ -33,7 +33,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        if (this.orders.length === 0) {
+        if (this.orders === null || this.orders.length === 0) {
             this.orderService.getOrders()
             .takeUntil(this.destroy$)
             .subscribe((response) => {
@@ -48,7 +48,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
 
     onClickOrderDetails(id: string) {
 
-        this.router.navigate(['/pedidos', id]);
+        this.router.navigate(['/cuenta/pedidos', id]);
     }
 
     ngOnDestroy() {
