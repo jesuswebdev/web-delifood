@@ -46,6 +46,55 @@ export function reducer(state = initialState, action: ProductActions.All ): Stat
             return { ...state, createCategoryModal: false };
         }
 
+        case ProductActions.ProductActionTypes.SEND_COMMENT_SUCCESS: {
+
+            console.log(action.payload);
+
+            let product = state.products.find(p => p._id === action.payload.product);
+            let products = state.products.filter(p => p._id !== action.payload.product);
+
+            console.log(product);
+            console.log(products);
+
+            // product.comments.unshift(action.payload);
+            product.commentsCount += 1;
+            product.totalRating += action.payload.rating;
+            product.rating = product.totalRating / product.commentsCount;
+
+            products.push(product);
+
+            return {
+                ...state,
+                products
+            }
+        }
+
+        case ProductActions.ProductActionTypes.LOAD_PRODUCT_COMMENTS: {
+
+            let productId = action.payload[0].product || '';
+            let products = state.products.map(p => {
+                
+                if (p._id === productId) {
+                        p.comments = action.payload;
+                    }
+                    return p;
+                });
+
+            return {
+                ...state,
+                products
+            };
+
+        }
+
+        case ProductActions.ProductActionTypes.UNLOAD_PRODUCT_INFO: {
+
+            return {
+                ...state,
+                products: []
+            }
+        }
+
         default: {
             return state;
         }

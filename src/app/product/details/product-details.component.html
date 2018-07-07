@@ -10,15 +10,18 @@
                     </div>
                     <div class="card-content">
                         <div class="content">
-                             <p class="title is-3">
+                            <p class="title is-3">
                                 {{product.name}}
-                             </p>
-                             <a [routerLink]="['/categorias', product.category.slug]">
+                            </p>
+                            <delifood-star [rating]="product.rating"></delifood-star>
+                            <small>({{product.commentsCount}} comentario{{ product.commentsCount !== 1 ? 's' : '' }})</small>
+                             <!-- <a [routerLink]="['/categorias', product.category.slug]">
                                 <p class="subtitle is-5">
                                     #{{product.category.name}}
                                 </p>
-                            </a>
-                             {{product.price | currency: 'BsF. '}}
+                            </a> -->
+                            <br>
+                            {{product.price | currency: 'BsF. '}}
                         </div>
     
                         <div class="content">
@@ -32,7 +35,18 @@
                     </div>
                 </div>
             </div>
+
+            <delifood-comment-editor *ngIf="product" [productId]="product._id"></delifood-comment-editor>
+
+            <delifood-comment *ngIf="product" [productId]="product._id" ></delifood-comment>
+            <!-- <div *ngIf="done && product.commentsCount > 0">
+                <div *ngIf="comments && comments.length > 0">
+                    <delifood-comment *ngFor="let comment of comments" [comment]="comment"></delifood-comment>
+                </div>
+            </div> -->
         </div>
     </div>
 </div>
+<div style="margin-bottom: 30px;"></div>
+<delifood-footer></delifood-footer>
 <delifood-add-to-cart-modal></delifood-add-to-cart-modal>

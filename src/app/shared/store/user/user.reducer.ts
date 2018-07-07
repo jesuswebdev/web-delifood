@@ -3,6 +3,7 @@ import * as UserActions from './user.actions';
 export interface State {
     name: string;
     email: string;
+    id?: string;
     role: string;
     token?: string;
     address?: string;

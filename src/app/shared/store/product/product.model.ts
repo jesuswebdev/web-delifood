@@ -1,3 +1,5 @@
+import { Comment } from "@delifood/store/comments/comment.model";
+
 export interface Product {
     id: string;
     _id?: string;
@@ -15,4 +17,8 @@ export interface Product {
     created?: Date;
     img?: string;
     slug?: string;
+    commentsCount: number;
+    rating: number;
+    comments?: Comment[];
+    totalRating?: number;
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
-import { PRODUCT_ENDPOINT } from '../server';
+import { PRODUCT_ENDPOINT, COMMENTS_ENDPOINT } from '../server';
 
 
 @Injectable()
@@ -44,5 +44,15 @@ export class ProductService {
     public findBySlug(slug: string): Observable<any> {
 
         return this.http.get(`${PRODUCT_ENDPOINT}?by=slug&q=${slug}`);
+    }
+
+    public getProductComments (id: string): Observable<any> {
+
+        return this.http.get(`${COMMENTS_ENDPOINT}?by=product&q=${id}`);
+    }
+
+    public sendComment (comment: any): Observable<any> {
+
+        return this.http.post(`${COMMENTS_ENDPOINT}`, comment);
     }
 }

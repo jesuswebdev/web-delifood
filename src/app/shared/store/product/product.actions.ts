@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Product } from './product.model';
+import { Comment } from '@delifood/store/comments/comment.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -10,7 +11,10 @@ export enum ProductActionTypes {
     SET_PRODUCTS_COUNT = '[Product] SET_PRODUCTS_COUNT',
     DELETE_PRODUCT_SUCCESS = '[Product] DELETE_PRODUCT_SUCCESS',
     ACTIVATE_MODAL = '[Product] ACTIVATE_MODAL',
-    DISMISS_MODAL = '[Product] DISMISS_MODAL'
+    DISMISS_MODAL = '[Product] DISMISS_MODAL',
+    SEND_COMMENT_SUCCESS = '[Product] SEND COMMENT SUCCESS',
+    LOAD_PRODUCT_COMMENTS = '[Product] LOAD PRODUCT COMMENTS',
+    UNLOAD_PRODUCT_INFO = '[Product] UNLOAD PRODUCT INFO'
 };
 
 /**
@@ -44,6 +48,24 @@ export class DismissModal implements Action {
     readonly type = ProductActionTypes.DISMISS_MODAL;
 }
 
+export class SendCommentSuccess implements Action {
+    readonly type = ProductActionTypes.SEND_COMMENT_SUCCESS;
+
+    constructor (public payload: Comment) { }
+}
+
+export class LoadProductComments implements Action {
+    readonly type = ProductActionTypes.LOAD_PRODUCT_COMMENTS;
+
+    constructor (public payload: Comment[]) { }
+}
+
+export class UnloadProductInfo implements Action {
+    readonly type = ProductActionTypes.UNLOAD_PRODUCT_INFO
+
+    constructor () {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -53,4 +75,7 @@ export type All
                 | SetProductsCount
                 | DeleteProductSuccess
                 | ActivateModal
-                | DismissModal;
+                | DismissModal
+                | SendCommentSuccess
+                | LoadProductComments
+                | UnloadProductInfo;

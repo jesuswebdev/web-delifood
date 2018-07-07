@@ -1,0 +1,23 @@
+<!-- <span class="icon has-text-warning" *ngFor="let star of stars">
+    <i class="fas fa-star" [title]="rating"></i>
+</span>
+<span class="icon" *ngIf="incompleteStar">
+    <span class="fa-stack" style="height: 1.125em; width: 1.125em;">
+        <i class="fas fa-star-half fa-stack-1x has-text-warning" style="height: 1.125em; width: 1.125em;" [title]="rating"></i>
+        <i class="fas fa-star-half fa-stack-1x" data-fa-transform="flip-h" style="height: 1.125em; width: 1.125em;" [title]="rating"></i>
+    </span>
+</span>
+<span class="icon" *ngFor="let gs of greyStars">
+    <i class="fas fa-star" [title]="rating"></i>
+</span> -->
+
+<span class="icon" 
+*ngFor="let star of stars"
+[class.has-text-warning]="star.yellow && star.complete"
+>
+    <i class="fas fa-star" [title]="rating | number" *ngIf="star.complete"></i>
+    <span class="fa-stack" style="height: 1.125em; width: 1.125em;" *ngIf="!star.complete">
+        <i class="fas fa-star-half fa-stack-1x has-text-warning" style="height: 1.125em; width: 1.125em;" [title]="rating | number"></i>
+        <i class="fas fa-star-half fa-stack-1x" data-fa-transform="flip-h" style="height: 1.125em; width: 1.125em;" [title]="rating | number"></i>
+    </span>
+</span>

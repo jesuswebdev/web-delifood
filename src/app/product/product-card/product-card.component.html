@@ -1,7 +1,9 @@
 <div class="card">
     <div class="card-image">
         <figure class="image is-4by3">
-            <img [src]="apiUrl + product.img" [alt]="product.name">
+            <a [routerLink]="['/comidas', product.slug]">
+                <img [src]="apiUrl + product.img" [alt]="product.name">
+            </a>
         </figure>
     </div>
     <div class="card-content">
@@ -11,11 +13,13 @@
                     {{product.name}}
                 </p>
             </a>
-            <a [routerLink]="['/categorias', product.category.slug]">
+            <delifood-star [rating]="product.rating"></delifood-star>
+            <small>({{product.commentsCount}} comentario{{ product.commentsCount !== 1 ? 's' : '' }})</small>
+            <!-- <a [routerLink]="['/categorias', product.category.slug]">
                 <p class="subtitle is-6">
                     #{{product.category.name}}
                 </p>
-            </a>
+            </a> -->
 
         </div>
         <div class="content">
@@ -23,11 +27,11 @@
         </div>
     </div>
     <div class="card-footer">
-        <div class="card-footer-item">
+        <!-- <div class="card-footer-item">
             <button id="details-button" class="button is-white" (click)="onClickDetails(product.slug)">
                 Detalles
             </button>
-        </div>
+        </div> -->
         <div class="card-footer-item">
             <delifood-add-to-cart-button [product]="product"></delifood-add-to-cart-button>
         </div>

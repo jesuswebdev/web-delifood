@@ -10,5 +10,7 @@ export const USER_ENDPOINT: string = `${ENDPOINT}/users`;
 export const CATEGORY_ENDPOINT: string = `${ENDPOINT}/categories`;
 export const PRODUCT_ENDPOINT: string = `${ENDPOINT}/products`;
 export const ORDER_ENDPOINT: string = `${ENDPOINT}/orders`;
+export const COMMENTS_ENDPOINT: string = `${ENDPOINT}/comments`
 export const AUTH_ENDPOINT: string = `${ENDPOINT}/auth`;
+
 export const TEST_ENDPOINT: string = `http://localhost:3000/test`;

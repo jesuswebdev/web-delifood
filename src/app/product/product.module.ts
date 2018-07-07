@@ -9,6 +9,9 @@ import { ProductPaginatorComponent } from './paginator/paginator.component';
 import { AddToCartButtonComponent } from '../cart/add-to-cart-button/add-to-cart-button.component';
 import { AddToCartModalComponent } from '../cart/add-to-cart-modal/add-to-cart-modal.component';
 import { SharedModule } from '../shared/shared.module';
+import { CommentComponent } from './comment/comment.component';
+import { StarComponent } from './star/star.component';
+import { CommentEditorComponent } from './comment-editor/comment-editor.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +20,10 @@ import { SharedModule } from '../shared/shared.module';
         ProductDetailsComponent,
         AddToCartButtonComponent,
         AddToCartModalComponent,
-        ProductPaginatorComponent
+        ProductPaginatorComponent,
+        CommentComponent,
+        CommentEditorComponent,
+        StarComponent
     ],
     imports: [
         SharedModule,

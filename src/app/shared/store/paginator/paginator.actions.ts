@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Page } from '@delifood/store/paginator/paginator.model';
+import { Comment } from '@delifood/store/comments/comment.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -9,7 +10,8 @@ export enum PaginatorActionTypes {
     SET_FIRST_PAGE = '[Paginator] SET FIRST PAGE',
     SET_SEARCH_RESULTS_COUNT = '[Paginator] SET SEARCH RESULTS COUNT',
     ADD_LOADED_PAGE = '[Paginator] ADD LOADED PAGE',
-    SET_CURRENT_PAGE = '[Paginator] SET CURRENT PAGE'
+    SET_CURRENT_PAGE = '[Paginator] SET CURRENT PAGE',
+    SEND_COMMENT_SUCCESS = '[Paginator] SEND COMMENT SUCCESS'
 };
 
 /**
@@ -38,7 +40,13 @@ export class AddLoadedPage implements Action {
 export class SetCurrentPage implements Action {
     readonly type = PaginatorActionTypes.SET_CURRENT_PAGE;
 
-    constructor(public payload: number) {}
+    constructor (public payload: number) {}
+}
+
+export class SendCommentSuccess implements Action {
+    readonly type = PaginatorActionTypes.SEND_COMMENT_SUCCESS;
+
+    constructor (public payload: Comment) {}
 }
 
 /**
@@ -49,4 +57,5 @@ export type All
                = SetFirstPage
                | SetSearchResultsCount
                | AddLoadedPage
-               | SetCurrentPage;
+               | SetCurrentPage
+               | SendCommentSuccess;

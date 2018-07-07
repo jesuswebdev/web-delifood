@@ -58,6 +58,44 @@ export function reducer(state = initialState, action: Paginator.All ): State {
             }
         }
 
+        case Paginator.PaginatorActionTypes.SEND_COMMENT_SUCCESS: {
+
+            state.loadedPages.forEach((page: Page) => {
+                let producto = page.products.find(p => p._id === action.payload.product);
+
+                if (producto) {
+
+                    page.products.find(p => {
+                        if (p._id === action.payload.product) {
+                            console.log(p);
+                            p.comments = p.comments ? [action.payload, ...p.comments] : [action.payload];
+                            // p.comments.push(action.payload);
+                            p.commentsCount += 1;
+                            p.totalRating += action.payload.rating;
+                            p.rating = p.totalRating / p.commentsCount;
+                            console.log(p);
+                            return true;
+                        }
+                    })
+                    // let productos = page.products.filter(p => p._id !== action.payload.product);
+    
+                    // producto.comments = producto.comments ? [...producto.comments, action.payload] : [ action.payload ];
+                    // producto.commentsCount += 1;
+                    // producto.totalRating += action.payload.rating;
+                    // producto.rating = producto.totalRating / producto.commentsCount;
+
+                    // productos.push(producto);
+
+                    // page.products = productos;
+                }
+
+            });
+
+            return {
+                ...state
+            };
+        }
+
         default: {
             return state;
         }

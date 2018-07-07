@@ -1,0 +1,35 @@
+<div class="notification is-danger" *ngIf="hasError" style="margin-top: 30px;">
+    <button class="delete" (click)="dismissError()"></button>
+    Ya hiciste un comentario en este producto
+</div>
+
+<h2 class="is-size-3" style="margin-top: 20px;">Escribir un comentario</h2>
+
+<article class="media" style="margin-bottom: 20px;">
+    <div class="media-content">
+        <div class="field">
+            <p class="control">
+                <textarea [(ngModel)]="comment" placeholder="Añadir un comentario..." class="textarea" [disabled]="loading"></textarea>
+            </p>
+        </div>
+        <div class="field">
+            <div class="select">
+                <select [(ngModel)]="rating" [disabled]="loading">
+                    <option selected disabled value="0">Elije una calificación</option>
+                    <option value="1">1 Estrella</option>
+                    <option value="2">2 Estrellas</option>
+                    <option value="3">3 Estrellas</option>
+                    <option value="4">4 Estrellas</option>
+                    <option value="5">5 Estrellas</option>
+                </select>
+            </div>
+        </div>
+        <nav class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <button class="button is-info" (click)="sendComment()" [class.is-loading]="loading" [disabled]="rating === 0 || comment === ''">Enviar</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</article>

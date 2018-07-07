@@ -1,0 +1,19 @@
+<div *ngIf="comments">
+
+    <h4 class="is-size-4"> {{ comments.length }} comentarios </h4>
+    <article class="media" *ngFor="let comment of comments">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong> {{ comment.user.name }} </strong>
+                    <small> {{ comment.createdAt | date }} </small>
+                    <br>
+                    Calificación: 
+                    <delifood-star [rating]="comment.rating"></delifood-star>
+                    <br>
+                    {{ comment.text }}
+                </p>
+            </div>
+        </div>
+    </article>
+</div>

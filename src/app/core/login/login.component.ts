@@ -186,7 +186,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             role: response.data.user.role,
             token: response.data.token,
             address: response.data.address || '',
-            phone: response.data.phone || ''
+            phone: response.data.phone || '',
+            id: response.data.user.id
         };
     }
 
