@@ -19,6 +19,7 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
     @Input() productId: string;
 
     hasError: boolean = false;
+    errorMessage: string = '';
     loading: boolean = false;
 
     destroy$: Subject<boolean> = new Subject<boolean>();
@@ -37,33 +38,51 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.cd.markForCheck();
 
-        this.productService.sendComment(this.prepareComment())
-        .takeUntil(this.destroy$)
-        .subscribe(response => {
+        let preparedComment = this.prepareComment();
 
-            this.loading = false;
-            this.comment = '';
-            this.rating = 0;
-            this.store.dispatch(new CommentActions.SendCommentSuccess(response.data));
-            this.store.dispatch(new PaginatorActions.SendCommentSuccess(response.data));
-            this.cd.markForCheck();
+        if (preparedComment) {
             
-        }, (err) => {
-            this.hasError = true;
-            this.loading = false;
-            this.cd.markForCheck();
-        });
+            this.productService.sendComment(preparedComment)
+            .takeUntil(this.destroy$)
+            .subscribe(response => {
+    
+                this.loading = false;
+                this.comment = '';
+                this.rating = 0;
+                this.store.dispatch(new CommentActions.SendCommentSuccess(response.data));
+                this.store.dispatch(new PaginatorActions.SendCommentSuccess(response.data));
+                this.cd.markForCheck();
+                
+            }, (err) => {
+                this.hasError = true;
+                this.errorMessage = 'Ya hiciste un comentario en este producto.';
+                this.loading = false;
+                this.cd.markForCheck();
+            });
+        }
+
 
     }
 
     dismissError() {
         
         this.hasError = false;
+        this.errorMessage = '';
     }
 
     prepareComment () {
 
-        let userId = JSON.parse(localStorage.getItem('user')).id;
+        let userId;
+
+        try {
+            userId = JSON.parse(localStorage.getItem('user')).id;
+        }
+        catch (error) {
+            this.hasError = true;
+            this.errorMessage = 'Debes iniciar sesión para hacer un comentario.';
+            this.loading = false;
+            return null;
+        }
 
         return {
             product: this.productId,
